@@ -2,16 +2,13 @@ package model;
 
 import java.util.Objects;
 
-public class Student implements User{
-    private String userId;
-    private String password;
-    private String email;
-    private String name;
+public class Student extends User{
     public Student(String userId, String name, String email) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.password = "password";
+        super(userId, name, email);
+        super.userId = userId;
+        super.name = name;
+        super.email = email;
+        super.password = "password";
     }
 
 
@@ -61,8 +58,8 @@ public class Student implements User{
         return (Objects.equals(userId, userid) && Objects.equals(this.password, password));
     }
 
-    public Request sendChangeTitleRequest(String projectID, String supervisorID, String newTitle){
-        Request request = new Request(RequestType.changeTitle, projectID, supervisorID, newTitle);
+    public Request sendChangeTitleRequest(String studentID, String projectID, String newTitle){
+        Request request = new Request(RequestType.changeTitle, projectID, newTitle, studentID);
         return request;
     }
     public Request sendSelectProjectRequest(String projectID, String studentID){

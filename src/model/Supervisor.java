@@ -1,17 +1,14 @@
 package model;
 
 import java.util.Objects;
-public class Supervisor implements User {
-    private String userId;
-    private String password = "password";
-    private String email;
-    private String name;
+public class Supervisor extends User {
 
     public Supervisor(String userId, String name, String email) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.password = "password";
+        super(userId, name, email);
+        super.userId = userId;
+        super.name = name;
+        super.email = email;
+        super.password = "password";
     }
 
 

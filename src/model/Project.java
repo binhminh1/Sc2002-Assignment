@@ -19,7 +19,7 @@ public class Project {
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
-    private void displaySupervisorInformation() {
+    /*private void displaySupervisorInformation() {
         Supervisor supervisor = FacultyRepository.getInstance().getByID(supervisorID);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
@@ -62,7 +62,7 @@ public class Project {
      */
     public void assignStudent(String studentID) throws IllegalStateException {
         if (status != ProjectStatus.AVAILABLE) {
-            throw new IllegalStateException("Fail to assign student to project. Project is not available for allocation.")
+            throw new IllegalStateException("Fail to assign student to project. Project is not available for allocation.");
         }
         this.studentId = studentID;
         this.status = ProjectStatus.ALLOCATED;
