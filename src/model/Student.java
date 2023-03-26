@@ -64,5 +64,14 @@ public class Student implements User{
 
 
 
+    public Request sendChangeTitleRequest(String projectID, String supervisorID, String newTitle){
+        Request request = new Request(RequestType.changeTitle, projectID, supervisorID, newTitle);
+        return request;
+    }
+    public Request sendSelectProjectRequest(String projectID, String studentID){
+        Request request = new Request(RequestType.assignProject, projectID, studentID);
+        return request;
+    }
 
-}
+
+    }

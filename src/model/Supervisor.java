@@ -61,4 +61,8 @@ public class Supervisor implements User {
     public boolean login(String userid, String password) {
         return (Objects.equals(userId, userid) && Objects.equals(this.password, password));
     }
+    public Request sendTransferStudentRequest(String studentId, String supervisorId, String ProjectId){
+        Request request = new Request(RequestType.transferStudent, studentId, supervisorId, ProjectId);
+        return request;
+    }
 }
