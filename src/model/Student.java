@@ -12,9 +12,6 @@ public class Student extends User{
     }
 
 
-    public String getPassword(){
-        return password;
-    }
 
     public String getEmail(){
         return email;
