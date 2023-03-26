@@ -60,4 +60,5 @@ public class Coordinator implements User{
     public boolean login(String userid, String password){
         return (Objects.equals(userId, userid) && Objects.equals(this.password, password));
     }
+
 }
