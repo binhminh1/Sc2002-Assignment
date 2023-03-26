@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 public class Request {
     private RequestType type;
 
@@ -8,7 +10,7 @@ public class Request {
     private String replacementSupId;
     private String newTitle;
 
-    private String requestId;
+    public String requestId;
 
 
     private RequestStatus status;

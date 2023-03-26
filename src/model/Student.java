@@ -62,19 +62,16 @@ public class Student extends User{
 
 
 
-    public boolean sendChangeTitleRequest(String projectID, String newTitle, String requestId){
+    public boolean sendChangeTitleRequest(String projectID, String newTitle, String requestId) {
         Request request = new Request(RequestType.changeTitle, projectID, this.userId, newTitle);
         requestId = request.getRequestId();
         return true;
-
-    public Request sendChangeTitleRequest(String studentID, String projectID, String newTitle){
-        Request request = new Request(RequestType.changeTitle, projectID, newTitle, studentID);
-        return request;
-
     }
-    public Request sendSelectProjectRequest(String projectID, String studentID){
+
+    public boolean sendSelectProjectRequest(String projectID, String studentID, String requestId){
         Request request = new Request(RequestType.assignProject, projectID, studentID);
-        return request;
+        requestId = request.getRequestId();
+        return true;
     }
 
-    }
+}
