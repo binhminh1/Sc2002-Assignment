@@ -1,11 +1,10 @@
 package model;
 
 public class ChangeTitleRequest {
-    private String projectId;
-    private String projectTitle;
+    private String newTitle;
 
-    public ChangeTitleRequest(String projectId,String projectTitle){
-        this.projectId = projectId;
-        this.projectTitle = projectTitle;
+    public ChangeTitleRequest(String projectId,String newTitle){
+
+        this.newTitle = newTitle;
     }
 }
