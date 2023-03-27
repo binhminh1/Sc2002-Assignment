@@ -8,22 +8,21 @@ import service.SupervisorService;
 public class Project {
     private String projectId;
     private String supervisorId;
-    private String supervisorName;
-    private String supervisorEmailAddress;
+
+
     private String projectTitle;
-    private String studentName;
-    private String studentEmailAddress;
+
     private String studentId;
     private ProjectStatus status;
 
-    public Project(String projectID, String projectTitle, String supervisorEmail, String supervisorName) {
+    public Project(String projectID, String projectTitle, String supervisorId) {
         this.projectId = projectID;
         this.projectTitle = projectTitle;
-        this.supervisorEmailAddress = getSupervisorEmail();
-        this.supervisorName = getSupervisorName();
+        this.supervisorId =  supervisorId;
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
+
     private void displaySupervisorInformation() {
         Supervisor supervisor = SupervisorService.getByID(supervisorId);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
@@ -65,12 +64,31 @@ public class Project {
      * @param studentID the student to be assigned
      * @throws IllegalStateException if the project is not available for allocation
      */
-    public void assignStudent(String studentID) throws IllegalStateException {
+
+    public boolean Select(String studentID){
         if (status != ProjectStatus.AVAILABLE) {
-            throw new IllegalStateException("Fail to assign student to project. Project is not available for allocation.");
+            return false;
+        }
+        this.studentId = studentID;
+        this.status = ProjectStatus.RESERVED;
+        return true;
+    }
+    public boolean Allocate(String studentID){
+        if (status != ProjectStatus.RESERVED) {
+            return false;
         }
         this.studentId = studentID;
         this.status = ProjectStatus.ALLOCATED;
+        return true;
+    }
+    public boolean Recycle(){
+        if (this.status != ProjectStatus.ALLOCATED && this.status != ProjectStatus.RESERVED) {
+            return false;
+        }
+        this.status = ProjectStatus.AVAILABLE;
+        this.studentId = "";
+        return true;
+
     }
 
     public String getProjectId(){
@@ -79,13 +97,11 @@ public class Project {
     public ProjectStatus getStatus(){
         return status;
     }
-    public String getSupervisorName(){
-        return supervisorName;
-    }
 
-    public String getSupervisorEmail(){
-        return supervisorEmailAddress;
-    }
+
+
+
+
 
     public String getProjectTitle(){
         return projectTitle;
@@ -96,13 +112,10 @@ public class Project {
         this.projectId = projectId;
     }
 
-    public void setSupervisorName(String supervisorName){
-        this.supervisorName = supervisorName;
-    }
 
-    public void setSupervisorEmail(String supervisorEmail){
-        this.supervisorEmailAddress = supervisorEmail;
-    }
+
+
+
 
     public void setProjectTitle(String projectTitle){
         this.projectTitle = projectTitle;
