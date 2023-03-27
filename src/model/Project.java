@@ -8,19 +8,17 @@ import service.SupervisorService;
 public class Project {
     private String projectId;
     private String supervisorId;
-    private String supervisorName;
-    private String supervisorEmailAddress;
+
+
     private String projectTitle;
-    private String studentName;
-    private String studentEmailAddress;
+
     private String studentId;
     private ProjectStatus status;
 
-    public Project(String projectID, String projectTitle, String supervisorEmail, String supervisorName) {
+    public Project(String projectID, String projectTitle, String supervisorId) {
         this.projectId = projectID;
         this.projectTitle = projectTitle;
-        this.supervisorEmailAddress = getSupervisorEmail();
-        this.supervisorName = getSupervisorName();
+        this.supervisorId =  supervisorId;
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
@@ -68,9 +66,6 @@ public class Project {
      */
 
     public boolean Select(String studentID){
-
-    public void assignStudent(String studentID) throws IllegalStateException {
-
         if (status != ProjectStatus.AVAILABLE) {
             return false;
         }
@@ -78,7 +73,6 @@ public class Project {
         this.status = ProjectStatus.RESERVED;
         return true;
     }
-
     public boolean Allocate(String studentID){
         if (status != ProjectStatus.RESERVED) {
             return false;
@@ -106,9 +100,7 @@ public class Project {
 
 
 
-    public String getSupervisorEmail(){
-        return supervisorEmailAddress;
-    }
+
 
 
     public String getProjectTitle(){
@@ -122,9 +114,7 @@ public class Project {
 
 
 
-    public void setSupervisorEmail(String supervisorEmail){
-        this.supervisorEmailAddress = supervisorEmail;
-    }
+
 
 
     public void setProjectTitle(String projectTitle){
