@@ -1,5 +1,9 @@
 package model;
 
+import repository.ProjectRepository;
+import repository.SupervisorRepository;
+import service.SupervisorService;
+
 public class Project {
     private String projectId;
     private String supervisorId;
@@ -19,13 +23,13 @@ public class Project {
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
-    private void displaySupervisorInformation() {
-        Supervisor supervisor = FacultyRepository.getInstance().getByID(supervisorID);//(need to change)
+    private void displaySupervisorInformation(String supervisorID) {
+        Supervisor supervisor = SupervisorService.getByID(supervisorID);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
     }
     private void displayStudentInformation() {
-        Student student = StudentRepository.getInstance().getByID(studentID);//(need to change)
+        Student student = StudentService.StustudentID);//(need to change)
         System.out.println("Student Name: " + student.getName());
         System.out.println("Student Email Address: " + student.getEmail());
     }
