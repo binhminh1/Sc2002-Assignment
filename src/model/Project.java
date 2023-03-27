@@ -4,7 +4,7 @@ public class Project {
     private String projectId;
     private String supervisorId;
     private String supervisorName;
-    private String supervisorEmail;
+    private String supervisorEmailAddress;
     private String projectTitle;
     private String studentName;
     private String studentEmailAddress;
@@ -14,12 +14,12 @@ public class Project {
     public Project(String projectID, String projectTitle, String supervisorEmail, String supervisorName) {
         this.projectId = projectID;
         this.projectTitle = projectTitle;
-        this.supervisorEmail = getSupervisorEmail();
+        this.supervisorEmailAddress = getSupervisorEmail();
         this.supervisorName = getSupervisorName();
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
-    /*private void displaySupervisorInformation() {
+    private void displaySupervisorInformation() {
         Supervisor supervisor = FacultyRepository.getInstance().getByID(supervisorID);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
@@ -79,7 +79,7 @@ public class Project {
     }
 
     public String getSupervisorEmail(){
-        return supervisorEmail;
+        return supervisorEmailAddress;
     }
 
     public String getProjectTitle(){
@@ -96,7 +96,7 @@ public class Project {
     }
 
     public void setSupervisorEmail(String supervisorEmail){
-        this.supervisorEmail = supervisorEmail;
+        this.supervisorEmailAddress = supervisorEmail;
     }
 
     public void setProjectTitle(String projectTitle){
