@@ -1,6 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
 
 public class User {
     String userId;
@@ -53,4 +56,5 @@ public class User {
     public boolean login(String userid, String password) {
         return (Objects.equals(userId, userid) && Objects.equals(this.password, password));
     }
+
 }

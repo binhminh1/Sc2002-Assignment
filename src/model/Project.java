@@ -1,29 +1,37 @@
 package model;
 
+import repository.ProjectRepository;
+import repository.SupervisorRepository;
+import service.StudentService;
+import service.SupervisorService;
+
 public class Project {
     private String projectId;
-    private String projectTitle;
     private String supervisorId;
+    private String supervisorName;
+    private String supervisorEmailAddress;
+    private String projectTitle;
+    private String studentName;
+    private String studentEmailAddress;
+    private String studentId;
     private ProjectStatus status;
 
-    private String studentId;
-
-    public Project(String projectID, String projectTitle, String supervisorId,String studentId) {
+    public Project(String projectID, String projectTitle, String supervisorEmail, String supervisorName) {
         this.projectId = projectID;
         this.projectTitle = projectTitle;
-        this.supervisorId = supervisorId;
+        this.supervisorEmailAddress = getSupervisorEmail();
+        this.supervisorName = getSupervisorName();
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
 
-    ·
     private void displaySupervisorInformation() {
-        Supervisor supervisor = FacultyRepository.getInstance().getByID(supervisorID);//(need to change)
+        Supervisor supervisor = SupervisorService.getByID(supervisorId);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
     }
-    private void displayStudentInformation() {
-        Student student = StudentRepository.getInstance().getByID(studentID);//(need to change)
+    private void displayStudentInformation(){
+        Student student = StudentService.getByID(studentId);//(need to change)
         System.out.println("Student Name: " + student.getName());
         System.out.println("Student Email Address: " + student.getEmail());
     }
@@ -58,7 +66,11 @@ public class Project {
      * @param studentID the student to be assigned
      * @throws IllegalStateException if the project is not available for allocation
      */
+
     public boolean Select(String studentID){
+
+    public void assignStudent(String studentID) throws IllegalStateException {
+
         if (status != ProjectStatus.AVAILABLE) {
             return false;
         }
@@ -93,6 +105,12 @@ public class Project {
     }
 
 
+
+    public String getSupervisorEmail(){
+        return supervisorEmailAddress;
+    }
+
+
     public String getProjectTitle(){
         return projectTitle;
     }
@@ -102,6 +120,11 @@ public class Project {
         this.projectId = projectId;
     }
 
+
+
+    public void setSupervisorEmail(String supervisorEmail){
+        this.supervisorEmailAddress = supervisorEmail;
+    }
 
 
     public void setProjectTitle(String projectTitle){
