@@ -28,7 +28,7 @@ public class Request {
             this.newTitle = comment;
             this.status = RequestStatus.Pending;
             Date day = new Date();
-            SimpleDateFormate df = new SimpleDateFormate("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             this.requestId = df.format(day);
 
         }
@@ -39,7 +39,7 @@ public class Request {
             this.replacementSupId = comment;
             this.status = RequestStatus.Pending;
             Date day = new Date();
-            SimpleDateFormate df = new SimpleDateFormate("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             this.requestId = df.format(day);
         }
 
@@ -52,7 +52,7 @@ public class Request {
         this.fromId = fromId;
         this.status = RequestStatus.Pending;
         Date day = new Date();
-        SimpleDateFormate df = new SimpleDateFormate("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.requestId = df.format(day);
     }
 
@@ -62,7 +62,7 @@ public class Request {
         this.ProjectId = ProjectID;
         this.status = RequestStatus.Pending;
         Date day = new Date();
-        SimpleDateFormate df = new SimpleDateFormate("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.requestId = df.format(day);
     }
 }

@@ -71,4 +71,10 @@ public class Student extends User{
         return true;
     }
 
+    public boolean deregisterProjectRequest(String projectID, String studentID, String requestId){
+        Request request = new Request(RequestType.deregister, projectID, studentID);
+        requestId = request.getRequestId();
+        return true;
+    }
+
 }
