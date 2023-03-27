@@ -2,24 +2,22 @@ package model;
 
 public class Project {
     private String projectId;
-    private String supervisorId;
-    private String supervisorName;
-    private String supervisorEmail;
     private String projectTitle;
-    private String studentName;
-    private String studentEmailAddress;
-    private String studentId;
+    private String supervisorId;
     private ProjectStatus status;
 
-    public Project(String projectID, String projectTitle, String supervisorEmail, String supervisorName) {
+    private String studentId;
+
+    public Project(String projectID, String projectTitle, String supervisorId,String studentId) {
         this.projectId = projectID;
         this.projectTitle = projectTitle;
-        this.supervisorEmail = getSupervisorEmail();
-        this.supervisorName = getSupervisorName();
+        this.supervisorId = supervisorId;
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
-    /*private void displaySupervisorInformation() {
+
+
+    private void displaySupervisorInformation() {
         Supervisor supervisor = FacultyRepository.getInstance().getByID(supervisorID);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
@@ -60,7 +58,7 @@ public class Project {
      * @param studentID the student to be assigned
      * @throws IllegalStateException if the project is not available for allocation
      */
-    public void assignStudent(String studentID) throws IllegalStateException {
+    public void Allocate(String studentID) throws IllegalStateException {
         if (status != ProjectStatus.AVAILABLE) {
             throw new IllegalStateException("Fail to assign student to project. Project is not available for allocation.");
         }
