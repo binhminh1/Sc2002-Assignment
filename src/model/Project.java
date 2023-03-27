@@ -2,6 +2,7 @@ package model;
 
 import repository.ProjectRepository;
 import repository.SupervisorRepository;
+import service.StudentService;
 import service.SupervisorService;
 
 public class Project {
@@ -28,8 +29,8 @@ public class Project {
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
     }
-    private void displayStudentInformation() {
-        Student student = StudentService.StustudentID);//(need to change)
+    private void displayStudentInformation(String studentID){
+        Student student = StudentService.getByID(studentID);//(need to change)
         System.out.println("Student Name: " + student.getName());
         System.out.println("Student Email Address: " + student.getEmail());
     }
