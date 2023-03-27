@@ -4,21 +4,16 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 public class Request {
     private RequestType type;
-
     private String ProjectId;
     private String fromId;
     private String replacementSupId;
     private String newTitle;
-
     public String requestId;
-
-
     private RequestStatus status;
-
     public String getRequestId(){
         return this.requestId;
     }
-
+    public void setRequestId(String requestId) {this.requestId = requestId;}
     //for change title or transferStudent
     public Request(RequestType type, String projectID, String fromID, String comment){
         if(type == RequestType.changeTitle){

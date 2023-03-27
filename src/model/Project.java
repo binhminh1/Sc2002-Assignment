@@ -2,19 +2,16 @@ package model;
 
 import repository.ProjectRepository;
 import repository.SupervisorRepository;
+import service.ProjectService;
 import service.StudentService;
 import service.SupervisorService;
 
 public class Project {
     private String projectId;
     private String supervisorId;
-
-
     private String projectTitle;
-
     private String studentId;
     private ProjectStatus status;
-
     public Project(String projectID, String projectTitle, String supervisorId) {
         this.projectId = projectID;
         this.projectTitle = projectTitle;
@@ -22,7 +19,6 @@ public class Project {
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
-
     private void displaySupervisorInformation() {
         Supervisor supervisor = SupervisorService.getByID(supervisorId);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
@@ -33,16 +29,13 @@ public class Project {
         System.out.println("Student Name: " + student.getName());
         System.out.println("Student Email Address: " + student.getEmail());
     }
-
     private void displayProjectID() {
         System.out.println("Project ID: " + projectId);
     }
-
     private void displayProjectInformation() {
         System.out.println("Project Title: " + projectTitle);
         System.out.println("Project Status: " + status);
     }
-
     public void displayProject() {
         if (status == ProjectStatus.AVAILABLE) {
             displayProjectID();
@@ -64,8 +57,7 @@ public class Project {
      * @param studentID the student to be assigned
      * @throws IllegalStateException if the project is not available for allocation
      */
-
-    public boolean Select(String studentID){
+    public boolean reserve(String studentID){
         if (status != ProjectStatus.AVAILABLE) {
             return false;
         }
@@ -88,39 +80,37 @@ public class Project {
         this.status = ProjectStatus.AVAILABLE;
         this.studentId = "";
         return true;
-
     }
 
+    public boolean Transfer(String studentID,String supervisorId,String projectId){
+        if(this.status != ProjectStatus.ALLOCATED){
+            return false;
+        }
+        Project project = ProjectService.getByID(projectId);
+        if(project.getSupervisorId() != supervisorId){
+            return false;
+        }
+        project.studentId = studentID;
+        this.studentId = "NULL";
+        this.status = ProjectStatus.AVAILABLE;
+        return true;
+    }
     public String getProjectId(){
         return projectId;
     }
     public ProjectStatus getStatus(){
         return status;
     }
-
-
-
-
-
-
     public String getProjectTitle(){
         return projectTitle;
     }
     public String getSupervisorId() {return supervisorId;}
-
     public void setProjectId(String projectId){
         this.projectId = projectId;
     }
-
-
-
-
-
-
     public void setProjectTitle(String projectTitle){
         this.projectTitle = projectTitle;
     }
-
     public void setStatus(ProjectStatus status){
         this.status = status;
     }

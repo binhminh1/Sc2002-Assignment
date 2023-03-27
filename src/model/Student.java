@@ -59,9 +59,11 @@ public class Student extends User{
 
 
 
+
     public boolean sendChangeTitleRequest(String projectID, String newTitle, String requestId) {
         Request request = new Request(RequestType.changeTitle, projectID, this.userId, newTitle);
         requestId = request.getRequestId();
+
         return true;
     }
 
