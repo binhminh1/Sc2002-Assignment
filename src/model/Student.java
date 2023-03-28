@@ -11,6 +11,9 @@ public class Student extends User{
     public void changeStatus(StudentStatus status){
         this.status = status;
     }
+    public StudentStatus getStatus(){
+        return status;
+    }
 
     public boolean sendChangeTitleRequest(String projectID, String newTitle, String requestId) {
         Request request = new Request(RequestType.changeTitle, projectID,super.getUserId(), newTitle);

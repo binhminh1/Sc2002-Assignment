@@ -1,6 +1,7 @@
 package repository;
 
 import model.Project;
+import model.ProjectStatus;
 import model.Student;
 import model.User;
 
@@ -9,26 +10,36 @@ import java.util.List;
 
 public class ProjectRepository {
 
-    public List<Project> projects = new ArrayList<>();
+    public static List <Project> projects = new ArrayList<>();
 
-    public void addProject(Project project) {
+    public static void addProject(Project project) {
         projects.add(project);
     }
 
-    public void removeProject(Project project) {
+    public static void removeProject(Project project) {
         projects.remove(project);
     }
 
-    public List<Project> getProjects() {
+    public static List<Project> getProjects() {
         return projects;
     }
 
-    public Project getByID(String id) {
+    public static Project getByID(String id) {
         for (Project project : projects) {
             if (project.getProjectId().equals(id)) {
                 return project;
             }
         }
         return null;
+    }
+
+    public static List<Project> getAvailableProject() {
+        List<Project> availableProjects = new ArrayList<>();
+        for (Project project : projects) {
+            if (project.getStatus() == ProjectStatus.AVAILABLE) {
+                availableProjects.add(project);
+            }
+        }
+        return availableProjects;
     }
 }

@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestRepository {
-    public List<Request> requests = new ArrayList<>();
+    public static List<Request> requests = new ArrayList<>();
 
-    public void addRequest(Request request){
+    public static void addRequest(Request request){
         requests.add(request);
     }
 
-    public void removeRequest(Request request){
+    public static void removeRequest(Request request){
         requests.remove(request);
     }
 
-    public List<Request> getRequests(){
+    public static List<Request> getRequests(){
         return requests;
     }
 }

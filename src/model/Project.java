@@ -1,6 +1,7 @@
 package model;
 
 import repository.ProjectRepository;
+import repository.StudentRepository;
 import repository.SupervisorRepository;
 import service.ProjectService;
 import service.StudentService;
@@ -12,6 +13,8 @@ public class Project {
     private String projectTitle;
     private String studentId;
     private ProjectStatus status;
+
+
     public Project(String projectID, String projectTitle, String supervisorId) {
         this.projectId = projectID;
         this.projectTitle = projectTitle;
@@ -20,12 +23,12 @@ public class Project {
         this.status = ProjectStatus.AVAILABLE;
     }
     private void displaySupervisorInformation() {
-        Supervisor supervisor = SupervisorService.getByID(supervisorId);//(need to change)
+        Supervisor supervisor = SupervisorRepository.getByID(supervisorId);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
     }
     private void displayStudentInformation(){
-        Student student = StudentService.getByID(studentId);//(need to change)
+        Student student = StudentRepository.getByID(studentId);//(need to change)
         System.out.println("Student Name: " + student.getName());
         System.out.println("Student Email Address: " + student.getEmail());
     }
@@ -98,6 +101,9 @@ public class Project {
     public String getProjectId(){
         return projectId;
     }
+    public String getStudentId(){
+        return studentId;
+    }
     public ProjectStatus getStatus(){
         return status;
     }
@@ -114,6 +120,5 @@ public class Project {
     public void setStatus(ProjectStatus status){
         this.status = status;
     }
-
 
 }
