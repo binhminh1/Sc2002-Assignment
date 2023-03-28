@@ -49,7 +49,6 @@ public class Coordinator extends User{
     }
 
 
-    @Override
     public String getID() {
         return getUserId();
     }

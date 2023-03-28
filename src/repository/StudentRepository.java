@@ -11,7 +11,7 @@ import java.util.List;
 public class StudentRepository {
     public static List<Student> students = new ArrayList<>();
 
-    public static void addSupervisor(Student student){
+    public static void addStudent(Student student){
         students.add(student);
     }
 

@@ -21,15 +21,13 @@ public class Main {
 
 
         System.out.println("Welcome to FYPMS! Please wait a few seconds for initialization");
-        System.out.println("Loading Supervisor List.....");
-
+        ReadCSV.readFile();
         System.out.println("If you are a student, please enter 1 \n" +
                 "If you are a supervisor, please enter 2 \n" +
                 "If you are a coordinator, please enter 3 \n");
         int choice = sc.nextInt();
         switch (choice) {
             case 1:
-
                 while (true) {
                     System.out.println("Enter your user ID: ");
                     userId = sc.nextLine();
