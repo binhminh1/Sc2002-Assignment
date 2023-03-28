@@ -22,12 +22,12 @@ public class Project {
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
-    private void displaySupervisorInformation() {
+    public void displaySupervisorInformation() {
         Supervisor supervisor = SupervisorRepository.getByID(supervisorId);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
     }
-    private void displayStudentInformation(){
+    public void displayStudentInformation(){
         Student student = StudentRepository.getByID(studentId);//(need to change)
         System.out.println("Student Name: " + student.getName());
         System.out.println("Student Email Address: " + student.getEmail());
@@ -41,10 +41,12 @@ public class Project {
     }
     public void displayProject() {
         if (status == ProjectStatus.AVAILABLE) {
+            System.out.println("Project is available for allocation.");
             displayProjectID();
             displaySupervisorInformation();
             displayProjectInformation();
         } else if (status == ProjectStatus.ALLOCATED) {
+            System.out.println("Project is allocated to a student.");
             displayProjectID();
             displaySupervisorInformation();
             displayStudentInformation();
