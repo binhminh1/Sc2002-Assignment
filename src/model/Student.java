@@ -35,19 +35,19 @@ public class Student extends User{
     public String getSuperid(){
         return Superid;
     }
-    public boolean sendChangeTitleRequest(String projectID, String toId, String newTitle) {
+    public Request sendChangeTitleRequest(String projectID, String toId, String newTitle) {
         Request request = new Request(RequestType.changeTitle, projectID, super.getUserId(), toId, newTitle);
 
-        return true;
+        return request;
     }
-    public boolean sendSelectProjectRequest(String projectID, String studentID){
+    public Request sendSelectProjectRequest(String projectID, String studentID){
         Request request = new Request(RequestType.assignProject, projectID, studentID);
 
-        return true;
+        return request;
     }
-    public boolean sendDeregisterProjectRequest(String projectID, String studentID, String requestId){
+    public Request sendDeregisterProjectRequest(String projectID, String studentID){
         Request request = new Request(RequestType.deregister, projectID, studentID);
-        requestId = request.getRequestId();
-        return true;
+
+        return request;
     }
 }

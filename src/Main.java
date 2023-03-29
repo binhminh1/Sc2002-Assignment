@@ -43,9 +43,9 @@ public class Main {
                 Student student = StudentService.getByID(userId);
                 System.out.println("Welcome " + userId + "!");
                 System.out.println("Please select an option: \n" +
-                        "1. Register/Deregister \n" +
-                        "2. View my project \n" +
-                        "3. Change the title of my project \n" +
+                        "1. changePassword \n" +
+                        "2. View available projects \n" +
+                        "3. Select the project to send to the coordinator\n" +
                         "4. Check all my requests \n" +
                         "5. Change password \n" +
                         "6. Logout \n");
@@ -76,7 +76,7 @@ public class Main {
                             String projectId = sc.nextLine();
                             Project project = ProjectRepository.getByID(projectId);
                             if (project != null) {
-                                student.sendDeregisterProjectRequest(projectId, student.getUserId(), null);
+                                student.sendDeregisterProjectRequest(projectId, student.getUserId());
                                 System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
                             } else {
                                 System.out.println("Invalid project ID. Please try again.");
