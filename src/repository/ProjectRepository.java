@@ -42,4 +42,16 @@ public class ProjectRepository {
         }
         return availableProjects;
     }
+
+    public static List<Project> getProjectsByStatus(ProjectStatus status) {
+        List<Project> matchingProjects = new ArrayList<>();
+        for (Project project : projects) {
+            if (project.getStatus() == status) {
+                matchingProjects.add(project);
+            }
+        }
+        return matchingProjects;
+    }
+
+    
 }
