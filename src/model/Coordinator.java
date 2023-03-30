@@ -1,6 +1,12 @@
 package model;
-
+ 
 import java.util.Objects;
+import repository.ProjectRepository;
+import repository.SupervisorRepository;
+import repository.StudentRepository; 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Coordinator extends User{
     private String userId;
     private String password = "password";
@@ -14,82 +20,70 @@ public class Coordinator extends User{
         this.email = email;
         this.password = "password";
     }
+
+    public void changeProjectSupervisor(String projectId, String newSupervisorId) {
+        Project projectToUpdate = ProjectRepository.getByID(projectId);
+        if (projectToUpdate != null) {
+            projectToUpdate.setSupervisorId(newSupervisorId);
+            System.out.println("Project supervisor updated.");
+        } else {
+            System.out.println("Project not found.");
+        }
+    }
+
+    public void allocateProject(String projectId, String studentId) {
+        Project project = ProjectRepository.getByID(projectId);
     
-    public void allocateProject(Project project, Student student) {
-        if (project.getStatus() == ProjectStatus.AVAILABLE) {
-            project.setStudent(student);
-            project.setStatus(ProjectStatus.ALLOCATED);
-            student.setProject(project);
+        if (project == null) {
+            System.out.println("Project not found.");
+            return;
+        }
+    
+        // Check if the project is already allocated to a student
+        if (project.getStudentId() != null) {
+            System.out.println("Project is already allocated to a student.");
+            return;
+        }
+    
+        // Update the project's student ID and status fields
+        project.setStudentId(studentId);
+        project.setStatus(ProjectStatus.ALLOCATED);
+        System.out.println("Project allocated to student.");
+    }
+
+    public void deregisterStudentFromFYP(String projectId) {
+        Project projectToUpdate = ProjectRepository.getByID(projectId);
+    
+        if (projectToUpdate != null) {
+            String studentId = projectToUpdate.getStudentId();
+            projectToUpdate.setStudentId(null);
+            projectToUpdate.setStatus(ProjectStatus.AVAILABLE);
+            System.out.println("Project deregistered from student.");
+            
+            // Update student status
+            Student studentToUpdate = StudentRepository.getByID(studentId);
+            if (studentToUpdate != null) {
+                studentToUpdate.changeStatus(StudentStatus.DEREGISTERED);
+                System.out.println("Student deregistered from FYP.");
+            } else {
+                System.out.println("Student not found.");
+            }
         } else {
-            throw new IllegalArgumentException("Project is not available for allocation");
+            System.out.println("Project not found.");
         }
-    }
+    } 
 
-    public void changeSupervisor(Project project, Supervisor supervisor) {
-        project.setSupervisor(supervisor);
-    }
-
-    public void deregisterStudent(Student student) {
-        Project project = student.getProject();
-        if (project != null) {
-            project.setStudent(null);
-            project.setStatus(ProjectStatus.AVAILABLE);
-            student.setProject(null);
-            student.setDeregistered(true);
+    public void displayProjectByStatus(ProjectStatus status) {
+        List<Project> matchingProjects = ProjectRepository.getProjectsByStatus(status);
+        if (matchingProjects.isEmpty()) {
+            System.out.println("No projects found with status " + status);
         } else {
-            throw new IllegalArgumentException("Student is not registered for any project");
-        }
-    }
-
-    public List<Project> getAvailableProjects() {
-        List<Project> availableProjects = new ArrayList<>();
-        for (Project project : projects) {
-            if (project.getStatus() == ProjectStatus.AVAILABLE) {
-                availableProjects.add(project);
+            System.out.println("Projects with status: " + status);
+            for (Project project : matchingProjects) {
+                System.out.println("Project ID: " + project.getProjectId());
             }
         }
-        return availableProjects;
     }
-
-    public List<Project> getUnavailableProjects() {
-        List<Project> unavailableProjects = new ArrayList<>();
-        for (Project project : projects) {
-            if (project.getStatus() == ProjectStatus.UNAVAILABLE) {
-                unavailableProjects.add(project);
-            }
-        }
-        return unavailableProjects;
-    }
-
-    public List<Project> getReservedProjects() {
-        List<Project> reservedProjects = new ArrayList<>();
-        for (Project project : projects) {
-            if (project.getStatus() == ProjectStatus.RESERVED) {
-                reservedProjects.add(project);
-            }
-        }
-        return reservedProjects;
-    }
-
-    public List<Project> getAllocatedProjects() {
-        List<Project> allocatedProjects = new ArrayList<>();
-        for (Project project : projects) {
-            if (project.getStatus() == ProjectStatus.ALLOCATED) {
-                allocatedProjects.add(project);
-            }
-        }
-        return allocatedProjects;
-    }
-
-    public List<Project> searchProjectsByStatus(ProjectStatus status) {
-        List<Project> projectsByStatus = new ArrayList<>();
-        for (Project project : projects) {
-            if (project.getStatus() == status) {
-                projectsByStatus.add(project);
-            }
-        }
-        return projectsByStatus;
-    }
-
+    
 
 }
