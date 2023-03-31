@@ -34,6 +34,7 @@ public class Main {
                     System.out.println("Enter your password: ");
                     password = sc.nextLine();
                     Student student = StudentService.getByID(userId);
+                    //The static method login(String, String) from the type User should be accessed in a static way
                     if (student.login(userId, password)) {
                         break;
                     }
@@ -106,7 +107,8 @@ public class Main {
                     case 4:
                         System.out.println("Your requests: ");
                         for (Request request : RequestRepository.getRequests()) {
-                            System.out.println(request.getRequestId() + " " + request.getRequestType() + " " + request.getStatus());
+                            System.out.println(request.getRequestId() + " " + request.getRequestType() + " " + request.getStatus()); 
+                            
                         }
 
 
