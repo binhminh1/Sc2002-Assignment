@@ -12,7 +12,7 @@ public class Project {
     private String supervisorId;
     private String projectTitle;
     private String studentId;
-    private ProjectStatus status;
+    private ProjectStatus status; 
 
 
     public Project(String projectID, String projectTitle, String supervisorId) {
@@ -22,23 +22,30 @@ public class Project {
         this.studentId = "NULL";
         this.status = ProjectStatus.AVAILABLE;
     }
-    private void displaySupervisorInformation() {
+    public void displaySupervisorInformation() {
         Supervisor supervisor = SupervisorRepository.getByID(supervisorId);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
     }
-    private void displayStudentInformation(){
+    public void displayStudentInformation(){
         Student student = StudentRepository.getByID(studentId);//(need to change)
         System.out.println("Student Name: " + student.getName());
         System.out.println("Student Email Address: " + student.getEmail());
     }
-    private void displayProjectID() {
+
+    public void displayProjectID() {
         System.out.println("Project ID: " + projectId);
     }
-    private void displayProjectInformation() {
+    public void displayProjectInformation() {
         System.out.println("Project Title: " + projectTitle);
         System.out.println("Project Status: " + status);
     }
+
+    public void displayProjectStatus()
+    {
+        
+    } 
+
     public void displayProject() {
         if (status == ProjectStatus.AVAILABLE) {
             displayProjectID();
@@ -121,4 +128,10 @@ public class Project {
         this.status = status;
     }
 
+    public void setSupervisorId(String supervisorId) {
+        this.supervisorId = supervisorId;
+    }
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
 }
