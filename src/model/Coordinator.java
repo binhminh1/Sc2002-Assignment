@@ -1,6 +1,8 @@
 package model;
  
 import java.util.Objects;
+import java.util.Scanner;
+
 import repository.ProjectRepository;
 import repository.SupervisorRepository;
 import repository.StudentRepository; 
@@ -85,5 +87,51 @@ public class Coordinator extends User{
         }
     }
     
+    private static Scanner scanner = new Scanner(System.in);
+
+    public void displayReportByFilters() {
+        // Ask coordinator for filter options
+        System.out.println("Please select filter options:");
+        System.out.println("1. Project status");
+        System.out.println("2. Supervisor ID");
+        System.out.println("3. Student ID");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        // Get selected filter values
+        ProjectStatus statusFilter = null;
+        String supervisorIdFilter = null;
+        String studentIdFilter = null;
+        switch (choice) {
+            case 1:
+                System.out.println("Enter project status filter (UNAVAILABLE, AVAILABLE, RESERVED, or ALLOCATED):");
+                statusFilter = ProjectStatus.valueOf(scanner.nextLine().toUpperCase());
+                break;
+            case 2:
+                System.out.println("Enter supervisor ID filter:");
+                supervisorIdFilter = scanner.nextLine();
+                break;
+            case 3:
+                System.out.println("Enter student ID filter:");
+                studentIdFilter = scanner.nextLine();
+                break;
+            default:
+                System.out.println("Invalid choice");
+                return;
+        }
+
+        // Search for projects matching the selected filters
+        List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, supervisorIdFilter, studentIdFilter);
+
+        // Print the details of the matching projects
+        for (Project project : matchingProjects) {
+            System.out.println("Project ID: " + project.getProjectId());
+            System.out.println("Supervisor ID: " + project.getSupervisorId());
+            System.out.println("Student ID: " + project.getStudentId());
+            System.out.println("Status: " + project.getStatus());
+            System.out.println("Title: " + project.getProjectTitle());
+            System.out.println();
+        }
+    }
 
 }
