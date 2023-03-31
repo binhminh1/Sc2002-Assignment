@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 public class Supervisor extends User {
+    private String toId;
     public List<Project> projects = new ArrayList<>();
     public Supervisor(String userId, String name, String email) {
         super(userId, name, email);
@@ -19,8 +20,8 @@ public class Supervisor extends User {
         return projects;
     }
 
-    public Request sendTransferStudentRequest(String studentId, String supervisorId, String ProjectId){
-        Request request = new Request(RequestType.transferStudent, studentId, supervisorId, ProjectId);
-        return request;
+    public boolean sendTransferStudentRequest(String supervisorId,String ProjectId){
+        Request request = new Request(RequestType.transferStudent , ProjectId , super.getUserId() , supervisorId);
+        return true;
     }
 }

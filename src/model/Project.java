@@ -41,17 +41,14 @@ public class Project {
         System.out.println("Project Status: " + status);
     }
 
-    public void displayProjectStatus()
-    {
-        
-    } 
-
     public void displayProject() {
         if (status == ProjectStatus.AVAILABLE) {
+            System.out.println("Project is available for allocation.");
             displayProjectID();
             displaySupervisorInformation();
             displayProjectInformation();
         } else if (status == ProjectStatus.ALLOCATED) {
+            System.out.println("Project is allocated to a student.");
             displayProjectID();
             displaySupervisorInformation();
             displayStudentInformation();

@@ -40,7 +40,7 @@ public class User {
         this.password = password;
     }
 
-    public static boolean login(String userid, String password) {
+    public boolean login(String userid, String password) {
         return (Objects.equals(userId, userid) && Objects.equals(this.password, password));
     }
 
