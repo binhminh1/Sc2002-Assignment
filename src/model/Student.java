@@ -1,6 +1,7 @@
 package model;
 
 import repository.ProjectRepository;
+import repository.RequestRepository;
 
 import java.util.Objects;
 
@@ -37,17 +38,17 @@ public class Student extends User{
     }
     public Request sendChangeTitleRequest(String projectID, String toId, String newTitle) {
         Request request = new Request(RequestType.changeTitle, projectID, super.getUserId(), toId, newTitle);
-
+        RequestRepository.addRequest(request);
         return request;
     }
     public Request sendSelectProjectRequest(String projectID, String studentID){
         Request request = new Request(RequestType.assignProject, projectID, studentID);
-
+        RequestRepository.addRequest(request);
         return request;
     }
     public Request sendDeregisterProjectRequest(String projectID, String studentID){
         Request request = new Request(RequestType.deregister, projectID, studentID);
-
+        RequestRepository.addRequest(request);
         return request;
     }
 }
