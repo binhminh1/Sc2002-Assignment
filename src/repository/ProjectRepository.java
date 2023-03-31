@@ -51,7 +51,17 @@ public class ProjectRepository {
             }
         }
         return matchingProjects;
-    }
-
+    }  
     
+    public static List<Project> searchProjects(ProjectStatus status, String studentId, String supervisorId) {
+        List<Project> matchingProjects = new ArrayList<>();
+        for (Project project : projects) {
+            if ((status == null || project.getStatus() == status)
+                && (studentId == null || project.getStudentId().equals(studentId))
+                && (supervisorId == null || project.getSupervisorId().equals(supervisorId))) {
+                matchingProjects.add(project);
+            }
+        }
+        return matchingProjects;
+    }
 }

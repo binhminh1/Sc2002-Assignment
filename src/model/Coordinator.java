@@ -6,6 +6,7 @@ import java.util.Scanner;
 import repository.ProjectRepository;
 import repository.SupervisorRepository;
 import repository.StudentRepository; 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class Coordinator extends User{
     
     private static Scanner scanner = new Scanner(System.in);
 
-    public void displayReportByFilters() {
+    private void displayReportByFilters() {
         // Ask coordinator for filter options
         System.out.println("Please select filter options:");
         System.out.println("1. Project status");
@@ -125,13 +126,18 @@ public class Coordinator extends User{
 
         // Print the details of the matching projects
         for (Project project : matchingProjects) {
-            System.out.println("Project ID: " + project.getProjectId());
-            System.out.println("Supervisor ID: " + project.getSupervisorId());
-            System.out.println("Student ID: " + project.getStudentId());
-            System.out.println("Status: " + project.getStatus());
-            System.out.println("Title: " + project.getProjectTitle());
-            System.out.println();
+            if (statusFilter == ProjectStatus.AVAILABLE || statusFilter == ProjectStatus.UNAVAILABLE ) {
+                project.displayProjectID();
+                project.displaySupervisorInformation();
+                project.displayProjectInformation();
+            } else if (statusFilter == ProjectStatus.ALLOCATED||statusFilter == ProjectStatus.RESERVED) {
+                project.displayProjectID();
+                project.displaySupervisorInformation();
+                project.displayStudentInformation();
+                project.displayProjectInformation();;
+            }           
         }
     }
+
 
 }
