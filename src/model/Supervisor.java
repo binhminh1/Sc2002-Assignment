@@ -1,5 +1,7 @@
 package model;
 
+import repository.RequestRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +24,7 @@ public class Supervisor extends User {
 
     public boolean sendTransferStudentRequest(String supervisorId,String ProjectId){
         Request request = new Request(RequestType.transferStudent , ProjectId , super.getUserId() , supervisorId);
+        RequestRepository.addRequest(request);
         return true;
     }
 }
