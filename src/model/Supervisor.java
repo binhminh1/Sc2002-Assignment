@@ -27,4 +27,14 @@ public class Supervisor extends User {
         RequestRepository.addRequest(request);
         return true;
     }
+
+    public boolean supervisorCapReached(String newSupervisorId) {
+        int numOfProject = 0;
+        for (Project project : projects) {
+            if (Objects.equals(project.getSupervisorId(), newSupervisorId)) {
+                numOfProject++;
+            }
+        }
+        return numOfProject >= 2;
+    }    
 }
