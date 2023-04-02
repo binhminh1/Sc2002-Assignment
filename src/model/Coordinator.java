@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import repository.ProjectRepository;
+import repository.RequestRepository;
 import repository.SupervisorRepository;
 import repository.StudentRepository; 
 
@@ -26,13 +27,23 @@ public class Coordinator extends User{
 
     public void changeProjectSupervisor(String projectId, String newSupervisorId) {
         Project projectToUpdate = ProjectRepository.getByID(projectId);
-        if (projectToUpdate != null) {
+        if(SupervisorRepository.getByID(newSupervisorId).supervisorCapReached(newSupervisorId))
+        {
+            System.out.println("Supervisor has reached maximum number of supervising projects");
+        }
+        
+        else 
+        {
+            if (projectToUpdate != null) {
             projectToUpdate.setSupervisorId(newSupervisorId);
             System.out.println("Project supervisor updated.");
-        } else {
+            } 
+        else {
             System.out.println("Project not found.");
+            }
         }
     }
+
 
     public void allocateProject(String projectId, String studentId) {
         Project project = ProjectRepository.getByID(projectId);
@@ -90,7 +101,7 @@ public class Coordinator extends User{
     
     private static Scanner scanner = new Scanner(System.in);
 
-    private void displayReportByFilters() {
+    protected void displayReportByFilters() {
         // Ask coordinator for filter options
         System.out.println("Please select filter options:");
         System.out.println("1. Project status");
@@ -139,10 +150,101 @@ public class Coordinator extends User{
         }
     }
 
-    private void processRequest()
-    {
-               
+    public void processPendingRequests() {
+        List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
+    
+        while (!pendingRequests.isEmpty()) {
+            // Print all pending requests
+            for (Request request : pendingRequests) {
+                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+            }
+    
+            // Process a request
+            System.out.println("Enter request ID to approve/reject or 0 to exit:");
+            int requestId = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+    
+            if (requestId == 0) {
+                break; // Exit loop
+            }
+    
+            Request request = RequestRepository.getByID(String.valueOf(requestId));
+            if (request != null) {
+                System.out.println("Please select an option: \n" +
+                        "1. Approve \n" +
+                        "2. Reject \n");
+                int processChoice = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+    
+                switch (request.getType()) {
+                    case transferStudent:
+                        if (processChoice == 1) {
+                            request.changeStatus(RequestStatus.Approve);
+                            changeProjectSupervisor(request.getProjectId(), request.getReplacementSupId());
+                            System.out.println("The request has been approved.");
+                        } else {
+                            System.out.println("The request has been rejected.");
+                            request.changeStatus(RequestStatus.Reject);
+                        }
+                        break;
+                    case assignProject:
+                        if (processChoice == 1) {
+                            request.changeStatus(RequestStatus.Approve);
+                            allocateProject(request.getProjectId(), request.getFromId());
+                            System.out.println("The request has been approved.");
+                        } else {
+                            System.out.println("The request has been rejected.");
+                            request.changeStatus(RequestStatus.Reject);
+                        }
+                        break;
+                    case deregister:
+                        if (processChoice == 1) {
+                            request.changeStatus(RequestStatus.Approve);
+                            deregisterStudentFromFYP(request.getProjectId());
+                            System.out.println("The request has been approved.");
+                        } else {
+                            System.out.println("The request has been rejected.");
+                            request.changeStatus(RequestStatus.Reject);
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid request type.");
+                        break;
+                }
+            } else {
+                System.out.println("Request not found.");
+            }
+    
+            // Update pending requests list
+            pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
+        }
+    
+        if (pendingRequests.isEmpty()) {
+            System.out.println("All pending requests processed.");
+        }
     }
 
-
+    //View all History
+    public List<String> viewRequestsHistory() {
+        List<String> requestHistory = new ArrayList<>();
+    
+        for (Request request : RequestRepository.getRequests()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Request ID: ").append(request.getRequestId())
+                    .append("\nType: ").append(request.getType())
+                    .append("\nFrom ID: ").append(request.getFromId())
+                    .append("\nTo ID: ").append(request.getToId())
+                    .append("\nStatus: ").append(request.getStatus());
+    
+            if (!request.getRequestHistory().isEmpty()) {
+                sb.append("\nHistory:");
+                for (RequestHistory history : request.getRequestHistory()) {
+                    sb.append("\n- ").append(history.getStatus())
+                            .append(" on ").append(history.getUpdatedDate());
+                }
+            }
+            requestHistory.add(sb.toString());
+        }
+        return requestHistory;
+    }
 }

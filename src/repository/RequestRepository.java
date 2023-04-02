@@ -41,4 +41,23 @@ public class RequestRepository {
         }
         return matchingRequests;
     }
+
+    public static Request getByID(String id) {
+        for (Request request : requests) {
+            if (request.getRequestId().equals(id)) {
+                return request;
+            }
+        }
+        return null;
+    }
+
+    public static List<Request> getRequestsbyStatus(RequestStatus status){
+        List<Request> matchingRequests = new ArrayList<>();
+        for(Request request : requests){
+            if(request.getStatus() == status){
+                matchingRequests.add(request);
+            }
+        }
+        return matchingRequests;
+    }
 }
