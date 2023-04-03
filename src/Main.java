@@ -33,12 +33,12 @@ public class Main {
                     userId = sc.nextLine();
                     System.out.println("Enter your password: ");
                     password = sc.nextLine();
-<<<<<<< HEAD
+
                     Student student = StudentService.getByID(userId);
                     //The static method login(String, String) from the type User should be accessed in a static way
-=======
+
                     Student student = StudentRepository.getByID(userId);
->>>>>>> 603aee4ee5b10da9934594f040bdffc36f3d69e8
+
                     if (student.login(userId, password)) {
                         break;
                     }
