@@ -60,4 +60,24 @@ public class RequestRepository {
         }
         return matchingRequests;
     }
+
+    public static List<Request> getRequestsByFromId(String fromId){
+        List<Request> matchingRequests = new ArrayList<>();
+        for(Request request : requests){
+            if(request.getFromId() == fromId){
+                matchingRequests.add(request);
+            }
+        }
+        return matchingRequests;
+    }
+
+    public static List<Request> getRequestsBygetToId(String toId){
+        List<Request> matchingRequests = new ArrayList<>();
+        for(Request request : requests){
+            if(request.getFromId() == toId){
+                matchingRequests.add(request);
+            }
+        }
+        return matchingRequests;
+    }
 }
