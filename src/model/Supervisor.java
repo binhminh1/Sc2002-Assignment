@@ -49,20 +49,60 @@ public class Supervisor extends User {
     }    
 
 
-    public void viewRequestHistory() {
-        List<Request> incomingRequests = RequestRepository.getRequestsBygetToId(this.getUserId());
-        List<Request> outgoingRequests = RequestRepository.getRequestsByFromId(this.getUserId());
-        
-        System.out.println("Incoming Requests:");
-        for (Request request : incomingRequests) {
-            System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+    //INCOMING request = change title
+    public List<String> viewIncomingRequestsHistory() {
+        List<String> requestHistory = new ArrayList<>();
+    
+        for (Request request : RequestRepository.getRequestsBygetToId(this.getUserId())) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Request ID: ").append(request.getRequestId())
+                    .append("\nType: ").append(request.getType())
+                    .append("\nProject ID: ").append(request.getProjectId())
+                    .append("\nFrom ID: ").append(request.getFromId())
+                    .append("\nTo ID: ").append(request.getToId())
+                    .append("\nNew title: ").append(request.getNewTitle())
+                    .append("\nStatus: ").append(request.getStatus());
+    
+            if (!request.getRequestHistory().isEmpty()) {
+                sb.append("\nHistory:");
+                for (RequestHistory history : request.getRequestHistory()) {
+                    sb.append("\n- ").append(history.getStatus())
+                            .append(" on ").append(history.getUpdatedDate());
+                }
+            }
+            requestHistory.add(sb.toString());
         }
-        
-        System.out.println("Outgoing Requests:");
-        for (Request request : outgoingRequests) {
-            System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+        return requestHistory;
+    }
+
+
+    //OUTGOING request = transfer student
+    public List<String> viewOutgoingRequestsHistory() {
+        List<String> requestHistory = new ArrayList<>();
+    
+        for (Request request : RequestRepository.getRequestsByFromId(this.getUserId())) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Request ID: ").append(request.getRequestId())
+                    .append("\nType: ").append(request.getType())
+                    .append("\nProject ID: ").append(request.getProjectId())
+                    .append("\nFrom ID: ").append(request.getFromId())
+                    .append("\nTo ID: ").append(request.getToId())
+                    .append("\nReplacement supervisor: ").append(request.getReplacementSupId())
+                    .append("\nStatus: ").append(request.getStatus());
+    
+            if (!request.getRequestHistory().isEmpty()) {
+                sb.append("\nHistory:");
+                for (RequestHistory history : request.getRequestHistory()) {
+                    sb.append("\n- ").append(history.getStatus())
+                            .append(" on ").append(history.getUpdatedDate());
+                }
+            }
+            requestHistory.add(sb.toString());
+        }
+        return requestHistory;
     }
     
+
     public void changeTitle(String newTitle, String projectId) {
         for (Project project : projects) {
             if (Objects.equals(project.getProjectId(), projectId)) {
