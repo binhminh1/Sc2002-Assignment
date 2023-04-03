@@ -1,0 +1,5 @@
+public class PATH {
+    public final static String facultyFile = "C:\\Users\\Msi\\Documents\\GitHub\\Sc2002-Assignment\\src\\faculty_list.csv";
+    public final static String projectFile = "C:\\Users\\Msi\\Documents\\GitHub\\Sc2002-Assignment\\src\\rollover project.csv";
+    public final static String studentFile = "C:\\Users\\Msi\\Documents\\GitHub\\Sc2002-Assignment\\src\\student list.csv";
+}

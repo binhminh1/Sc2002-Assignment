@@ -1,8 +1,11 @@
 package model;
 
+import repository.StudentRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 
 public class User {
@@ -40,8 +43,19 @@ public class User {
         this.password = password;
     }
 
-    public boolean login(String userid, String password) {
-        return (Objects.equals(userId, userid) && Objects.equals(this.password, password));
+    public void login(String userId,Student student) {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("Enter your password: ");
+            String password = sc.nextLine();
+
+            if (Objects.equals(this.password, student.getPassword())) {
+                System.out.println("Login successful.");
+            } else {
+                System.out.println("Wrong user ID or password. Please try again.");
+            }
+        }
     }
+
 
 }
