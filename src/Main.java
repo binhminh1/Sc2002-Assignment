@@ -23,8 +23,8 @@ public class Main {
         System.out.println("Welcome to FYPMS! Please wait a few seconds for initialization");
         ReadCSV.readFile();
         System.out.println("If you are a student, please enter 1 \n" +
-                "If you are a supervisor, please enter 2 \n" +
-                "If you are a coordinator, please enter 3 \n");
+                "If you are a Faculty, please enter 2 \n" +
+                "If you are a  FYP coordinator, please enter 3 \n");
         int choice = sc.nextInt();
         switch (choice) {
             case 1:
@@ -34,10 +34,8 @@ public class Main {
                     System.out.println("Enter your password: ");
                     password = sc.nextLine();
 
-                    Student student = StudentService.getByID(userId);
-                    //The static method login(String, String) from the type User should be accessed in a static way
-
                     Student student = StudentRepository.getByID(userId);
+                    //The static method login(String, String) from the type User should be accessed in a static way
 
                     if (student.login(userId, password)) {
                         break;
@@ -51,9 +49,10 @@ public class Main {
                         "1. changePassword \n" +
                         "2. View available projects \n" +
                         "3. Select the project to send to the coordinator\n" +
-                        "4. Check all my requests \n" +
-                        "5. Change password \n" +
-                        "6. Logout \n");
+                        "4. View my project \n" +
+                        "5. View requests status and history \n" +
+                        "6. Request to change project title \n" +
+                        "7. Request to deregister FYP \n");
                 int studentChoice = sc.nextInt();
                 switch (studentChoice) {
                     case 1:

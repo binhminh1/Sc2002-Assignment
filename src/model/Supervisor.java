@@ -66,10 +66,10 @@ public class Supervisor extends User {
             int requestId = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
 
-            if (requestId == 0) {
+            if (studentId == 0) {
                 break; // Exit loop
             }
-            Request request1 = RequestRepository.getByID(String.valueOf(requestId));
+            Request request1 = RequestRepository.getByID(String.valueOf(studentId));
             int processChoice;
             if (request1 != null) {
                 System.out.println("Please select an option: \n" +
