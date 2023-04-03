@@ -159,7 +159,7 @@ public class Coordinator extends User{
                 System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
             }
     
-            // Process a request
+            // Process a request, ask for requestID
             System.out.println("Enter request ID to approve/reject or 0 to exit:");
             int requestId = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character

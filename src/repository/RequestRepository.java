@@ -61,6 +61,7 @@ public class RequestRepository {
         return matchingRequests;
     }
 
+    //Outgoing
     public static List<Request> getRequestsByFromId(String fromId){
         List<Request> matchingRequests = new ArrayList<>();
         for(Request request : requests){
@@ -71,6 +72,7 @@ public class RequestRepository {
         return matchingRequests;
     }
 
+    //Incoming
     public static List<Request> getRequestsBygetToId(String toId){
         List<Request> matchingRequests = new ArrayList<>();
         for(Request request : requests){
