@@ -55,18 +55,20 @@ public class Student extends User{
         return request;
     }
 
-    public List<String> viewRequestsHistory() {
+    public List<String> viewOutgoingRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
-
-        for (Request request : RequestRepository.getRequests()) {
+    
+        for (Request request : RequestRepository.getRequestsByFromId(this.getUserId())) {
             StringBuilder sb = new StringBuilder();
             sb.append("Request ID: ").append(request.getRequestId())
                     .append("\nType: ").append(request.getType())
+                    .append("\nProject ID: ").append(request.getProjectId())
                     .append("\nFrom ID: ").append(request.getFromId())
                     .append("\nTo ID: ").append(request.getToId())
+                    .append("\nReplacement supervisor: ").append(request.getReplacementSupId())
                     .append("\nStatus: ").append(request.getStatus());
-
-            if (!request.getRequestHistory().isEmpty()) {
+    
+          if (!request.getRequestHistory().isEmpty()) {
                 sb.append("\nHistory:");
                 for (RequestHistory history : request.getRequestHistory()) {
                     sb.append("\n- ").append(history.getStatus())
