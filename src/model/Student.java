@@ -3,6 +3,8 @@ package model;
 import repository.ProjectRepository;
 import repository.RequestRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Student extends User{
@@ -50,5 +52,30 @@ public class Student extends User{
         Request request = new Request(RequestType.deregister, projectID, studentID);
         RequestRepository.addRequest(request);
         return request;
+    }
+
+    public List<String> viewOutgoingRequestsHistory() {
+        List<String> requestHistory = new ArrayList<>();
+    
+        for (Request request : RequestRepository.getRequestsByFromId(this.getUserId())) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Request ID: ").append(request.getRequestId())
+                    .append("\nType: ").append(request.getType())
+                    .append("\nProject ID: ").append(request.getProjectId())
+                    .append("\nFrom ID: ").append(request.getFromId())
+                    .append("\nTo ID: ").append(request.getToId())
+                    .append("\nReplacement supervisor: ").append(request.getReplacementSupId())
+                    .append("\nStatus: ").append(request.getStatus());
+    
+            if (!request.getRequestHistory().isEmpty()) {
+                sb.append("\nHistory:");
+                for (RequestHistory history : request.getRequestHistory()) {
+                    sb.append("\n- ").append(history.getStatus())
+                            .append(" on ").append(history.getUpdatedDate());
+                }
+            }
+            requestHistory.add(sb.toString());
+        }
+        return requestHistory;
     }
 }
