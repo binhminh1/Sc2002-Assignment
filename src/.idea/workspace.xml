@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Supervisor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +63,7 @@
       <workItem from="1679896443245" duration="131000" />
       <workItem from="1679896616326" duration="336000" />
       <workItem from="1679896973270" duration="7681000" />
-      <workItem from="1680001226998" duration="23974000" />
+      <workItem from="1680001226998" duration="38628000" />
     </task>
     <servers />
   </component>

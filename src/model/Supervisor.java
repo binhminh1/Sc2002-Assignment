@@ -49,6 +49,21 @@ public class Supervisor extends User {
     }    
 
 
+    public void viewRequestHistory() {
+        List<Request> incomingRequests = RequestRepository.getRequestsBygetToId(this.getUserId());
+        List<Request> outgoingRequests = RequestRepository.getRequestsByFromId(this.getUserId());
+
+        System.out.println("Incoming Requests:");
+        for (Request request : incomingRequests) {
+            System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+        }
+
+        System.out.println("Outgoing Requests:");
+        for (Request request : outgoingRequests) {
+            System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+        }
+    }
+    
     //INCOMING request = change title
     public List<String> viewIncomingRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
@@ -101,60 +116,65 @@ public class Supervisor extends User {
         }
         return requestHistory;
     }
-    
 
-    public void changeTitle(String newTitle, String projectId) {
-        for (Project project : projects) {
-            if (Objects.equals(project.getProjectId(), projectId)) {
-                project.setProjectTitle(newTitle);
-            }
-        }
-    }
-
-    public void processChangeTitleRequest(Request request) {
-        List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
-
-        while (!pendingRequests.isEmpty()) {
-            // Print all pending requests
-            for (Request request1 : pendingRequests) {
-                if (request1.getType() == (RequestType.changeTitle) && request1.getToId().equals(super.getUserId())) {
-                    System.out.println(request1.getRequestId() + " " + request1.getType() + " " + request1.getStatus());
+    //Approve change title request
+        public void changeTitle (String newTitle, String projectId){
+            for (Project project : projects) {
+                if (Objects.equals(project.getProjectId(), projectId)) {
+                    project.setProjectTitle(newTitle);
                 }
             }
-            // Process a request
-            System.out.println("Enter request ID to approve/reject or 0 to exit:");
-            int requestId = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+        }
+        public void processChangeTitleRequest (){
+            List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
 
-            if (requestId == 0) {
-                break; // Exit loop
-            }
-            Request request1 = RequestRepository.getByID(String.valueOf(requestId));
-            int processChoice;
-            if (request1 != null) {
-                System.out.println("Please select an option: \n" +
-                        "1. Approve \n" +
-                        "2. Reject \n");
-                processChoice = scanner.nextInt();
-                scanner.nextLine();// Consume the newline character
-            } else {
-                System.out.println("Invalid request ID");
-                continue;
-            }
+            while (!pendingRequests.isEmpty()) {
+                // Print all pending requests
+                for (Request request1 : pendingRequests) {
+                    if (request1.getType() == (RequestType.changeTitle) && request1.getToId().equals(super.getUserId())) {
+                        System.out.println(request1.getRequestId() + " from: " + request1.getFromId() + request1.getType() + " " + request1.getStatus());
+                    }
+                }
+                // Process a request
+                System.out.println("Enter student ID to approve/reject or 0 to exit:");
+                int studentId = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
 
-            if (processChoice == 1) {
-                request1.changeStatus(RequestStatus.Approve);
-                System.out.println("Request approved");
+                if (studentId == 0) {
+                    break; // Exit loop
+                }
+                // request2 is the request that the supervisor wants to process
+                Request request2 = null;
+                for (Request request1 : pendingRequests) {
+                    if (Objects.equals(request1.getFromId(), studentId)) {
+                        request2 = request1;
+                    }
+                }
+                int processChoice;
+                if (request2 != null) {
+                    System.out.println("Please select an option: \n" +
+                            "1. Approve \n" +
+                            "2. Reject \n");
+                    processChoice = scanner.nextInt();
+                    scanner.nextLine();// Consume the newline character
+                } else {
+                    System.out.println("Invalid request ID");
+                    continue;
+                }
 
-                //change title
-                changeTitle(request1.getNewTitle(), request1.getProjectId());
+                if (processChoice == 1) {
+                    request2.changeStatus(RequestStatus.Approve);
+                    System.out.println("Request approved");
 
-            } else if (processChoice == 2) {
-                request1.changeStatus(RequestStatus.Reject);
-                System.out.println("Request rejected");
-            } else {
-                System.out.println("Invalid option");
+                    //change title
+                    changeTitle(request2.getNewTitle(), request2.getProjectId());
+
+                } else if (processChoice == 2) {
+                    request2.changeStatus(RequestStatus.Reject);
+                    System.out.println("Request rejected");
+                } else {
+                    System.out.println("Invalid option");
+                }
             }
         }
-    }
 }

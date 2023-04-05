@@ -23,57 +23,112 @@ public class Main {
         System.out.println("Welcome to FYPMS! Please wait a few seconds for initialization");
         ReadCSV.readFile();
         System.out.println("If you are a student, please enter 1 \n" +
-                "If you are a supervisor, please enter 2 \n" +
-                "If you are a coordinator, please enter 3 \n");
+                "If you are a Faculty, please enter 2 \n" +
+                "If you are a  FYP coordinator, please enter 3 \n");
         int choice = sc.nextInt();
+        //login as student
         switch (choice) {
             case 1:
+                String studentuserid;
                 while (true) {
                     System.out.println("Enter your user ID: ");
-                    userId = sc.nextLine();
-                    System.out.println("Enter your password: ");
-                    password = sc.nextLine();
+                    studentuserid = sc.nextLine();
+                    Student student = StudentRepository.getByID(studentuserid);
 
-                    Student student = StudentService.getByID(userId);
-                    //The static method login(String, String) from the type User should be accessed in a static way
-
-                    Student student = StudentRepository.getByID(userId);
-
-                    if (student.login(userId, password)) {
-                        break;
+                    if (student == null) {
+                        System.out.println("Invalid user ID or password. Please try again.");
+                        continue;
                     }
-                    System.out.println("Invalid user ID or password. Please try again.");
+                    student.login(studentuserid, student);
+                    break;
                 }
 
-                Student student = StudentService.getByID(userId);
-                System.out.println("Welcome " + userId + "!");
+                System.out.println("Welcome " + studentuserid + "!");
                 System.out.println("Please select an option: \n" +
                         "1. changePassword \n" +
                         "2. View available projects \n" +
                         "3. Select the project to send to the coordinator\n" +
-                        "4. Check all my requests \n" +
-                        "5. Change password \n" +
-                        "6. Logout \n");
+                        "4. View my project \n" +
+                        "5. View requests status and history \n" +
+                        "6. Request to change project title \n" +
+                        "7. Request to deregister FYP \n");
+
                 int studentChoice = sc.nextInt();
+                Student student = StudentRepository.getByID(studentuserid);
                 switch (studentChoice) {
                     case 1:
+                        System.out.println("Please enter your new password: ");
+                        String newPassword = sc.nextLine();
+                        student.changePassword(newPassword);
+                        System.out.println("Your password has been changed.");
+                        student.login(studentuserid, student);
+                        break;
+
+                    case 2:
+                        System.out.println("Available projects: ");
+                        for (Project project : ProjectRepository.getAvailableProject()) {
+                            System.out.println(project.getProjectId() + " " + project.getProjectTitle());
+                        }
+                        break;
+
+                    case 3:
                         if (student.getStatus() == StudentStatus.UNREGISTERED) {
                             System.out.println("Please select a project to register: ");
+
+                            //print all available projects
                             for (Project project : ProjectRepository.getAvailableProject()) {
                                 System.out.println(project.getProjectId() + " " + project.getProjectTitle());
                             }
+                            //student input the project id
                             String projectId = sc.nextLine();
                             Project project = ProjectRepository.getByID(projectId);
                             if (project != null) {
                                 student.sendSelectProjectRequest(projectId, student.getUserId());
-                                //
-
 
                                 System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
                             } else {
                                 System.out.println("Invalid project ID. Please try again.");
                             }
-                        } else if (student.getStatus() == StudentStatus.REGISTERED) {
+                        }
+                        break;
+
+                    case 4:
+                        if (student.getStatus() == StudentStatus.REGISTERED) {
+                            for (Project project : ProjectRepository.getAvailableProject()) {
+                                if (project.getStudentId().equals(student.getUserId())) {
+                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle());
+                                }
+                            }
+                        } else {
+                            System.out.println("You have not registered a project yet.");
+                        }
+                        break;
+
+                    case 5:
+                        System.out.println("Your requests: ");
+                        for (Request request : RequestRepository.getRequests()) {
+
+                            System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+
+
+                            System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+                        }
+                        break;
+
+                    case 6:
+                        if (student.getStatus() == StudentStatus.REGISTERED) {
+                            System.out.println("Please enter the new title of your project: ");
+                            String newTitle = sc.nextLine();
+                            student.sendChangeTitleRequest(student.getProjectId(), student.getSuperid(), newTitle);
+
+                            System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
+                        } else {
+                            System.out.println("You have not registered a project yet.");
+                        }
+                        break;
+
+                    case 7:
+                        if (student.getStatus() == StudentStatus.REGISTERED) {
                             System.out.println("Please select a project to deregister: ");
                             for (Project project : ProjectRepository.getProjects()) {
                                 System.out.println(project.getProjectId() + " " + project.getProjectTitle());
@@ -90,100 +145,70 @@ public class Main {
                             System.out.println("You are unable to register or deregister a project at this moment.");
                         }
                         break;
-                    case 2:
-                        if (student.getStatus() == StudentStatus.REGISTERED) {
-                            for (Project project : ProjectRepository.getAvailableProject()) {
-                                if (project.getStudentId().equals(student.getUserId())) {
-                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle());
-                                }
-                            }
-                        } else {
-                            System.out.println("You have not registered a project yet.");
-                        }
-                        break;
-                    case 3:
-                        if (student.getStatus() == StudentStatus.REGISTERED) {
-                            System.out.println("Please enter the new title of your project: ");
-                            String newTitle = sc.nextLine();
-                            student.sendChangeTitleRequest(student.getProjectId(), student.getSuperid() , newTitle);
-                            //
 
-
-                            System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
-                        } else {
-                            System.out.println("You have not registered a project yet.");
-                        }
-                        break;
-                    case 4:
-                        System.out.println("Your requests: ");
-                        for (Request request : RequestRepository.getRequests()) {
-<<<<<<< HEAD
-                            System.out.println(request.getRequestId() + " " + request.getRequestType() + " " + request.getStatus()); 
-                            
-=======
-                            System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-                        }
-                        break;
-                    case 5:
-                        System.out.println("Please enter your new password: ");
-                        String newPassword = sc.nextLine();
-                        student.changePassword(newPassword);
-                        System.out.println("Your password has been changed.");
-                        break;
-                    case 6:
-                        System.out.println("You have logged out.");
-                        break;
                 }
             case 2:
+                String supervisoruserid;
                 while (true) {
                     System.out.println("Enter your user ID: ");
-                    userId = sc.nextLine();
-                    System.out.println("Enter your password: ");
-                    password = sc.nextLine();
-                    Supervisor supervisor = SupervisorRepository.getByID(userId);
-                    if (supervisor.login(userId, password)) {
-                        break;
+                    supervisoruserid = sc.nextLine();
+                    Supervisor supervisor = SupervisorRepository.getByID(supervisoruserid);
+
+                    if (supervisor == null) {
+                        System.out.println("Invalid user ID or password. Please try again.");
+                        continue;
                     }
-                    System.out.println("Invalid user ID or password. Please try again.");
+                    supervisor.login(supervisoruserid, supervisor);
+                    break;
                 }
-                Supervisor supervisor = SupervisorRepository.getByID(userId);
-                System.out.println("Welcome " + userId + "!");
+
+                System.out.println("Welcome " + supervisoruserid + "!");
                 System.out.println("Please select an option: \n" +
-                        "1. View my projects \n" +
-                        "2. View all my requests \n" +
-                        "3. Process pending requests from students \n" +
-                        "4. Transfer my project \n" +
-                        "5. Create an project \n" +
-                        "6. Change names of my project \n" +
-                        "7. Change password \n" +
-                        "8. Logout \n");
-                int supervisorChoice = sc.nextInt();
-                switch(supervisorChoice) {
-                    case 1:
-                        System.out.println("Your projects: ");
-                        for (Project project : ProjectRepository.getProjects()) {
-                            if (project.getSupervisorId().equals(SupervisorRepository.getByID(userId))) {
-                                project.displayProject();
-                            }
-                        }
-                        break;
-                    case 2:
-                        System.out.println("Your requests: ");
-                        for (Request request : RequestRepository.getRequests()) {
-                            if (Objects.equals(userId, request.getToId())) {
-                                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+                        "1. changePassword \n" +
+                        "2. Create/update/View projects \n" +//need another switch class
+                        "3. Approve request\n" +
+                        "4. Reject request\n" +
+                        "5. View request history\n");
+
+                        int supervisorChoice = sc.nextInt();
+                        switch(supervisorChoice) {
+                            case 1:
+                                System.out.println("Please enter your new password: ");
+                                String newPassword = sc.nextLine();
+                                student.changePassword(newPassword);
+                                System.out.println("Your password has been changed.");
+                                student.login(studentuserid, student);
+                                break;
+
+                            System.out.println("Your projects: ");
+                            for (Project project : ProjectRepository.getProjects()) {
+                                if (project.getSupervisorId().equals(SupervisorRepository.getByID(userId))) {
+                                    project.displayProject();
+                                }
                             }
                             break;
+                            case 2:
+                                System.out.println("Your requests: ");
+                                for (Request request : RequestRepository.getRequests()) {
+                                    if (Objects.equals(userId, request.getToId())) {
+                                        System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+                                    }
+                                    break;
+                                }
+                            case 3:
+                                Supervisor supervisor = SupervisorRepository.getByID(userId);
+                                supervisor.processChangeTitleRequest();
+                            case 4:
+
+                            case 5:
+                                System.out.println("Your requests: ");
+                                for (Request request : RequestRepository.getRequests()) {
+                                    if (Objects.equals(userId, request.getToId())) {
+                                        System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+                                    }
+                                    break;
+                                }
                         }
-                    case 3:
-                        System.out.println("Pending requests: ");
-                        for (Request request : RequestRepository.getRequests()) {
-                            if (request.getStatus() == RequestStatus.Pending) {
-                                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-                            }
-                        }
-                        System.out.println("Please select a request to process: ");
-                        String requestId = sc.nextLine();
                         /*
                         Request request = RequestRepository.getByID(requestId);
                         if (request != null) {
@@ -203,12 +228,12 @@ public class Main {
                             }
                         } else {
                             System.out.println("Invalid request ID. Please try again.");
->>>>>>> 603aee4ee5b10da9934594f040bdffc36f3d69e8
+
                         }
 
                          */
-                        break;
-                    case 4:
+         //               break;
+                /*    case 4:
                         System.out.println("Please enter the new supervisor's user ID: ");
                         String newSupervisorId = sc.nextLine();
                         System.out.println("Please enter the project ID: ");
@@ -250,3 +275,4 @@ public class Main {
 
         }
     }
+    */

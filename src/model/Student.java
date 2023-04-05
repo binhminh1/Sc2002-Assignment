@@ -21,6 +21,7 @@ public class Student extends User{
         this.status = StudentStatus.UNREGISTERED;
     }
 
+
     public void changeStatus(StudentStatus status){
         this.status = status;
     }
@@ -67,7 +68,7 @@ public class Student extends User{
                     .append("\nReplacement supervisor: ").append(request.getReplacementSupId())
                     .append("\nStatus: ").append(request.getStatus());
     
-            if (!request.getRequestHistory().isEmpty()) {
+          if (!request.getRequestHistory().isEmpty()) {
                 sb.append("\nHistory:");
                 for (RequestHistory history : request.getRequestHistory()) {
                     sb.append("\n- ").append(history.getStatus())

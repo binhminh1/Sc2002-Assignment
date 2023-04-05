@@ -32,12 +32,8 @@ public class ReadCSV {
     }
     public static void readFile() {
         //csv file to read
-        String facultyFile = "C:\\Users\\Msi\\Documents\\GitHub\\Sc2002-Assignment\\src\\faculty_list.csv";
-        String projectFile = "C:\\Users\\Msi\\Documents\\GitHub\\Sc2002-Assignment\\src\\rollover project.csv";
-        String studentFile = "C:\\Users\\Msi\\Documents\\GitHub\\Sc2002-Assignment\\src\\student list.csv";
-
         System.out.println("Loading Supervisor List");
-        List<List<String>> facultyList = ReadCSV.read(facultyFile);
+        List<List<String>> facultyList = ReadCSV.read(PATH.facultyFile);
         for(List<String> supervisor: facultyList){
             int iend = supervisor.get(1).indexOf("@");
             String subString = null;
@@ -48,7 +44,7 @@ public class ReadCSV {
             SupervisorRepository.addSupervisor(supervisor1);
         }
         System.out.println("Loading Project List");
-        List<List<String>> projectList = ReadCSV.read(projectFile);
+        List<List<String>> projectList = ReadCSV.read(PATH.projectFile);
         int o = 0;
         for(List<String> project: projectList){
             Project project1 = new Project(String.valueOf(o),project.get(0), project.get(1));
@@ -57,7 +53,7 @@ public class ReadCSV {
             o++;
         }
         System.out.println("Loading Student List");
-        List<List<String>> studentList = ReadCSV.read(studentFile);
+        List<List<String>> studentList = ReadCSV.read(PATH.studentFile);
 
         for(List<String> student: studentList){
             int iend = student.get(1).indexOf("@");
