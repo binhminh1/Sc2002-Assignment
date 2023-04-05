@@ -116,16 +116,8 @@ public class Supervisor extends User {
         }
         return requestHistory;
     }
-    
 
-    public void changeTitle(String newTitle, String projectId) {
-        for (Project project : projects) {
-            if (Objects.equals(project.getProjectId(), projectId)) {
-                project.setProjectTitle(newTitle);
-            }
-        }
-    }
-
+    //Approve change title request
         public void changeTitle (String newTitle, String projectId){
             for (Project project : projects) {
                 if (Objects.equals(project.getProjectId(), projectId)) {
@@ -133,15 +125,14 @@ public class Supervisor extends User {
                 }
             }
         }
-
-        public void processChangeTitleRequest (Request request){
+        public void processChangeTitleRequest (){
             List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
 
             while (!pendingRequests.isEmpty()) {
                 // Print all pending requests
                 for (Request request1 : pendingRequests) {
                     if (request1.getType() == (RequestType.changeTitle) && request1.getToId().equals(super.getUserId())) {
-                        System.out.println(request1.getRequestId() + " " + request1.getType() + " " + request1.getStatus());
+                        System.out.println(request1.getRequestId() + " from: " + request1.getFromId() + request1.getType() + " " + request1.getStatus());
                     }
                 }
                 // Process a request
