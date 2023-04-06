@@ -64,9 +64,6 @@ public class ReadCSV {
             Student student1 = new Student(subString,student.get(0), student.get(1));
             StudentRepository.addStudent(student1);
         }
-        System.err.println("list = ");
-        System.err.println("facultyList");
-        System.err.println("projectList");
-        System.err.println("studentList");
+
     }
 }

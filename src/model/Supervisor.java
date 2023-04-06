@@ -13,7 +13,6 @@ public class Supervisor extends User {
 
     public Supervisor(String userId, String name, String email) {
         super(userId, name, email);
-
     }
     Scanner scanner = new Scanner(System.in);
 
@@ -25,10 +24,20 @@ public class Supervisor extends User {
         projects.remove(project);
     }
 
-    public List<Project> getProjects() {
-        return projects;
+    public Project getProjectsById(String projectId) {
+        for(Project project : projects){
+            if(Objects.equals(project.getProjectId(),projectId)){
+                return project;
+            }
+        }
+        return null;
     }
 
+    public void viewProjects(){
+        for(Project project : this.projects){
+            project.displayProject();
+        }
+    }
 
     public boolean sendTransferStudentRequest(String supervisorId,String ProjectId){
         Project project = ProjectRepository.getByID(ProjectId);
@@ -112,6 +121,7 @@ public class Supervisor extends User {
                             .append(" on ").append(history.getUpdatedDate());
                 }
             }
+
             requestHistory.add(sb.toString());
         }
         return requestHistory;

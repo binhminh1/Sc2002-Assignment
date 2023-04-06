@@ -6,6 +6,8 @@ import repository.SupervisorRepository;
 import service.ProjectService;
 import service.StudentService;
 import service.SupervisorService;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Project {
     private String projectId;
@@ -15,8 +17,10 @@ public class Project {
     private ProjectStatus status; 
 
 
-    public Project(String projectID, String projectTitle, String supervisorId) {
-        this.projectId = projectID;
+    public Project(String projectTitle, String supervisorId) {
+        Date day = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.projectId = df.format(day);
         this.projectTitle = projectTitle;
         this.supervisorId =  supervisorId;
         this.studentId = "NULL";
