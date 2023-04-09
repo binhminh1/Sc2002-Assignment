@@ -15,6 +15,7 @@ import static model.StudentStatus.UNREGISTERED;
 
 public class Main {
 
+  private   static final String CoordinatorID = "ASFLI";
 
     public static void main(String[] args) throws IOException {
 
@@ -61,11 +62,14 @@ public class Main {
                     Student student = StudentRepository.getByID(studentuserid);
                     switch (studentChoice) {
                         case 1:
-                            System.out.println("Please enter your new password: ");
-                            String newPassword = sc.next();
-                            student.changePassword(newPassword);
-                            System.out.println("Your password has been changed.");
-                            student.login(studentuserid, student);
+                            Boolean studentResult = false;
+                                System.out.println("Please enter your new password: ");
+                                String newPassword = sc.next();
+                                student.changePassword(newPassword);
+                                System.out.println("Your password has been changed.");
+                            while(!studentResult) {
+                                studentResult = student.login(studentuserid, student);
+                            }
                             break;
 
                         case 2:
@@ -159,6 +163,7 @@ public class Main {
                 while (!superResult) {
                     System.out.println("Enter your user ID: ");
                     supervisoruserid = sc.next();
+
                     Supervisor supervisor = SupervisorRepository.getByID(supervisoruserid);
 
                     if (supervisor == null) {
@@ -186,12 +191,9 @@ public class Main {
                             String newPassword = sc.next();
                             supervisor.changePassword(newPassword);
                             System.out.println("Your password has been changed.");
-                            supervisor.login(supervisoruserid, supervisor);
-                            System.out.println("Your projects: ");
-                            for (Project project : ProjectRepository.getProjects()) {
-                                if (project.getSupervisorId().equals(SupervisorRepository.getByID(supervisoruserid))) {
-                                    project.displayProject();
-                                }
+                            boolean supervisorResult = false;
+                            while(!supervisorResult) {
+                                supervisorResult = supervisor.login(supervisoruserid, supervisor);
                             }
                             break;
                         case 2:
@@ -275,6 +277,7 @@ public class Main {
                     }
                 }
 
+
             case 3:
                 boolean coordinatorResult = false;
                 String coorId = null;
@@ -282,12 +285,13 @@ public class Main {
                 while (!coordinatorResult) {
                     System.out.println("Enter your user ID: ");
                     coorId = sc.next();
-                    if(coorId == "ASFLI"){
+                    if(coorId != "ASFLI"){
                         continue;
                     }
                     Coordinator coordinator = new Coordinator("ASFLI", "Li Fang", "ASFLI@NTU.EDU.SG");
 
                     coordinatorResult = coordinator.login(coorId,coordinator);
+
                 }
 
 
@@ -325,5 +329,4 @@ public class Main {
                 }
         }
     }
-}
 

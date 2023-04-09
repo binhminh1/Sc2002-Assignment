@@ -48,7 +48,7 @@ public class User {
             System.out.println("Enter your password: ");
             String password = sc.next();
 
-            if (Objects.equals(this.password, student.getPassword())) {
+            if (Objects.equals(password, student.getPassword())) {
                 System.out.println("Login successful.");
                 return true;
             } else {
@@ -63,7 +63,7 @@ public class User {
             System.out.println("Enter your password: ");
             String password = sc.next();
 
-            if (Objects.equals(this.password, supervisor.getPassword())) {
+            if (Objects.equals(password, supervisor.getPassword())) {
                 System.out.println("Login successful.");
                 return true;
             } else {
@@ -75,9 +75,11 @@ public class User {
 
     public boolean login(String userId, Coordinator coordinator) {
 
+
             System.out.println("Enter your password: ");
             String password = sc.next();
-            if (Objects.equals(this.password, coordinator.getPassword())) {
+            if (Objects.equals(password, coordinator.getPassword())) {
+
                 System.out.println("Login successful.");
                 return true;
             } else {
