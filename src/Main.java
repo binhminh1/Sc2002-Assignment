@@ -277,25 +277,52 @@ public class Main {
 
             case 3:
                 boolean coordinatorResult = false;
+                String coorId = null;
+
                 while (!coordinatorResult) {
                     System.out.println("Enter your user ID: ");
-                    userId = sc.next();
-                    System.out.println("Enter your password: ");
-                    password = sc.next();
-                    String CoordinatorID = "ASFLI";
-                    Coordinator coordinator = new Coordinator(CoordinatorID, "Li Fang", "ASFLI@NTU.EDU.SG");
-
-                    if (coordinator.login(userId, coordinator)) {
-                        coordinatorResult = true;
-                    } else {
-                        System.out.println("Invalid user ID or password. Please try again.");
-                        coordinatorResult = false;
+                    coorId = sc.next();
+                    if(coorId == "ASFLI"){
+                        continue;
                     }
+                    Coordinator coordinator = new Coordinator("ASFLI", "Li Fang", "ASFLI@NTU.EDU.SG");
 
-                    
+                    coordinatorResult = coordinator.login(coorId,coordinator);
                 }
 
 
+
+                Coordinator coordinator = new Coordinator("ASFLI", "Li Fang", "ASFLI@NTU.EDU.SG");
+                while(true) {
+                    System.out.println("Welcome " + coordinator.getName() + "!");
+                    System.out.println("Please select an option: \n" +
+                            "1. changePassword \n" +
+                            "2. View Projects By filter \n" +//need another switch class
+                            "3. View Request \n" +
+                            "4. View request history\n" +
+                            "press any key to back\n");
+                    int coorChoice = sc.nextInt();
+                    switch (coorChoice) {
+                        case 1:
+                            System.out.println("Please enter your new password: ");
+                            String newPassword = sc.next();
+                            coordinator.changePassword(newPassword);
+                            System.out.println("Your password has been changed.");
+                            coordinator.login(coorId, coordinator);
+                            break;
+                        case 2:
+                            coordinator.displayReportByFilters();
+                            break;
+                        case 3:
+                            coordinator.processPendingRequests();
+                            break;
+                        case 4:
+                            coordinator.viewRequestsHistory();
+                            break;
+                        default:
+                            break;
+                    }
+                }
         }
     }
 }

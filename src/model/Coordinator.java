@@ -25,6 +25,11 @@ public class Coordinator extends User{
         this.password = "password";
     }
 
+    public void viewProjects(){
+        for(Project project : ProjectRepository.getProjects()){
+            project.displayProject();
+        }
+    }
     public void changeProjectSupervisor(String projectId, String newSupervisorId) {
         Project projectToUpdate = ProjectRepository.getByID(projectId);
         if(SupervisorRepository.getByID(newSupervisorId).supervisorCapReached(newSupervisorId))
@@ -101,7 +106,7 @@ public class Coordinator extends User{
     
     private static Scanner scanner = new Scanner(System.in);
 
-    protected void displayReportByFilters() {
+    public void displayReportByFilters() {
         // Ask coordinator for filter options
         System.out.println("Please select filter options:");
         System.out.println("1. Project status");
