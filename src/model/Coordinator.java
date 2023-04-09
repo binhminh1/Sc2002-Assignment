@@ -19,7 +19,7 @@ public class Coordinator extends User{
 
     public Coordinator(String userId, String name, String email) {
         super(userId, name, email);
-        this.userId = userId;
+        this.userId = "ASFLI";
         this.name = name;
         this.email = email;
         this.password = "password";
@@ -65,7 +65,9 @@ public class Coordinator extends User{
         }
     
         // Update the project's student ID and status fields
+        Student student=  StudentRepository.getByID(studentId);
         project.setStudentId(studentId);
+        student.changeProjectId(projectId);
         project.setStatus(ProjectStatus.ALLOCATED);
         System.out.println("Project allocated to student.");
     }
@@ -166,10 +168,10 @@ public class Coordinator extends User{
     
             // Process a request, ask for requestID
             System.out.println("Enter request ID to approve/reject or 0 to exit:");
-            int requestId = scanner.nextInt();
-            scanner.next(); // Consume the newline character
+            String requestId = scanner.next();
+//            scanner.next(); // Consume the newline character
     
-            if (requestId == 0) {
+            if (requestId .equals("0") ) {
                 break; // Exit loop
             }
     
@@ -179,7 +181,7 @@ public class Coordinator extends User{
                         "1. Approve \n" +
                         "2. Reject \n");
                 int processChoice = scanner.nextInt();
-                scanner.next(); // Consume the newline character
+//                scanner.next(); // Consume the newline character
     
                 switch (request.getType()) {
                     case transferStudent:
@@ -195,6 +197,7 @@ public class Coordinator extends User{
                     case assignProject:
                         if (processChoice == 1) {
                             request.changeStatus(RequestStatus.Approve);
+                            StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.REGISTERED);
                             allocateProject(request.getProjectId(), request.getFromId());
                             System.out.println("The request has been approved.");
                         } else {
@@ -205,6 +208,7 @@ public class Coordinator extends User{
                     case deregister:
                         if (processChoice == 1) {
                             request.changeStatus(RequestStatus.Approve);
+                            StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.DEREGISTERED);
                             deregisterStudentFromFYP(request.getProjectId());
                             System.out.println("The request has been approved.");
                         } else {

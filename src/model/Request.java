@@ -24,8 +24,8 @@ public class Request {
             this.newTitle = newTitle;
             this.status = RequestStatus.Pending;
             Date day = new Date();
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            this.requestId = df.format(day);
+//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            this.requestId = String.valueOf(new Date().getTime()) ;
             this.requestHistory = new ArrayList<>();
         }
     }
@@ -39,8 +39,8 @@ public class Request {
             this.replacementSupId = newSuperId;
             this.status = RequestStatus.Pending;
             Date day = new Date();
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            this.requestId = df.format(day);
+//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            this.requestId = String.valueOf(new Date().getTime()) ;
             this.requestHistory = new ArrayList<>();
         }
     }
@@ -51,8 +51,8 @@ public class Request {
         this.fromId = fromId;
         this.status = RequestStatus.Pending;
         Date day = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.requestId = df.format(day);
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.requestId = String.valueOf(new Date().getTime()) ;
         this.requestHistory = new ArrayList<>();
     }
 
@@ -61,8 +61,8 @@ public class Request {
         this.projectId = projectId;
         this.status = RequestStatus.Pending;
         Date day = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.requestId = df.format(day);
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.requestId = String.valueOf(new Date().getTime()) ;
         this.requestHistory = new ArrayList<>();
     }
 

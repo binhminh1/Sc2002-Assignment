@@ -2,6 +2,7 @@ package model;
 
 import repository.ProjectRepository;
 import repository.RequestRepository;
+import repository.StudentRepository;
 import repository.SupervisorRepository;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Supervisor extends User {
     public Supervisor(String userId, String name, String email) {
         super(userId, name, email);
     }
+
     Scanner scanner = new Scanner(System.in);
 
     public void addProjects(Project project) {
@@ -26,27 +28,31 @@ public class Supervisor extends User {
     }
 
     public Project getProjectsById(String projectId) {
-        for(Project project : projects){
-            if(Objects.equals(project.getProjectId(),projectId)){
+        for (Project project : projects) {
+            if (Objects.equals(project.getProjectId(), projectId)) {
                 return project;
             }
         }
         return null;
     }
 
-    public void viewProjects(){
-        for(Project project : this.projects){
+    public void viewProjects() {
+        for (Project project : this.projects) {
             project.displayProject();
         }
     }
 
-    public boolean sendTransferStudentRequest(String supervisorId,String ProjectId){
+    public boolean sendTransferStudentRequest(String supervisorId, String ProjectId) {
         Project project = ProjectRepository.getByID(ProjectId);
-        if( project == null  ){return false;}
+        if (project == null) {
+            return false;
+        }
         //projecttitle对应了supervisorName
-        Supervisor supervisor= SupervisorRepository.getByName(project.getProjectTitle());
-        if( supervisor==null ){return false;}
-        Request request = new Request(RequestType.transferStudent , ProjectId , super.getUserId() , supervisorId);
+        Supervisor supervisor = SupervisorRepository.getByName(project.getProjectTitle());
+        if (supervisor == null) {
+            return false;
+        }
+        Request request = new Request(RequestType.transferStudent, ProjectId, super.getUserId(), supervisorId);
         RequestRepository.addRequest(request);
         return true;
     }
@@ -59,7 +65,7 @@ public class Supervisor extends User {
             }
         }
         return numOfProject >= 2;
-    }    
+    }
 
 
     public void viewRequestHistory() {
@@ -76,11 +82,11 @@ public class Supervisor extends User {
             System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
         }
     }
-    
+
     //INCOMING request = change title
     public List<String> viewIncomingRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
-    
+
         for (Request request : RequestRepository.getRequestsBygetToId(this.getUserId())) {
             StringBuilder sb = new StringBuilder();
             sb.append("Request ID: ").append(request.getRequestId())
@@ -90,7 +96,7 @@ public class Supervisor extends User {
                     .append("\nTo ID: ").append(request.getToId())
                     .append("\nNew title: ").append(request.getNewTitle())
                     .append("\nStatus: ").append(request.getStatus());
-    
+
             if (!request.getRequestHistory().isEmpty()) {
                 sb.append("\nHistory:");
                 for (RequestHistory history : request.getRequestHistory()) {
@@ -107,7 +113,7 @@ public class Supervisor extends User {
     //OUTGOING request = transfer student
     public List<String> viewOutgoingRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
-    
+
         for (Request request : RequestRepository.getRequestsByFromId(this.getUserId())) {
             StringBuilder sb = new StringBuilder();
             sb.append("Request ID: ").append(request.getRequestId())
@@ -117,7 +123,7 @@ public class Supervisor extends User {
                     .append("\nTo ID: ").append(request.getToId())
                     .append("\nReplacement supervisor: ").append(request.getReplacementSupId())
                     .append("\nStatus: ").append(request.getStatus());
-    
+
             if (!request.getRequestHistory().isEmpty()) {
                 sb.append("\nHistory:");
                 for (RequestHistory history : request.getRequestHistory()) {
@@ -132,32 +138,44 @@ public class Supervisor extends User {
     }
 
     //Approve change title request
-        public void changeTitle (String newTitle, String projectId){
-            for (Project project : projects) {
-                if (Objects.equals(project.getProjectId(), projectId)) {
-                    project.setProjectTitle(newTitle);
+    public void changeTitle(String newTitle, String projectId) {
+        Project project=   ProjectRepository.getByID(projectId);
+        project.setSupervisorId(newTitle);
+    }
+
+    public void processChangeTitleRequest() {
+        List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
+
+        if (!pendingRequests.isEmpty()) {
+            // Print all pending requests
+            System.out.println("Enter student ID to approve/reject or 0 to exit:");
+            String studentId = scanner.next();
+            if (studentId.equals("0")) {
+                return; // Exit loop
+            }
+            Request req = null;
+            for (Request request1 : pendingRequests) {
+                if (request1.getType() == (RequestType.changeTitle) && request1.getFromId().equals(studentId)) {
+                    System.out.println(request1.getRequestId() + " from: " + request1.getFromId() + request1.getType() + " " + request1.getStatus());
+                    req=request1;
                 }
             }
-        }
-        public void processChangeTitleRequest (){
-            List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
+            if (req== null) {
+                System.out.println("Invalid request ID");
+                return;
+            }
+            // Process a request
+            req.changeStatus(RequestStatus.Approve);
+            System.out.println("Request approved");
+            Student student= StudentRepository.getByID(studentId);
+            //change title
+            changeTitle(req.getNewTitle(), student.getProjectId());
 
-            while (!pendingRequests.isEmpty()) {
-                // Print all pending requests
-                for (Request request1 : pendingRequests) {
-                    if (request1.getType() == (RequestType.changeTitle) && request1.getToId().equals(super.getUserId())) {
-                        System.out.println(request1.getRequestId() + " from: " + request1.getFromId() + request1.getType() + " " + request1.getStatus());
-                    }
-                }
-                // Process a request
-                System.out.println("Enter student ID to approve/reject or 0 to exit:");
-                int studentId = scanner.nextInt();
-                scanner.next(); // Consume the newline character
 
-                if (studentId == 0) {
-                    break; // Exit loop
-                }
+                /*
+
                 // request2 is the request that the supervisor wants to process
+
                 Request request2 = null;
                 for (Request request1 : pendingRequests) {
                     if (Objects.equals(request1.getFromId(), studentId)) {
@@ -189,6 +207,7 @@ public class Supervisor extends User {
                 } else {
                     System.out.println("Invalid option");
                 }
-            }
+            }*/
         }
+    }
 }
