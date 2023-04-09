@@ -77,12 +77,29 @@
       <workItem from="1679896443245" duration="131000" />
       <workItem from="1679896616326" duration="336000" />
       <workItem from="1679896973270" duration="7681000" />
-      <workItem from="1680001226998" duration="56376000" />
+      <workItem from="1680001226998" duration="57962000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -74,8 +74,7 @@ public class User {
     }
 
     public boolean login(String userId, Coordinator coordinator) {
-            System.out.println("Enter your password: ");
-            String password = sc.next();
+
 
             if (Objects.equals(this.password, coordinator.getPassword())) {
                 System.out.println("Login successful.");

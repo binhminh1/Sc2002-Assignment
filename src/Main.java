@@ -174,7 +174,7 @@ public class Main {
                     System.out.println("Please select an option: \n" +
                             "1. changePassword \n" +
                             "2. Create/update/View projects \n" +//need another switch class
-                            "3. ViewStudentPendingRequest \n" +
+                            "3. View Student Pending Request \n" +
                             "4. View request history\n" +
                             "5. Request to transfer student \n" +
                             "6. back\n");
@@ -255,14 +255,14 @@ public class Main {
                             System.out.println("Please enter the supervisor ID: ");
                             String supervisorId = sc.next();
 
-                          String projectId = id;
-                            Supervisor trasferSuper= SupervisorRepository.getByID(supervisorId);
-                            if (trasferSuper==null) {
+                            String projectId = id;
+                            Supervisor trasferSuper = SupervisorRepository.getByID(supervisorId);
+                            if (trasferSuper == null) {
                                 System.out.println("Invalid supervisor ID. Please try again.");
                                 break;
                             }
-                           boolean re= trasferSuper.sendTransferStudentRequest( supervisorId, projectId);
-                            if(!re){
+                            boolean re = trasferSuper.sendTransferStudentRequest(supervisorId, projectId);
+                            if (!re) {
                                 System.out.println("Invalid project ID. Please try again.");
                                 break;
                             }
@@ -276,22 +276,27 @@ public class Main {
                 }
 
             case 3:
-                while (true) {
-                System.out.println("Enter your user ID: ");
-                userId = sc.next();
-                System.out.println("Enter your password: ");
-                password = sc.next();
-                String CoordinatorID = "ASFLI";
-                Coordinator coordinator = new Coordinator(CoordinatorID,"Li Fang", "ASFLI@NTU.EDU.SG");
+                boolean coordinatorResult = false;
+                while (!coordinatorResult) {
+                    System.out.println("Enter your user ID: ");
+                    userId = sc.next();
+                    System.out.println("Enter your password: ");
+                    password = sc.next();
+                    String CoordinatorID = "ASFLI";
+                    Coordinator coordinator = new Coordinator(CoordinatorID, "Li Fang", "ASFLI@NTU.EDU.SG");
 
-                if (coordinator.login(userId, coordinator)){
-                    break;
+                    if (coordinator.login(userId, coordinator)) {
+                        coordinatorResult = true;
+                    } else {
+                        System.out.println("Invalid user ID or password. Please try again.");
+                        coordinatorResult = false;
+                    }
+
+                    
                 }
-                }
-                System.out.println("Invalid user ID or password. Please try again.");
-            }
 
 
-                }
         }
+    }
+}
 
