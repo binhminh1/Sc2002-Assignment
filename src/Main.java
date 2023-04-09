@@ -159,9 +159,9 @@ public class Main {
                 while (!superResult) {
                     System.out.println("Enter your user ID: ");
                     supervisoruserid = sc.next();
-                    Supervisor supervisor = SupervisorRepository.getByID(supervisoruserid);
+                    Student student = StudentRepository.getByID(supervisoruserid);
 
-                    if (supervisor == null) {
+                    if (student == null) {
                         System.out.println("Invalid user ID or password. Please try again.");
                         continue;
                     }
@@ -274,7 +274,7 @@ public class Main {
 
                     }
                 }
-                /*
+
             case 3:
                 while (true) {
                 System.out.println("Enter your user ID: ");
@@ -292,9 +292,10 @@ public class Main {
             }
 
 
+                }
+        }
+
+
         }
     }
-    */
-        }
-    }
-}
+
