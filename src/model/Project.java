@@ -13,17 +13,19 @@ public class Project {
     private String projectId;
     private String supervisorId;
     private String projectTitle;
+
     private String studentId;
     private ProjectStatus status; 
 
 
-    public Project(String projectTitle, String supervisorId) {
+    public Project(String o,String projectTitle, String supervisorId) {
         Date day = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.projectId = df.format(day);
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        this.projectId = df.format(day);
+        this.projectId=o;
         this.projectTitle = projectTitle;
         this.supervisorId =  supervisorId;
-        this.studentId = "NULL";
+//        this.studentId = o;
         this.status = ProjectStatus.AVAILABLE;
     }
     public void displaySupervisorInformation() {

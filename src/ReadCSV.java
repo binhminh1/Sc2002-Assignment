@@ -45,7 +45,7 @@ public class ReadCSV {
         }
         System.out.println("Loading Project List");
         List<List<String>> projectList = ReadCSV.read(PATH.projectFile);
-        int o = 0;
+        int o = 1;
         for(List<String> project: projectList){
             Project project1 = new Project(String.valueOf(o),project.get(0), project.get(1));
             ProjectRepository.addProject(project1);

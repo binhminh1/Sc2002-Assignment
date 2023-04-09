@@ -7,8 +7,13 @@
     <list default="true" id="9de086b2-4bc4-4ff6-b3d1-ab694aa7417c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReadCSV.java" beforeDir="false" afterPath="$PROJECT_DIR$/ReadCSV.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Coordinator.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Coordinator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Project.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Supervisor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/StudentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rollover project.csv" beforeDir="false" afterPath="$PROJECT_DIR$/rollover project.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +49,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "project.propCompiler",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -51,6 +57,20 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="model" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Assignment" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -63,11 +83,15 @@
       <workItem from="1679896443245" duration="131000" />
       <workItem from="1679896616326" duration="336000" />
       <workItem from="1679896973270" duration="7681000" />
-      <workItem from="1680001226998" duration="38628000" />
+      <workItem from="1680001226998" duration="50962000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

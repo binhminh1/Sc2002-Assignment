@@ -108,7 +108,7 @@ public class Coordinator extends User{
         System.out.println("2. Supervisor ID");
         System.out.println("3. Student ID");
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.next(); // Consume the newline character
 
         // Get selected filter values
         ProjectStatus statusFilter = null;
@@ -117,15 +117,15 @@ public class Coordinator extends User{
         switch (choice) {
             case 1:
                 System.out.println("Enter project status filter (UNAVAILABLE, AVAILABLE, RESERVED, or ALLOCATED):");
-                statusFilter = ProjectStatus.valueOf(scanner.nextLine().toUpperCase());
+                statusFilter = ProjectStatus.valueOf(scanner.next().toUpperCase());
                 break;
             case 2:
                 System.out.println("Enter supervisor ID filter:");
-                supervisorIdFilter = scanner.nextLine();
+                supervisorIdFilter = scanner.next();
                 break;
             case 3:
                 System.out.println("Enter student ID filter:");
-                studentIdFilter = scanner.nextLine();
+                studentIdFilter = scanner.next();
                 break;
             default:
                 System.out.println("Invalid choice");
@@ -162,7 +162,7 @@ public class Coordinator extends User{
             // Process a request, ask for requestID
             System.out.println("Enter request ID to approve/reject or 0 to exit:");
             int requestId = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.next(); // Consume the newline character
     
             if (requestId == 0) {
                 break; // Exit loop
@@ -174,7 +174,7 @@ public class Coordinator extends User{
                         "1. Approve \n" +
                         "2. Reject \n");
                 int processChoice = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
+                scanner.next(); // Consume the newline character
     
                 switch (request.getType()) {
                     case transferStudent:

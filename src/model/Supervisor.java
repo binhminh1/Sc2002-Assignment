@@ -148,7 +148,7 @@ public class Supervisor extends User {
                 // Process a request
                 System.out.println("Enter student ID to approve/reject or 0 to exit:");
                 int studentId = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
+                scanner.next(); // Consume the newline character
 
                 if (studentId == 0) {
                     break; // Exit loop
@@ -166,7 +166,7 @@ public class Supervisor extends User {
                             "1. Approve \n" +
                             "2. Reject \n");
                     processChoice = scanner.nextInt();
-                    scanner.nextLine();// Consume the newline character
+                    scanner.next();// Consume the newline character
                 } else {
                     System.out.println("Invalid request ID");
                     continue;

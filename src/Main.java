@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static model.StudentStatus.PENDING;
+import static model.StudentStatus.UNREGISTERED;
+
 public class Main {
 
 
@@ -29,129 +32,132 @@ public class Main {
         //login as student
         switch (choice) {
             case 1:
-                String studentuserid;
-                while (true) {
+                String studentuserid = null;
+                Boolean result = false;
+                while (!result) {
                     System.out.println("Enter your user ID: ");
-                    studentuserid = sc.nextLine();
+                    studentuserid = sc.next();
                     Student student = StudentRepository.getByID(studentuserid);
 
                     if (student == null) {
                         System.out.println("Invalid user ID or password. Please try again.");
                         continue;
                     }
-                    student.login(studentuserid, student);
-                    break;
+                    result = student.login(studentuserid, student);
                 }
 
-                System.out.println("Welcome " + studentuserid + "!");
-                System.out.println("Please select an option: \n" +
-                        "1. changePassword \n" +
-                        "2. View available projects \n" +
-                        "3. Select the project to send to the coordinator\n" +
-                        "4. View my project \n" +
-                        "5. View requests status and history \n" +
-                        "6. Request to change project title \n" +
-                        "7. Request to deregister FYP \n");
+                while (true) {
+                    System.out.println("Welcome " + studentuserid + "!");
+                    System.out.println("Please select an option: \n" +
+                            "1. changePassword \n" +
+                            "2. View available projects \n" +
+                            "3. Select the project to send to the coordinator\n" +
+                            "4. View my project \n" +
+                            "5. View requests status and history \n" +
+                            "6. Request to change project title \n" +
+                            "7. Request to deregister FYP \n");
 
-                int studentChoice = sc.nextInt();
-                Student student = StudentRepository.getByID(studentuserid);
-                switch (studentChoice) {
-                    case 1:
-                        System.out.println("Please enter your new password: ");
-                        String newPassword = sc.nextLine();
-                        student.changePassword(newPassword);
-                        System.out.println("Your password has been changed.");
-                        student.login(studentuserid, student);
-                        break;
+                    int studentChoice = sc.nextInt();
+                    Student student = StudentRepository.getByID(studentuserid);
+                    switch (studentChoice) {
+                        case 1:
+                            System.out.println("Please enter your new password: ");
+                            String newPassword = sc.next();
+                            student.changePassword(newPassword);
+                            System.out.println("Your password has been changed.");
+                            student.login(studentuserid, student);
+                            break;
 
-                    case 2:
-                        System.out.println("Available projects: ");
-                        for (Project project : ProjectRepository.getAvailableProject()) {
-                            System.out.println(project.getProjectId() + " " + project.getProjectTitle());
-                        }
-                        break;
-
-                    case 3:
-                        if (student.getStatus() == StudentStatus.UNREGISTERED) {
-                            System.out.println("Please select a project to register: ");
-
-                            //print all available projects
+                        case 2:
+                            System.out.println("Available projects: ");
                             for (Project project : ProjectRepository.getAvailableProject()) {
-                                System.out.println(project.getProjectId() + " " + project.getProjectTitle());
+                                System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
                             }
-                            //student input the project id
-                            String projectId = sc.nextLine();
-                            Project project = ProjectRepository.getByID(projectId);
-                            if (project != null) {
-                                student.sendSelectProjectRequest(projectId, student.getUserId());
+                            break;
+
+                        case 3:
+                            if (student.getStatus() == UNREGISTERED) {
+                                System.out.println("Please select a project to register: ");
+
+                                //print all available projects
+                                for (Project project : ProjectRepository.getAvailableProject()) {
+                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
+                                }
+                                //student input the project id
+                                String projectId = sc.next();
+                                Project project = ProjectRepository.getByID(projectId);
+                                if (project != null) {
+                                    student.sendSelectProjectRequest(projectId, student.getUserId());
+
+                                    System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
+                                    student.changeStatus(PENDING);
+                                } else {
+                                    System.out.println("Invalid project ID. Please try again.");
+                                }
+                            } else {
+                                System.out.println("You are unable to register or deregister a project at this moment.");
+                            }
+                            break;
+
+                        case 4:
+                            if (student.getStatus() == StudentStatus.REGISTERED) {
+                                for (Project project : ProjectRepository.getAvailableProject()) {
+                                    if (project.getStudentId().equals(student.getUserId())) {
+                                        System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
+                                    }
+                                }
+                            } else {
+                                System.out.println("You have not registered a project yet.");
+                            }
+                            break;
+
+                        case 5:
+                            System.out.println("Your requests: ");
+                            for (Request request : RequestRepository.getRequests()) {
+
+                                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+
+                            }
+                            break;
+
+                        case 6:
+                            if (student.getStatus() == StudentStatus.REGISTERED) {
+                                System.out.println("Please enter the new title of your project: ");
+                                String newTitle = sc.next();
+                                student.sendChangeTitleRequest(student.getProjectId(), student.getSuperid(), newTitle);
 
                                 System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
                             } else {
-                                System.out.println("Invalid project ID. Please try again.");
+                                System.out.println("You have not registered a project yet.");
                             }
-                        }
-                        break;
+                            break;
 
-                    case 4:
-                        if (student.getStatus() == StudentStatus.REGISTERED) {
-                            for (Project project : ProjectRepository.getAvailableProject()) {
-                                if (project.getStudentId().equals(student.getUserId())) {
+                        case 7:
+                            if (student.getStatus() == StudentStatus.REGISTERED) {
+                                System.out.println("Please select a project to deregister: ");
+                                for (Project project : ProjectRepository.getProjects()) {
                                     System.out.println(project.getProjectId() + " " + project.getProjectTitle());
                                 }
-                            }
-                        } else {
-                            System.out.println("You have not registered a project yet.");
-                        }
-                        break;
-
-                    case 5:
-                        System.out.println("Your requests: ");
-                        for (Request request : RequestRepository.getRequests()) {
-
-                            System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-
-
-                            System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-                        }
-                        break;
-
-                    case 6:
-                        if (student.getStatus() == StudentStatus.REGISTERED) {
-                            System.out.println("Please enter the new title of your project: ");
-                            String newTitle = sc.nextLine();
-                            student.sendChangeTitleRequest(student.getProjectId(), student.getSuperid(), newTitle);
-
-                            System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
-                        } else {
-                            System.out.println("You have not registered a project yet.");
-                        }
-                        break;
-
-                    case 7:
-                        if (student.getStatus() == StudentStatus.REGISTERED) {
-                            System.out.println("Please select a project to deregister: ");
-                            for (Project project : ProjectRepository.getProjects()) {
-                                System.out.println(project.getProjectId() + " " + project.getProjectTitle());
-                            }
-                            String projectId = sc.nextLine();
-                            Project project = ProjectRepository.getByID(projectId);
-                            if (project != null) {
-                                student.sendDeregisterProjectRequest(projectId, student.getUserId());
-                                System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
+                                String projectId = sc.next();
+                                Project project = ProjectRepository.getByID(projectId);
+                                if (project != null) {
+                                    student.sendDeregisterProjectRequest(projectId, student.getUserId());
+                                    System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
+                                } else {
+                                    System.out.println("Invalid project ID. Please try again.");
+                                }
                             } else {
-                                System.out.println("Invalid project ID. Please try again.");
+                                System.out.println("You are unable to register or deregister a project at this moment.");
                             }
-                        } else {
-                            System.out.println("You are unable to register or deregister a project at this moment.");
-                        }
-                        break;
+                            break;
 
+                    }
                 }
             case 2:
                 String supervisoruserid;
                 while (true) {
                     System.out.println("Enter your user ID: ");
-                    supervisoruserid = sc.nextLine();
+                    supervisoruserid = sc.next();
                     Supervisor supervisor = SupervisorRepository.getByID(supervisoruserid);
 
                     if (supervisor == null) {
@@ -161,7 +167,8 @@ public class Main {
                     supervisor.login(supervisoruserid, supervisor);
                     break;
                 }
-                loop1:while (true) {
+                loop1:
+                while (true) {
                     Supervisor supervisor = SupervisorRepository.getByID(supervisoruserid);
                     System.out.println("Welcome " + supervisoruserid + "!");
                     System.out.println("Please select an option: \n" +
@@ -175,7 +182,7 @@ public class Main {
                     switch (supervisorChoice) {
                         case 1:
                             System.out.println("Please enter your new password: ");
-                            String newPassword = sc.nextLine();
+                            String newPassword = sc.next();
                             supervisor.changePassword(newPassword);
                             System.out.println("Your password has been changed.");
                             supervisor.login(supervisoruserid, supervisor);
@@ -187,7 +194,8 @@ public class Main {
                             }
                             break;
                         case 2:
-                            loop2:while (true) {
+                            loop2:
+                            while (true) {
                                 System.out.println("Please select an option: \n" +
                                         "1. create \n" +
                                         "2. update \n" +//need another switch class
@@ -201,8 +209,8 @@ public class Main {
                                             continue;
                                         }
                                         System.out.println("Please enter the project  name");
-                                        String projectName = sc.nextLine();
-                                        Project project = new Project(projectName, supervisor.getUserId());
+                                        String projectName = sc.next();
+                                        Project project = new Project("1", projectName, supervisor.getUserId());
                                         supervisor.addProjects(project);
                                         ProjectRepository.addProject(project);
                                         break;
@@ -210,9 +218,9 @@ public class Main {
                                     case 2:
                                         supervisor.viewProjects();
                                         System.out.println("choose the project you want to update by id");
-                                        String projectId = sc.nextLine();
+                                        String projectId = sc.next();
                                         System.out.println("Please enter the new title");
-                                        String newTitle = sc.nextLine();
+                                        String newTitle = sc.next();
                                         if (supervisor.getProjectsById(projectId) != null) {
                                             supervisor.changeTitle(newTitle, projectId);
                                             System.out.println("successfully changed");
@@ -246,62 +254,13 @@ public class Main {
 
                     }
                 }
-        }
-    }
-}
-                        /*
-                        Request request = RequestRepository.getByID(requestId);
-                        if (request != null) {
-                            System.out.println("Please select an option: \n" +
-                                    "1. Approve \n" +
-                                    "2. Reject \n");
-                            int processChoice = sc.nextInt();
-                            switch (processChoice) {
-                                case 1:
-                                    request.approve();
-                                    System.out.println("The request has been approved.");
-                                    break;
-                                case 2:
-                                    request.reject();
-                                    System.out.println("The request has been rejected.");
-                                    break;
-                            }
-                        } else {
-                            System.out.println("Invalid request ID. Please try again.");
-
-                        }
-
-                         */
-         //               break;
-                /*    case 4:
-                        System.out.println("Please enter the new supervisor's user ID: ");
-                        String newSupervisorId = sc.nextLine();
-                        System.out.println("Please enter the project ID: ");
-                        String proid = sc.nextLine();
-                        Supervisor newSupervisor = SupervisorRepository.getByID(newSupervisorId);
-                        if (newSupervisor != null) {
-                            System.out.println("Please enter the project ID: ");
-                            String projectId = sc.nextLine();
-                            Project project = ProjectRepository.getByID(projectId);
-                            if (project != null) {
-                                supervisor.sendTransferStudentRequest(newSupervisorId, projectId);
-                                //if succeed，change the supervisorId of the project
-                                System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
-                            } else {
-                                System.out.println("Invalid project ID. Please try again.");
-                            }
-                        } else {
-                            System.out.println("Invalid supervisor ID. Please try again.");
-                        }
-                        break;
-
-                }
+                /*
             case 3:
                 while (true) {
                 System.out.println("Enter your user ID: ");
-                userId = sc.nextLine();
+                userId = sc.next();
                 System.out.println("Enter your password: ");
-                password = sc.nextLine();
+                password = sc.next();
                 String CoordinatorID = "ASFLI";
                 Coordinator coordinator = new Coordinator(CoordinatorID,"Li Fang", "ASFLI@NTU.EDU.SG");
 
@@ -316,3 +275,6 @@ public class Main {
         }
     }
     */
+        }
+    }
+}

@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 
 public class User {
-    private static String userId;
+    private String userId;
     private String password = "password";
     private String email;
     private String name;
@@ -33,6 +33,9 @@ public class User {
         public String getUserId() {
             return userId;
         }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
         public void setEmail(String email) {
             this.email = email;
         }
@@ -44,23 +47,25 @@ public class User {
         this.password = password;
     }
 
-    public void login(String userId,Student student) {
-        while (true) {
+    public Boolean login(String userId,Student student) {
+//        while (true) {
             System.out.println("Enter your password: ");
-            String password = sc.nextLine();
+            String password = sc.next();
 
             if (Objects.equals(this.password, student.getPassword())) {
                 System.out.println("Login successful.");
+                return true;
             } else {
                 System.out.println("Wrong user ID or password. Please try again.");
+                return false;
             }
-        }
+//        }
     }
 
     public void login(String userId, Supervisor supervisor) {
         while (true) {
             System.out.println("Enter your password: ");
-            String password = sc.nextLine();
+            String password = sc.next();
 
             if (Objects.equals(this.password, supervisor.getPassword())) {
                 System.out.println("Login successful.");
