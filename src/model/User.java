@@ -59,7 +59,7 @@ public class User {
     }
 
     public Boolean login(String userId, Supervisor supervisor) {
-        while (true) {
+//        while (true) {
             System.out.println("Enter your password: ");
             String password = sc.next();
 
@@ -70,11 +70,10 @@ public class User {
                 System.out.println("Wrong user ID or password. Please try again.");
                 return false;
             }
-        }
+//        }
     }
 
     public boolean login(String userId, Coordinator coordinator) {
-        while (true) {
             System.out.println("Enter your password: ");
             String password = sc.next();
 
@@ -85,8 +84,7 @@ public class User {
                 System.out.println("Wrong user ID or password. Please try again.");
                 return false;
             }
-        }
-//    }
+    }
 
 
 }

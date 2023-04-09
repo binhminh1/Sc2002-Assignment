@@ -159,9 +159,9 @@ public class Main {
                 while (!superResult) {
                     System.out.println("Enter your user ID: ");
                     supervisoruserid = sc.next();
-                    Student student = StudentRepository.getByID(supervisoruserid);
+                    Supervisor supervisor = SupervisorRepository.getByID(supervisoruserid);
 
-                    if (student == null) {
+                    if (supervisor == null) {
                         System.out.println("Invalid user ID or password. Please try again.");
                         continue;
                     }
@@ -284,7 +284,7 @@ public class Main {
                 String CoordinatorID = "ASFLI";
                 Coordinator coordinator = new Coordinator(CoordinatorID,"Li Fang", "ASFLI@NTU.EDU.SG");
 
-                if (coordinator.login(userId, password)){
+                if (coordinator.login(userId, coordinator)){
                     break;
                 }
                 }
@@ -294,8 +294,4 @@ public class Main {
 
                 }
         }
-
-
-        }
-    }
 
