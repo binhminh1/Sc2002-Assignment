@@ -23,7 +23,7 @@ public class SupervisorRepository {
 
     public static Supervisor getByID(String id) {
         for (Supervisor supervisor : supervisors) {
-            if (supervisor.getUserId().equals(id)) {
+            if (id.equals( supervisor.getUserId())) {
                 return supervisor;
             }
         }
