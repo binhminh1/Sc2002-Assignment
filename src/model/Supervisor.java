@@ -2,6 +2,7 @@ package model;
 
 import repository.ProjectRepository;
 import repository.RequestRepository;
+import repository.SupervisorRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,10 @@ public class Supervisor extends User {
 
     public boolean sendTransferStudentRequest(String supervisorId,String ProjectId){
         Project project = ProjectRepository.getByID(ProjectId);
-        if( project != null ||  project.getSupervisorId() != this.getUserId()){return false;}
+        if( project == null  ){return false;}
+        //projecttitle对应了supervisorName
+        Supervisor supervisor= SupervisorRepository.getByName(project.getProjectTitle());
+        if( supervisor==null ){return false;}
         Request request = new Request(RequestType.transferStudent , ProjectId , super.getUserId() , supervisorId);
         RequestRepository.addRequest(request);
         return true;

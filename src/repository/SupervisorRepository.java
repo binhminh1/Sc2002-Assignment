@@ -29,5 +29,13 @@ public class SupervisorRepository {
         }
         return null;
     }
+    public static Supervisor getByName(String name) {
+        for (Supervisor supervisor : supervisors) {
+            if (supervisor.getName().equals(name)) {
+                return supervisor;
+            }
+        }
+        return null;
+    }
 }
 
