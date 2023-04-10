@@ -15,6 +15,7 @@ public class Request {
     private RequestStatus status;
     private ArrayList<RequestHistory> requestHistory;
 
+
     public Request(RequestType type, String projectId, String fromId, String toId, String newTitle){
         if(type == RequestType.changeTitle){
             this.type = type;

@@ -163,7 +163,11 @@ public class Coordinator extends User{
         while (!pendingRequests.isEmpty()) {
             // Print all pending requests
             for (Request request : pendingRequests) {
-                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+                if(request.getType() == RequestType.transferStudent)
+                    System.out.println(request.getRequestId() + SupervisorRepository.getByID(request.getFromId()) + request.getType() + " " + request.getStatus());
+                else{
+                    System.out.println(request.getRequestId() + StudentRepository.getByID(request.getFromId()) + request.getType() + " " + request.getStatus());
+                }
             }
     
             // Process a request, ask for requestID
