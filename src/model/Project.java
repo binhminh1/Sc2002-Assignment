@@ -18,7 +18,7 @@ public class Project {
     private ProjectStatus status; 
 
 
-    public Project(String o,String projectTitle, String supervisorId) {
+    public Project(String o, String supervisorId, String projectTitle) {
         Date day = new Date();
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        this.projectId = df.format(day);

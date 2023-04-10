@@ -79,7 +79,7 @@ public class Main {
                             case 2:
                                 System.out.println("Available projects: ");
                                 for (Project project : ProjectRepository.getAvailableProject()) {
-                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
+                                    System.out.println(project.getProjectId() + " " + project.getSupervisorId() + " " + project.getProjectTitle());
                                 }
                                 break;
 
@@ -111,7 +111,7 @@ public class Main {
                                 if (student.getStatus() == StudentStatus.REGISTERED) {
                                     for (Project project : ProjectRepository.getProjectsByStatus(ProjectStatus.ALLOCATED)) {
                                         if (student.getUserId().equals(project.getStudentId())) {
-                                            System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
+                                            System.out.println(project.getProjectId() + " " + project.getSupervisorId() + " " + project.getProjectTitle());
                                         }
                                     }
                                 } else {
@@ -142,17 +142,10 @@ public class Main {
 
                             case 7:
                                 if (student.getStatus() == StudentStatus.REGISTERED) {
-                                    System.out.println("Please select a project to deregister: ");
-                                    for (Project project : ProjectRepository.getProjects()) {
-                                        System.out.println(project.getProjectId() + " " + project.getProjectTitle());
-                                    }
-                                    String projectId = sc.next();
-                                    Project project = ProjectRepository.getByID(projectId);
+                                    Project project = ProjectRepository.getByID(student.getProjectId());
                                     if (project != null) {
-                                        student.sendDeregisterProjectRequest(projectId, student.getUserId());
+                                        student.sendDeregisterProjectRequest(project.getProjectId(), student.getUserId());
                                         System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
-                                    } else {
-                                        System.out.println("Invalid project ID. Please try again.");
                                     }
                                 } else {
                                     System.out.println("You are unable to register or deregister a project at this moment.");

@@ -7,8 +7,7 @@
     <list default="true" id="9de086b2-4bc4-4ff6-b3d1-ab694aa7417c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Coordinator.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Coordinator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Project.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Supervisor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,7 +79,7 @@
       <workItem from="1679896443245" duration="131000" />
       <workItem from="1679896616326" duration="336000" />
       <workItem from="1679896973270" duration="7681000" />
-      <workItem from="1680001226998" duration="71773000" />
+      <workItem from="1680001226998" duration="74981000" />
     </task>
     <servers />
   </component>
@@ -111,16 +110,6 @@
           <url>file://$PROJECT_DIR$/model/Supervisor.java</url>
           <line>51</line>
           <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/model/Supervisor.java</url>
-          <line>171</line>
-          <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/model/Supervisor.java</url>
-          <line>142</line>
-          <option name="timeStamp" value="73" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

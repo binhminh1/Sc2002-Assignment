@@ -139,8 +139,8 @@ public class Supervisor extends User {
 
     //Approve change title request
     public void changeTitle(String newTitle, String projectId) {
-        Project project=   ProjectRepository.getByID(projectId);
-        project.setSupervisorId(newTitle);
+        Project project =   ProjectRepository.getByID(projectId);
+        project.setProjectTitle(newTitle);
     }
 
     public void processChangeTitleRequest() {
@@ -148,11 +148,25 @@ public class Supervisor extends User {
 
         if (!pendingRequests.isEmpty()) {
             // Print all pending requests
+            System.out.println("Pending requests:");
+            for (Request request : pendingRequests) {
+                if (request.getType() == (RequestType.changeTitle)) {
+                    System.out.println(request.getRequestId() + " from: " + request.getFromId() + " " +  request.getType() + " " + request.getStatus());
+                }
+            }
+
             System.out.println("Enter student ID to approve/reject or 0 to exit:");
             String studentId = scanner.next();
             if (studentId.equals("0")) {
                 return; // Exit loop
             }
+
+            System.out.println("Please select an option: \n" +
+                    "1. Approve \n" +
+                    "2. Reject \n");
+            int processChoice = scanner.nextInt();
+
+
             Request req = null;
             for (Request request1 : pendingRequests) {
                 if (request1.getType() == (RequestType.changeTitle) && request1.getFromId().equals(studentId)) {
@@ -165,11 +179,18 @@ public class Supervisor extends User {
                 return;
             }
             // Process a request
-            req.changeStatus(RequestStatus.Approve);
-            System.out.println("Request approved");
-            Student student= StudentRepository.getByID(studentId);
-            //change title
-            changeTitle(req.getNewTitle(), student.getProjectId());
+            if (processChoice == 1) {
+                req.changeStatus(RequestStatus.Approve);
+                System.out.println("Request approved");
+                Student student = StudentRepository.getByID(studentId);
+                //change title
+                changeTitle(req.getNewTitle(), student.getProjectId());
+            } else if (processChoice == 2) {
+                req.changeStatus(RequestStatus.Reject);
+                System.out.println("Request rejected");
+            } else {
+                System.out.println("Invalid choice");
+            }
 
 
                 /*
