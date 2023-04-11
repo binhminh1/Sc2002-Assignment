@@ -78,7 +78,7 @@ public class Main {
                             case 2:
                                 System.out.println("Available projects: ");
                                 for (Project project : ProjectRepository.getAvailableProject()) {
-                                    project.displayProject();
+                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
                                 }
                                 break;
 
@@ -144,7 +144,7 @@ public class Main {
                                     Project project = ProjectRepository.getByID(student.getProjectId());
                                     if (project != null) {
                                         student.sendDeregisterProjectRequest(project.getProjectId(), student.getUserId());
-                                        System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
+                                        System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
                                     }
                                 } else {
                                     System.out.println("You are unable to register or deregister a project at this moment.");
@@ -248,7 +248,12 @@ public class Main {
                             case 4:
                                 System.out.println("Your requests: ");
                                 for (Request request : RequestRepository.getRequests()) {
-                                    if (Objects.equals(supervisor.getUserId(), request.getToId())) {
+
+                                    System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+
+                                }
+                                for (Request request : RequestRepository.getRequests()) {
+                                    if (request.getToId().equals(supervisor.getUserId())) {
                                         System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
                                     }
                                 }
