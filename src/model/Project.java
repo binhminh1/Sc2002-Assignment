@@ -10,6 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Project {
+    /** 
+     * Declaration of variables to be used within the Project Class
+     */
     private String projectId;
     private String supervisorId;
     private String projectTitle;
@@ -28,25 +31,44 @@ public class Project {
 //        this.studentId = o;
         this.status = ProjectStatus.AVAILABLE;
     }
+
+    /**
+     * Print the name and email of the supervisor.
+     */
     public void displaySupervisorInformation() {
         Supervisor supervisor = SupervisorRepository.getByID(supervisorId);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
     }
+
+    /**
+     * Print the name and email of the student.
+     */
     public void displayStudentInformation(){
         Student student = StudentRepository.getByID(studentId);//(need to change)
         System.out.println("Student Name: " + student.getName());
         System.out.println("Student Email Address: " + student.getEmail());
     }
 
+    /**
+     * Print the ID of the project.
+     */
     public void displayProjectID() {
         System.out.println("Project ID: " + projectId);
     }
+
+    /**
+     * Print the title and status of the project.
+     */
     public void displayProjectInformation() {
         System.out.println("Project Title: " + projectTitle);
         System.out.println("Project Status: " + status);
     }
 
+    /**
+     * Print all the projects and display the projectID, information of the project and supervisor information.<!-- -->
+     * For projects that are allocated, the information of the student that is allocated to the project is also printed.
+     */
     public void displayProject() {
         if (status == ProjectStatus.AVAILABLE) {
             System.out.println("Project is available for allocation.");
@@ -65,7 +87,8 @@ public class Project {
     }
 
     /**
-     * Assign a student to the project
+     * Assign a student to the project 
+     * (change project status to reserved so that no otehr student can choose it until request is approved/rejected)
      *
      * @param studentID the student to be assigned
      * @throws IllegalStateException if the project is not available for allocation
@@ -78,6 +101,13 @@ public class Project {
         this.status = ProjectStatus.RESERVED;
         return true;
     }
+
+    /**
+     * Allocate student to the project if project is not reserved
+     * 
+     * @param studentID the studentID of student that is to be allocated to the project
+     * @return true if student is allocated to the project
+     */
     public boolean Allocate(String studentID){
         if (status != ProjectStatus.RESERVED) {
             return false;
@@ -86,6 +116,12 @@ public class Project {
         this.status = ProjectStatus.ALLOCATED;
         return true;
     }
+
+    /**
+     * Changes project status to available after student drops project
+     * 
+     * @return true when request from student to deregister from project
+     */
     public boolean Recycle(){
         if (this.status != ProjectStatus.ALLOCATED && this.status != ProjectStatus.RESERVED) {
             return false;
@@ -95,6 +131,13 @@ public class Project {
         return true;
     }
 
+    /**
+     * 
+     * @param studentID 
+     * @param supervisorId 
+     * @param projectId 
+     * @return true when 
+     */
     public boolean Transfer(String studentID,String supervisorId,String projectId){
         if(this.status != ProjectStatus.ALLOCATED){
             return false;
@@ -108,32 +151,80 @@ public class Project {
         this.status = ProjectStatus.AVAILABLE;
         return true;
     }
+
+    /**
+     * 
+     * @return get projectID
+     */
     public String getProjectId(){
         return projectId;
     }
+
+    /**
+     * 
+     * @return get studentID
+     */
     public String getStudentId(){
         return studentId;
     }
+
+    /**
+     * 
+     * @return get project status
+     */
     public ProjectStatus getStatus(){
         return status;
     }
+
+    /**
+     * 
+     * @return get title of project
+     */
     public String getProjectTitle(){
         return projectTitle;
     }
-    public String getSupervisorId() {return supervisorId;}
+
+    /**
+     * 
+     * @return get supervisorID
+     */
+    public String getSupervisorId() {
+        return supervisorId;
+    }
+
+    /**
+     * set projectID
+     * @param projectId
+     */
     public void setProjectId(String projectId){
         this.projectId = projectId;
     }
+
+    /**
+     * set title of project
+     */
     public void setProjectTitle(String projectTitle){
         this.projectTitle = projectTitle;
     }
+
+    /**
+     * set the project status
+     */
     public void setStatus(ProjectStatus status){
         this.status = status;
     }
 
+    /**
+     * set the supervisorID
+     * @param supervisorId
+     */
     public void setSupervisorId(String supervisorId) {
         this.supervisorId = supervisorId;
     }
+
+    /**
+     * set the studentID
+     */
     public void setStudentId(String studentId) {
         this.studentId = studentId;
     }

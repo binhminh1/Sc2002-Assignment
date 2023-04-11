@@ -25,6 +25,7 @@ public class Coordinator extends User{
         this.password = "password";
     }
 
+    
     public void viewProjects(){
         for(Project project : ProjectRepository.getProjects()){
             project.displayProject();
