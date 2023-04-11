@@ -19,10 +19,16 @@ public class Supervisor extends User {
 
     Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Allows supervisor to add new projects
+     */
     public void addProjects(Project project) {
         projects.add(project);
     }
 
+    /**
+     * Allows supervisor to remove exisiting projects
+     */
     public void removeProject(Project project) {
         projects.remove(project);
     }
@@ -36,12 +42,21 @@ public class Supervisor extends User {
         return null;
     }
 
+    /**
+     * Prints projects under the supervisor
+     */
     public void viewProjects() {
         for (Project project : this.projects) {
             project.displayProject();
         }
     }
 
+    /**
+     * Allows supervisor to send a request to coordinator to transfer student to another supervisor
+     * @param supervisorId new supervisorID
+     * @param ProjectId projectID does not change
+     * @return
+     */
     public boolean sendTransferStudentRequest(String supervisorId, String ProjectId) {
         Project project = ProjectRepository.getByID(ProjectId);
         if (project == null) {
@@ -57,6 +72,11 @@ public class Supervisor extends User {
         return true;
     }
 
+    /**
+     * Ensures that each supervisor only have 2 projects 
+     * @param newSupervisorId
+     * @return
+     */
     public boolean supervisorCapReached(String newSupervisorId) {
         int numOfProject = 0;
         for (Project project : projects) {
@@ -67,7 +87,9 @@ public class Supervisor extends User {
         return numOfProject >= 2;
     }
 
-
+    /**
+     * Allow supervisor to view all of his requests (both incoming and outgoing)
+     */
     public void viewRequestHistory() {
         List<Request> incomingRequests = RequestRepository.getRequestsBygetToId(this.getUserId());
         List<Request> outgoingRequests = RequestRepository.getRequestsByFromId(this.getUserId());
@@ -137,12 +159,17 @@ public class Supervisor extends User {
         return requestHistory;
     }
 
-    //Approve change title request
+    /**
+     * Approve change title request
+     */
     public void changeTitle(String newTitle, String projectId) {
         Project project =   ProjectRepository.getByID(projectId);
         project.setProjectTitle(newTitle);
     }
 
+    /**
+     * Allow supervisor to approve or reject student requests
+     */
     public void processChangeTitleRequest() {
         List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
 

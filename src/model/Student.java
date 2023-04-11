@@ -6,8 +6,13 @@ import repository.RequestRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * Makes use of inheritance and extends from User Class 
+ */
 public class Student extends User{
+    /**
+     * initialize private variables to be used in class
+     */
     private StudentStatus status;
     private String toId;
     private String projectId;
