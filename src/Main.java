@@ -61,7 +61,6 @@ public class Main {
                                 "6. Request to change project title \n" +
                                 "7. Request to deregister FYP \n" +
                                 "8. Exit \n");
-
                         studentChoice = sc.nextInt();
                         Student student = StudentRepository.getByID(studentuserid);
                         switch (studentChoice) {
