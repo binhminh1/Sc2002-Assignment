@@ -184,7 +184,7 @@ public class Main {
                                 "3. View Student Pending Request \n" +
                                 "4. View request history\n" +
                                 "5. Request to transfer student \n" +
-                                "6. Exist\n");
+                                "6. Exit\n");
 
                         supervisorChoice = sc.nextInt();
                         switch (supervisorChoice) {
@@ -254,6 +254,7 @@ public class Main {
                                 }
                                 break;
                             case 5:
+                                supervisor.viewProjects();
                                 System.out.println("Please enter the project ID: ");
                                 String id = sc.next();
                                 System.out.println("Please enter the supervisor ID: ");

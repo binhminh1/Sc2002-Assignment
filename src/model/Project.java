@@ -22,9 +22,8 @@ public class Project {
 
 
     public Project(String o, String supervisorId, String projectTitle) {
-        Date day = new Date();
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        this.projectId = df.format(day);
+
+
         this.projectId=o;
         this.projectTitle = projectTitle;
         this.supervisorId =  supervisorId;
@@ -75,14 +74,14 @@ public class Project {
             displayProjectID();
             displaySupervisorInformation();
             displayProjectInformation();
-            System.out.println("Project is available for allocation.");
+
         } else if (status == ProjectStatus.ALLOCATED) {
 
             displayProjectID();
             displaySupervisorInformation();
             displayStudentInformation();
             displayProjectInformation();
-            System.out.println("Project is allocated to a student.");
+
         } else {
             throw new IllegalStateException("Project status is not AVAILABLE or ALLOCATED.");
         }

@@ -6,6 +6,7 @@ import repository.StudentRepository;
 import repository.SupervisorRepository;
 
 import java.io. * ;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,19 +36,26 @@ public class ReadCSV {
         System.out.println("Loading Supervisor List");
         List<List<String>> facultyList = ReadCSV.read(PATH.facultyFile);
         for(List<String> supervisor: facultyList){
-            int iend = supervisor.get(1).indexOf("@");
-            String subString = null;
-            if(iend != -1){
-                subString = supervisor.get(1).substring(0 , iend);
-            }
-            Supervisor supervisor1 = new Supervisor(subString,supervisor.get(0),supervisor.get(1));
-            SupervisorRepository.addSupervisor(supervisor1);
+
+                int iend = supervisor.get(1).indexOf("@");
+                String subString = null;
+                if(iend != -1){
+                    subString = supervisor.get(1).substring(0 , iend);
+                }
+
+                Supervisor supervisor1 = new Supervisor(subString,supervisor.get(0),supervisor.get(1));
+                SupervisorRepository.addSupervisor(supervisor1);
+
+
         }
         System.out.println("Loading Project List");
         List<List<String>> projectList = ReadCSV.read(PATH.projectFile);
         int o = 1;
         for(List<String> project: projectList){
-            Project project1 = new Project(String.valueOf(o),project.get(0), project.get(1));
+
+            Supervisor supervisor = SupervisorRepository.getByName(project.get(0));
+
+            Project project1 = new Project(String.valueOf(o),supervisor.getUserId(), project.get(1));
             ProjectRepository.addProject(project1);
 
             o++;
