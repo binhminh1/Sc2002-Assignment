@@ -79,7 +79,7 @@ public class Main {
                             case 2:
                                 System.out.println("Available projects: ");
                                 for (Project project : ProjectRepository.getAvailableProject()) {
-                                    System.out.println(project.getProjectId() + " " + project.getSupervisorId() + " " + project.getProjectTitle());
+                                    project.displayProject();
                                 }
                                 break;
 

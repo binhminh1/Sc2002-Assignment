@@ -71,16 +71,18 @@ public class Project {
      */
     public void displayProject() {
         if (status == ProjectStatus.AVAILABLE) {
-            System.out.println("Project is available for allocation.");
+
             displayProjectID();
             displaySupervisorInformation();
             displayProjectInformation();
+            System.out.println("Project is available for allocation.");
         } else if (status == ProjectStatus.ALLOCATED) {
-            System.out.println("Project is allocated to a student.");
+
             displayProjectID();
             displaySupervisorInformation();
             displayStudentInformation();
             displayProjectInformation();
+            System.out.println("Project is allocated to a student.");
         } else {
             throw new IllegalStateException("Project status is not AVAILABLE or ALLOCATED.");
         }
