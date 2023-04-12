@@ -57,6 +57,7 @@ public class User {
             }
 //        }
     }
+<<<<<<< Updated upstream
 
     public Boolean login(String userId, Supervisor supervisor) {
 //        while (true) {
@@ -89,4 +90,6 @@ public class User {
     }
 
 
+=======
+>>>>>>> Stashed changes
 }
