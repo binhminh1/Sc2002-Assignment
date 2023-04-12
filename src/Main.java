@@ -120,11 +120,7 @@ public class Main {
 
                             case 5:
                                 System.out.println("Your requests: ");
-                                for (Request request : RequestRepository.getRequests()) {
-
-                                    System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-
-                                }
+                                student.viewRequestHistoryStudent(studentuserid);
                                 break;
 
                             case 6:

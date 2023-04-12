@@ -207,13 +207,13 @@ public class Supervisor extends User {
             }
             // Process a request
             if (processChoice == 1) {
-                req.changeStatus(RequestStatus.Approve);
+                req.changeStatus(RequestStatus.Approved);
                 System.out.println("Request approved");
                 Student student = StudentRepository.getByID(studentId);
                 //change title
                 changeTitle(req.getNewTitle(), student.getProjectId());
             } else if (processChoice == 2) {
-                req.changeStatus(RequestStatus.Reject);
+                req.changeStatus(RequestStatus.Rejected);
                 System.out.println("Request rejected");
             } else {
                 System.out.println("Invalid choice");

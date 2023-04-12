@@ -206,20 +206,20 @@ public class Coordinator extends User{
                 switch (request.getType()) {
                     case transferStudent:
                         if (processChoice == 1) {
-                            request.changeStatus(RequestStatus.Approve);
+                            request.changeStatus(RequestStatus.Approved);
                             changeProjectSupervisor(request.getProjectId(), request.getReplacementSupId());
                             System.out.println("The request has been approved.");
                         } else {
                             System.out.println("The request has been rejected.");
-                            request.changeStatus(RequestStatus.Reject);
+                            request.changeStatus(RequestStatus.Rejected);
                         }
                         break;
                     case assignProject:
                         if (processChoice == 1) {
-                            request.changeStatus(RequestStatus.Approve);
+                            request.changeStatus(RequestStatus.Approved);
                             StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.REGISTERED);
                             allocateProject(request.getProjectId(), request.getFromId());
-                            for(Project project: ProjectRepository.searchProjects(null,null,.getName())){
+                            for(Project project: ProjectRepository.searchProjects(null,null,ProjectRepository.getByID(request.getProjectId()).getSupervisorName())){
                                 if(project.getStatus() == ProjectStatus.AVAILABLE){
                                     project.setStatus(ProjectStatus.UNAVAILABLE);
                                 }
@@ -227,18 +227,18 @@ public class Coordinator extends User{
                             System.out.println("The request has been approved.");
                         } else {
                             System.out.println("The request has been rejected.");
-                            request.changeStatus(RequestStatus.Reject);
+                            request.changeStatus(RequestStatus.Rejected);
                         }
                         break;
                     case deregister:
                         if (processChoice == 1) {
-                            request.changeStatus(RequestStatus.Approve);
+                            request.changeStatus(RequestStatus.Approved);
                             StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.DEREGISTERED);
                             deregisterStudentFromFYP(request.getProjectId());
                             System.out.println("The request has been approved.");
                         } else {
                             System.out.println("The request has been rejected.");
-                            request.changeStatus(RequestStatus.Reject);
+                            request.changeStatus(RequestStatus.Rejected);
                         }
                         break;
                     default:

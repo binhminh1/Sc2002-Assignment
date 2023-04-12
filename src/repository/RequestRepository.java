@@ -65,7 +65,7 @@ public class RequestRepository {
     public static List<Request> getRequestsByFromId(String fromId){
         List<Request> matchingRequests = new ArrayList<>();
         for(Request request : requests){
-            if(request.getFromId() == fromId){
+            if(request.getFromId().equals(fromId)){
                 matchingRequests.add(request);
             }
         }
@@ -73,10 +73,10 @@ public class RequestRepository {
     }
 
     //Incoming
-    public static List<Request> getRequestsByToName(String toId){
+    public static List<Request> getRequestsByToName(String toName){
         List<Request> matchingRequests = new ArrayList<>();
         for(Request request : requests){
-            if(request.getToName() == toId){
+            if(request.getToName().equals(toName)){
                 matchingRequests.add(request);
             }
         }

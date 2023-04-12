@@ -85,4 +85,14 @@ public class Student extends User{
         }
         return requestHistory;
     }
+
+    public  void viewRequestHistoryStudent(String studentID){
+        for (Request request : RequestRepository.getRequestsByFromId(studentID)){
+            System.out.println("Request ID: "+ request.getRequestId());
+            System.out.println("Student ID: "+ request.getFromId());
+            System.out.println("Request Type: "+ request.getType() );
+            System.out.println("Request Status: "+request.getStatus());
+            System.out.println(" ");
+        }
+    }
 }

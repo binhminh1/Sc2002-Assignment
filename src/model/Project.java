@@ -66,7 +66,7 @@ public class Project {
      * For projects that are allocated, the information of the student that is allocated to the project is also printed.
      */
     public void displayProject() {
-        if (status == ProjectStatus.AVAILABLE) {
+        if (status == ProjectStatus.AVAILABLE || status == ProjectStatus.UNAVAILABLE) {
             System.out.println(" ");
             displayProjectID();
             displaySupervisorInformation();

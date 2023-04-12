@@ -1,7 +1,7 @@
 package model;
 
 public enum RequestStatus {
-    Approve,
-    Reject,
+    Approved,
+    Rejected,
     Pending;
 }
