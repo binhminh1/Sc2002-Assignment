@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 public class Supervisor extends User {
-    private String toId;
+
     public List<Project> projects = new ArrayList<>();
 
     public Supervisor(String userId, String name, String email) {
@@ -46,7 +46,7 @@ public class Supervisor extends User {
      * Prints projects under the supervisor
      */
     public void viewProjects() {
-        for (Project project : this.projects) {
+        for (Project project : ProjectRepository.searchProjects(null,null,super.getName())){
             project.displayProject();
         }
     }

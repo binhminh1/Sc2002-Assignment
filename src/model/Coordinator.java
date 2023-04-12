@@ -219,6 +219,11 @@ public class Coordinator extends User{
                             request.changeStatus(RequestStatus.Approve);
                             StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.REGISTERED);
                             allocateProject(request.getProjectId(), request.getFromId());
+                            for(Project project: ProjectRepository.searchProjects(null,null,.getName())){
+                                if(project.getStatus() == ProjectStatus.AVAILABLE){
+                                    project.setStatus(ProjectStatus.UNAVAILABLE);
+                                }
+                            }
                             System.out.println("The request has been approved.");
                         } else {
                             System.out.println("The request has been rejected.");
