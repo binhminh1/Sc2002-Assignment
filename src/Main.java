@@ -320,7 +320,6 @@ public class Main {
                                         System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
                                     }
                                 }
-                                supervisor.viewRequestHistory();
                                 break;
                             case 5:
                                 System.out.println("Please enter the project ID: ");
