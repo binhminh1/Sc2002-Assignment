@@ -80,7 +80,7 @@ public class Supervisor extends User {
     public boolean supervisorCapReached(String newSupervisorId) {
         int numOfProject = 0;
         for (Project project : projects) {
-            if (Objects.equals(project.getSupervisorId(), newSupervisorId)) {
+            if (Objects.equals(project.getSupervisorName(), newSupervisorId)) {
                 numOfProject++;
             }
         }

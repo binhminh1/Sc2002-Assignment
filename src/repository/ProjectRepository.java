@@ -2,8 +2,6 @@ package repository;
 
 import model.Project;
 import model.ProjectStatus;
-import model.Student;
-import model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,17 +50,22 @@ public class ProjectRepository {
             }
         }
         return matchingProjects;
-    }  
-    
-    public static List<Project> searchProjects(ProjectStatus status, String studentId, String supervisorId) {
+    }
+
+    public static List<Project> searchProjects(ProjectStatus status, String studentId, String supervisorName) {
         List<Project> matchingProjects = new ArrayList<>();
         for (Project project : projects) {
-            if ((status == null || project.getStatus() == status)
-                && (studentId == null || project.getStudentId().equals(studentId))
-                && (supervisorId == null || project.getSupervisorId().equals(supervisorId))) {
+            boolean matchesStatus = (status == null || project.getStatus() == status);
+            boolean matchesStudentId = (studentId == null || (project.getStudentId() != null && project.getStudentId().equals(studentId)));
+            boolean matchesSupervisorName = (supervisorName == null || (project.getSupervisorName() != null && project.getSupervisorName().equalsIgnoreCase(supervisorName)));
+
+            if (matchesStatus && matchesStudentId && matchesSupervisorName) {
                 matchingProjects.add(project);
             }
         }
         return matchingProjects;
     }
+
+
+
 }

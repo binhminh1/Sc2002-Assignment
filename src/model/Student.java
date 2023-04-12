@@ -5,7 +5,7 @@ import repository.RequestRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 /**
  * Makes use of inheritance and extends from User Class 
  */
@@ -32,7 +32,7 @@ public class Student extends User{
     }
     public void changeProjectId(String projectId){
         this.projectId = projectId;
-        this.Superid = ProjectRepository.getByID(projectId).getSupervisorId();
+        this.Superid = ProjectRepository.getByID(projectId).getSupervisorName();
     }
     public StudentStatus getStatus(){
         return status;
