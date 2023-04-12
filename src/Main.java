@@ -78,7 +78,7 @@ public class Main {
                             case 2:
                                 System.out.println("Available projects: ");
                                 for (Project project : ProjectRepository.getAvailableProject()) {
-                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
+                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + "("+project.getSupervisorId()+")");
                                 }
                                 break;
 
@@ -88,7 +88,7 @@ public class Main {
 
                                     //print all available projects
                                     for (Project project : ProjectRepository.getAvailableProject()) {
-                                        System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
+                                        System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + "("+project.getSupervisorId()+")");
                                     }
                                     //student input the project id
                                     String projectId = sc.next();
@@ -215,7 +215,7 @@ public class Main {
                                             }
                                             System.out.println("Please enter the project  name");
                                             String projectName = sc.next();
-                                            Project project = new Project("1", projectName, supervisor.getUserId());
+                                            Project project = new Project(String.valueOf(ProjectRepository.numberOfProjects + 1), projectName, supervisor.getUserId());
                                             supervisor.addProjects(project);
                                             ProjectRepository.addProject(project);
                                             break;

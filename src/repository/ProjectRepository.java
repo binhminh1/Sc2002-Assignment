@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectRepository {
-
+    public static int numberOfProjects = 0;
     public static List <Project> projects = new ArrayList<>();
 
     public static void addProject(Project project) {
+        numberOfProjects++;
         projects.add(project);
     }
 

@@ -165,9 +165,13 @@ public class Coordinator extends User{
             // Print all pending requests
             for (Request request : pendingRequests) {
                 if(request.getType() == RequestType.transferStudent)
-                    System.out.println(request.getRequestId() + SupervisorRepository.getByID(request.getFromId()) + request.getType() + " " + request.getStatus());
-                else{
-                    System.out.println(request.getRequestId() + StudentRepository.getByID(request.getFromId()) + request.getType() + " " + request.getStatus());
+                    System.out.println(request.getRequestId() + " "+(SupervisorRepository.getByID(request.getFromId())).getName() + " " +request.getType() + " " + request.getStatus());
+                else if(request.getType() == RequestType.assignProject){
+                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to assign project (id:" +request.getProjectId() + ") to him " + request.getStatus());
+                }else if (request.getType() == RequestType.changeTitle){
+                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to change title of project (id:" +request.getProjectId() + ") to " + request.getNewTitle() + request.getStatus());
+                }else{
+                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to deregister of project (id:" +request.getProjectId() + ")" + request.getStatus());
                 }
             }
     
