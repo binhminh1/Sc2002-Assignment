@@ -76,7 +76,11 @@ public class Main {
                             case 2:
                                 System.out.println("Available projects: ");
                                 for (Project project : ProjectRepository.getAvailableProject()) {
+
+                                    
+
                                     System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
+
                                 }
                                 break;
 
@@ -86,7 +90,11 @@ public class Main {
 
                                     //print all available projects
                                     for (Project project : ProjectRepository.getAvailableProject()) {
+
+
+
                                         System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
+
                                     }
                                     //student input the project id
                                     String projectId = sc.next();
@@ -182,7 +190,7 @@ public class Main {
                                 "3. View Student Pending Request \n" +
                                 "4. View request history\n" +
                                 "5. Request to transfer student \n" +
-                                "6. Exist\n");
+                                "6. Exit\n");
 
                         supervisorChoice = sc.nextInt();
                         switch (supervisorChoice) {
@@ -213,7 +221,7 @@ public class Main {
                                             }
                                             System.out.println("Please enter the project  name");
                                             String projectName = sc.next();
-                                            Project project = new Project("1", projectName, supervisor.getUserId());
+                                            Project project = new Project(String.valueOf(ProjectRepository.numberOfProjects + 1), projectName, supervisor.getUserId());
                                             supervisor.addProjects(project);
                                             ProjectRepository.addProject(project);
                                             break;
@@ -257,6 +265,7 @@ public class Main {
                                 }
                                 break;
                             case 5:
+                                supervisor.viewProjects();
                                 System.out.println("Please enter the project ID: ");
                                 String id = sc.next();
                                 System.out.println("Please enter the supervisor ID: ");

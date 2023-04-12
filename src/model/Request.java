@@ -45,7 +45,7 @@ public class Request {
             this.requestHistory = new ArrayList<>();
         }
     }
-
+    // assign project
     public Request(RequestType type, String projectId, String fromId){
         this.type = type;
         this.projectId = projectId;
