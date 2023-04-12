@@ -55,7 +55,7 @@ public class ReadCSV {
 
             Supervisor supervisor = SupervisorRepository.getByName(project.get(0));
 
-            Project project1 = new Project(String.valueOf(o),supervisor.getUserId(), project.get(1));
+            Project project1 = new Project(String.valueOf(o),supervisor.getName(), project.get(1));
             ProjectRepository.addProject(project1);
 
             o++;

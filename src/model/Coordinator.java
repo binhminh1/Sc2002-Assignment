@@ -127,8 +127,9 @@ public class Coordinator extends User{
                 break;
             case 2:
                 System.out.println("Enter supervisor name filter:");
-                scanner.nextLine();
+                scanner.nextLine(); // consume the end-of-line character
                 supervisorNameFilter = scanner.nextLine();
+                //System.out.println(supervisorNameFilter);
                 break;
             case 3:
                 System.out.println("Enter student ID filter:");
@@ -140,24 +141,29 @@ public class Coordinator extends User{
         }
 
         // Search for projects matching the selected filters
-        List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, supervisorNameFilter, studentIdFilter);
-
+        List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, studentIdFilter, supervisorNameFilter);
+        System.out.println(matchingProjects.size());
         // Print the details of the matching projects
         for (Project project : matchingProjects) {
-            if (statusFilter == ProjectStatus.AVAILABLE || statusFilter == ProjectStatus.UNAVAILABLE ) {
+
+
+            if (project.getStatus() == ProjectStatus.AVAILABLE || project.getStatus() == ProjectStatus.UNAVAILABLE ) {
                 project.displayProjectID();
                 System.out.println("Supervisor: " + project.getSupervisorName());
                 System.out.println("Supervisor email: " + SupervisorRepository.getByName(project.getSupervisorName()).getEmail());
                 project.displayProjectInformation();;
                 System.out.println("\n");
-            } else if (statusFilter == ProjectStatus.ALLOCATED||statusFilter == ProjectStatus.RESERVED) {
+            } else if (project.getStatus() == ProjectStatus.ALLOCATED||project.getStatus() == ProjectStatus.RESERVED) {
                 project.displayProjectID();
                 System.out.println("Supervisor: " + project.getSupervisorName());
                 System.out.println("Supervisor email: " + SupervisorRepository.getByName(project.getSupervisorName()).getEmail());
                 //project.displayStudentInformation();
                 System.out.println("\n");
             }
+
+
         }
+
     }
 
     public void processPendingRequests() {

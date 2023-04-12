@@ -76,9 +76,6 @@ public class Main {
                             case 2:
                                 System.out.println("Available projects: ");
                                 for (Project project : ProjectRepository.getAvailableProject()) {
-
-                                    
-
                                     System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
 
                                 }
@@ -90,9 +87,6 @@ public class Main {
 
                                     //print all available projects
                                     for (Project project : ProjectRepository.getAvailableProject()) {
-
-
-
                                         System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
 
                                     }

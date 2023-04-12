@@ -49,13 +49,13 @@ public class Student extends User{
         RequestRepository.addRequest(request);
         return request;
     }
-    public Request sendSelectProjectRequest(String projectID, String studentID){
-        Request request = new Request(RequestType.assignProject, projectID, studentID);
+    public Request sendSelectProjectRequest(String projectID){
+        Request request = new Request(RequestType.assignProject, projectID, super.getUserId());
         RequestRepository.addRequest(request);
         return request;
     }
-    public Request sendDeregisterProjectRequest(String projectID, String studentID){
-        Request request = new Request(RequestType.deregister, projectID, studentID);
+    public Request sendDeregisterProjectRequest(String projectID){
+        Request request = new Request(RequestType.deregister, projectID, super.getUserId());
         RequestRepository.addRequest(request);
         return request;
     }

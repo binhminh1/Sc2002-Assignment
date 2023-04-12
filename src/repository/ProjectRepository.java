@@ -3,6 +3,7 @@ package repository;
 import model.Project;
 import model.ProjectStatus;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,8 +57,10 @@ public class ProjectRepository {
         List<Project> matchingProjects = new ArrayList<>();
         for (Project project : projects) {
             boolean matchesStatus = (status == null || project.getStatus() == status);
+
             boolean matchesStudentId = (studentId == null || (project.getStudentId() != null && project.getStudentId().equals(studentId)));
-            boolean matchesSupervisorName = (supervisorName == null || (project.getSupervisorName() != null && project.getSupervisorName().equalsIgnoreCase(supervisorName)));
+
+            boolean matchesSupervisorName = (supervisorName == null || (project.getSupervisorName() != null && project.getSupervisorName().equals(supervisorName)));
 
             if (matchesStatus && matchesStudentId && matchesSupervisorName) {
                 matchingProjects.add(project);

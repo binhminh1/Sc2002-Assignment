@@ -34,3 +34,4 @@ bin/
 ### JAR Files ###
 *.jar
 src/PATH.java
+src/Mainsample.java
