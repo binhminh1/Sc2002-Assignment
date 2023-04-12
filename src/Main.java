@@ -246,21 +246,21 @@ public class Main {
                                 supervisor.processChangeTitleRequest();
                                 break;
                             case 4:
-                                /*
                                 System.out.println("Your requests: ");
                                 for (Request request : RequestRepository.getRequests()) {
 
-                                    System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-
-                                }
-                                for (Request request : RequestRepository.getRequests()) {
-                                    if (request.getToId().equals(supervisor.getUserId())) {
+                                    if (request.getToName().equals(supervisor.getName())) {
+                                        System.out.println("Incoming requests:");
                                         System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
                                     }
-                                }
-                                */
 
+                                    if (request.getFromId().equals(supervisoruserid)) {
+                                        System.out.println("Outgoing requests:");
+                                        System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+                                        }
+                                    }
                                 break;
+
                             case 5:
                                 supervisor.viewProjects();
                                 System.out.println("Please enter the project ID: ");
