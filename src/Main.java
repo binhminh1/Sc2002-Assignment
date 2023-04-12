@@ -211,6 +211,7 @@ public class Main {
                                         case 1:
                                             if (supervisor.supervisorCapReached(supervisoruserid)) {
                                                 System.out.println("You already have two projects");
+                                                // His AVAILABLE projects have to become UNAVAILABLE
                                                 continue;
                                             }
                                             System.out.println("Please enter the project  name");
