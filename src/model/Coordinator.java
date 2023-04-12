@@ -126,10 +126,12 @@ public class Coordinator extends User{
                 statusFilter = ProjectStatus.valueOf(scanner.next().toUpperCase());
                 break;
             case 2:
+
                 System.out.println("Enter supervisor name filter:");
                 scanner.nextLine(); // consume the end-of-line character
                 supervisorNameFilter = scanner.nextLine();
                 //System.out.println(supervisorNameFilter);
+
                 break;
             case 3:
                 System.out.println("Enter student ID filter:");
@@ -251,17 +253,20 @@ public class Coordinator extends User{
     }
 
     //View all History
-    public List<String> viewRequestsHistory() {
+    public void viewRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
     
         for (Request request : RequestRepository.getRequests()) {
+            System.out.println("Request ID: " + request.getRequestId() + " Type: " + request.getType() + " From ID: " + request.getFromId() + " To ID: " + request.getToId() + " Status: " + request.getStatus());
+        }
+            /*
             StringBuilder sb = new StringBuilder();
             sb.append("Request ID: ").append(request.getRequestId())
                     .append("\nType: ").append(request.getType())
                     .append("\nFrom ID: ").append(request.getFromId())
                     .append("\nTo ID: ").append(request.getToId())
                     .append("\nStatus: ").append(request.getStatus());
-    
+
             if (!request.getRequestHistory().isEmpty()) {
                 sb.append("\nHistory:");
                 for (RequestHistory history : request.getRequestHistory()) {
@@ -272,5 +277,7 @@ public class Coordinator extends User{
             requestHistory.add(sb.toString());
         }
         return requestHistory;
+        */
     }
+
 }
