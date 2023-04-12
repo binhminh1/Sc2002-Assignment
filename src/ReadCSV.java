@@ -40,7 +40,9 @@ public class ReadCSV {
             if(iend != -1){
                 subString = supervisor.get(1).substring(0 , iend);
             }
+
             Supervisor supervisor1 = new Supervisor(subString,supervisor.get(0),supervisor.get(1));
+
             SupervisorRepository.addSupervisor(supervisor1);
         }
         System.out.println("Loading Project List");
