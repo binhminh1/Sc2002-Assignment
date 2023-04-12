@@ -1,5 +1,7 @@
 package model;
 
+import repository.ProjectRepository;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -21,11 +23,11 @@ public class Request {
             this.type = type;
             this.projectId = projectId;
             this.fromId = fromId;
-            this.toId = toId;
+            this.toId = ProjectRepository.getby;
             this.newTitle = newTitle;
             this.status = RequestStatus.Pending;
             Date day = new Date();
-//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             this.requestId = String.valueOf(new Date().getTime()) ;
             this.requestHistory = new ArrayList<>();
         }
@@ -36,7 +38,7 @@ public class Request {
             this.type = type;
             this.projectId = projectId;
             this.fromId = fromId;
-            this.toId = "NULL";
+            this.toId = "ASFLI";
             this.replacementSupId = newSuperId;
             this.status = RequestStatus.Pending;
             Date day = new Date();
@@ -47,7 +49,9 @@ public class Request {
     }
 
 
-    public Request(RequestType type, String projectId){
+    public Request(RequestType type, String projectId, String studentId){
+        this.fromId = studentId;
+        this.toId = "ASFLI";
         this.type = type;
         this.projectId = projectId;
         this.status = RequestStatus.Pending;
