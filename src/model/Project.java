@@ -83,7 +83,7 @@ public class Project {
             throw new IllegalStateException("Project status is not AVAILABLE or ALLOCATED.");
         }
     }
-
+    // sss
     /**
      * Assign a student to the project 
      * (change project status to reserved so that no otehr student can choose it until request is approved/rejected)
