@@ -210,7 +210,8 @@ public class Main {
                                     switch (projectChoice) {
                                         case 1:
                                             if (supervisor.supervisorCapReached(supervisoruserid)) {
-                                                System.out.println("You already have two projects");
+                                                System.out.println("You already have supervising two projects");
+
                                                 // His AVAILABLE projects have to become UNAVAILABLE
                                                 continue;
                                             }
