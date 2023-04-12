@@ -23,7 +23,7 @@ public class Request {
             this.type = type;
             this.projectId = projectId;
             this.fromId = fromId;
-            this.toId = ProjectRepository.getby;
+            this.toId = ProjectRepository.getByID(projectId).getSupervisorName();
             this.newTitle = newTitle;
             this.status = RequestStatus.Pending;
             Date day = new Date();
