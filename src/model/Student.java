@@ -69,7 +69,7 @@ public class Student extends User{
                     .append("\nType: ").append(request.getType())
                     .append("\nProject ID: ").append(request.getProjectId())
                     .append("\nFrom ID: ").append(request.getFromId())
-                    .append("\nTo ID: ").append(request.getToId())
+                    .append("\nTo ID: ").append(request.getToName())
                     .append("\nReplacement supervisor: ").append(request.getReplacementSupId())
                     .append("\nStatus: ").append(request.getStatus());
     

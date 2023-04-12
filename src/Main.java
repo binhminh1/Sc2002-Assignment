@@ -76,7 +76,7 @@ public class Main {
                             case 2:
                                 System.out.println("Available projects: ");
                                 for (Project project : ProjectRepository.getAvailableProject()) {
-                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
+                                    project.displayProject();
 
                                 }
                                 break;
@@ -94,7 +94,7 @@ public class Main {
                                     String projectId = sc.next();
                                     Project project = ProjectRepository.getByID(projectId);
                                     if (project != null) {
-                                        student.sendSelectProjectRequest(projectId, student.getUserId());
+                                        student.sendSelectProjectRequest(projectId);
 
                                         System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
                                         student.changeStatus(PENDING);
@@ -143,7 +143,7 @@ public class Main {
                                 if (student.getStatus() == StudentStatus.REGISTERED) {
                                     Project project = ProjectRepository.getByID(student.getProjectId());
                                     if (project != null) {
-                                        student.sendDeregisterProjectRequest(project.getProjectId(), student.getUserId());
+                                        student.sendDeregisterProjectRequest(project.getProjectId());
                                         System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
                                     }
                                 } else {
@@ -246,6 +246,7 @@ public class Main {
                                 supervisor.processChangeTitleRequest();
                                 break;
                             case 4:
+                                /*
                                 System.out.println("Your requests: ");
                                 for (Request request : RequestRepository.getRequests()) {
 
@@ -257,6 +258,8 @@ public class Main {
                                         System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
                                     }
                                 }
+                                */
+
                                 break;
                             case 5:
                                 supervisor.viewProjects();

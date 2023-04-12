@@ -91,7 +91,7 @@ public class Supervisor extends User {
      * Allow supervisor to view all of his requests (both incoming and outgoing)
      */
     public void viewRequestHistory() {
-        List<Request> incomingRequests = RequestRepository.getRequestsBygetToId(this.getUserId());
+        List<Request> incomingRequests = RequestRepository.getRequestsByToName(this.getName());
         List<Request> outgoingRequests = RequestRepository.getRequestsByFromId(this.getUserId());
 
         System.out.println("Incoming Requests:");
@@ -109,13 +109,13 @@ public class Supervisor extends User {
     public List<String> viewIncomingRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
 
-        for (Request request : RequestRepository.getRequestsBygetToId(this.getUserId())) {
+        for (Request request : RequestRepository.getRequestsByToName(this.getUserId())) {
             StringBuilder sb = new StringBuilder();
             sb.append("Request ID: ").append(request.getRequestId())
                     .append("\nType: ").append(request.getType())
                     .append("\nProject ID: ").append(request.getProjectId())
                     .append("\nFrom ID: ").append(request.getFromId())
-                    .append("\nTo ID: ").append(request.getToId())
+                    .append("\nTo ID: ").append(request.getToName())
                     .append("\nNew title: ").append(request.getNewTitle())
                     .append("\nStatus: ").append(request.getStatus());
 
@@ -142,7 +142,7 @@ public class Supervisor extends User {
                     .append("\nType: ").append(request.getType())
                     .append("\nProject ID: ").append(request.getProjectId())
                     .append("\nFrom ID: ").append(request.getFromId())
-                    .append("\nTo ID: ").append(request.getToId())
+                    .append("\nTo ID: ").append(request.getToName())
                     .append("\nReplacement supervisor: ").append(request.getReplacementSupId())
                     .append("\nStatus: ").append(request.getStatus());
 

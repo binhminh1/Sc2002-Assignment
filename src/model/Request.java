@@ -10,7 +10,7 @@ public class Request {
     private RequestType type;
     private String projectId;
     private String fromId;
-    private String toId;
+    private String toName;
     private String replacementSupId;
     private String newTitle;
     private String requestId;
@@ -23,7 +23,7 @@ public class Request {
             this.type = type;
             this.projectId = projectId;
             this.fromId = fromId;
-            this.toId = ProjectRepository.getByID(projectId).getSupervisorName();
+            this.toName = ProjectRepository.getByID(projectId).getSupervisorName(); //Get supervisor from project ID, then get his name
             this.newTitle = newTitle;
             this.status = RequestStatus.Pending;
             Date day = new Date();
@@ -38,7 +38,7 @@ public class Request {
             this.type = type;
             this.projectId = projectId;
             this.fromId = fromId;
-            this.toId = "ASFLI";
+            this.toName = "Li Fang";
             this.replacementSupId = newSuperId;
             this.status = RequestStatus.Pending;
             Date day = new Date();
@@ -48,10 +48,10 @@ public class Request {
         }
     }
 
-
+    // Deregister and register
     public Request(RequestType type, String projectId, String studentId){
         this.fromId = studentId;
-        this.toId = "ASFLI";
+        this.toName = "Li Fang";
         this.type = type;
         this.projectId = projectId;
         this.status = RequestStatus.Pending;
@@ -69,8 +69,8 @@ public class Request {
         return status;
     }
 
-    public String getToId() {
-        return toId;
+    public String getToName() {
+        return toName;
     }
 
     public void changeStatus(RequestStatus status){

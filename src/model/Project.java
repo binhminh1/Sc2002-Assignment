@@ -31,11 +31,11 @@ public class Project {
     /**
      * Print the name and email of the supervisor.
      */
-    /*public void displaySupervisorInformation() {
+    public void displaySupervisorInformation() {
         Supervisor supervisor = SupervisorRepository.getByName(supervisorName);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
-    }*/
+    }
 
     /**
      * Print the name and email of the student.
@@ -67,15 +67,15 @@ public class Project {
      */
     public void displayProject() {
         if (status == ProjectStatus.AVAILABLE) {
-
+            System.out.println(" ");
             displayProjectID();
-            //displaySupervisorInformation();
+            displaySupervisorInformation();
             displayProjectInformation();
 
-        } else if (status == ProjectStatus.ALLOCATED) {
-
+        } else if (status == ProjectStatus.ALLOCATED || status == ProjectStatus.RESERVED) {
+            System.out.println(" ");
             displayProjectID();
-            //displaySupervisorInformation();
+            displaySupervisorInformation();
             displayStudentInformation();
             displayProjectInformation();
 

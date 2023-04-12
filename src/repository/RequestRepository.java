@@ -73,10 +73,10 @@ public class RequestRepository {
     }
 
     //Incoming
-    public static List<Request> getRequestsBygetToId(String toId){
+    public static List<Request> getRequestsByToName(String toId){
         List<Request> matchingRequests = new ArrayList<>();
         for(Request request : requests){
-            if(request.getToId() == toId){
+            if(request.getToName() == toId){
                 matchingRequests.add(request);
             }
         }

@@ -151,8 +151,9 @@ public class Coordinator extends User{
 
             if (project.getStatus() == ProjectStatus.AVAILABLE || project.getStatus() == ProjectStatus.UNAVAILABLE ) {
                 project.displayProjectID();
-                System.out.println("Supervisor: " + project.getSupervisorName());
-                System.out.println("Supervisor email: " + SupervisorRepository.getByName(project.getSupervisorName()).getEmail());
+                //System.out.println("Supervisor: " + project.getSupervisorName());
+                //System.out.println("Supervisor email: " + SupervisorRepository.getByName(project.getSupervisorName()).getEmail());
+                project.displaySupervisorInformation();
                 project.displayProjectInformation();;
                 System.out.println("\n");
             } else if (project.getStatus() == ProjectStatus.ALLOCATED||project.getStatus() == ProjectStatus.RESERVED) {
@@ -175,13 +176,13 @@ public class Coordinator extends User{
             // Print all pending requests
             for (Request request : pendingRequests) {
                 if(request.getType() == RequestType.transferStudent)
-                    System.out.println(request.getRequestId() + " "+(SupervisorRepository.getByID(request.getFromId())).getName() + " " +request.getType() + " " + request.getStatus());
+                    System.out.println(request.getRequestId() + " "+(SupervisorRepository.getByID(request.getFromId())).getName() + " " +request.getType());
                 else if(request.getType() == RequestType.assignProject){
-                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to assign project (id:" +request.getProjectId() + ") to him " + request.getStatus());
+                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to assign project (id:" +request.getProjectId() + ") to him ");
                 }else if (request.getType() == RequestType.changeTitle){
-                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to change title of project (id:" +request.getProjectId() + ") to " + request.getNewTitle() + request.getStatus());
+                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to change title of project (id:" +request.getProjectId() + ") to " + request.getNewTitle());
                 }else{
-                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to deregister of project (id:" +request.getProjectId() + ")" + request.getStatus());
+                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to deregister of project (id:" + request.getProjectId() + ")");
                 }
             }
     
@@ -257,7 +258,7 @@ public class Coordinator extends User{
         List<String> requestHistory = new ArrayList<>();
     
         for (Request request : RequestRepository.getRequests()) {
-            System.out.println("Request ID: " + request.getRequestId() + " Type: " + request.getType() + " From ID: " + request.getFromId() + " To ID: " + request.getToId() + " Status: " + request.getStatus());
+            System.out.println("Request ID: " + request.getRequestId() + " Type: " + request.getType() + " From ID: " + request.getFromId() + " To ID: " + request.getToName() + " Status: " + request.getStatus());
         }
             /*
             StringBuilder sb = new StringBuilder();
