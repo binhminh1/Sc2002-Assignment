@@ -1,6 +1,5 @@
 package model;
  
-import java.util.Objects;
 import java.util.Scanner;
 
 import repository.ProjectRepository;
@@ -41,7 +40,7 @@ public class Coordinator extends User{
         else 
         {
             if (projectToUpdate != null) {
-            projectToUpdate.setSupervisorId(newSupervisorId);
+            projectToUpdate.setSupervisorName(newSupervisorId);
             System.out.println("Project supervisor updated.");
             } 
         else {
@@ -116,11 +115,10 @@ public class Coordinator extends User{
         System.out.println("2. Supervisor ID");
         System.out.println("3. Student ID");
         int choice = scanner.nextInt();
-        scanner.next(); // Consume the newline character
 
         // Get selected filter values
         ProjectStatus statusFilter = null;
-        String supervisorIdFilter = null;
+        String supervisorNameFilter = null;
         String studentIdFilter = null;
         switch (choice) {
             case 1:
@@ -128,8 +126,9 @@ public class Coordinator extends User{
                 statusFilter = ProjectStatus.valueOf(scanner.next().toUpperCase());
                 break;
             case 2:
-                System.out.println("Enter supervisor ID filter:");
-                supervisorIdFilter = scanner.next();
+                System.out.println("Enter supervisor name filter:");
+                scanner.nextLine();
+                supervisorNameFilter = scanner.nextLine();
                 break;
             case 3:
                 System.out.println("Enter student ID filter:");
@@ -141,20 +140,23 @@ public class Coordinator extends User{
         }
 
         // Search for projects matching the selected filters
-        List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, supervisorIdFilter, studentIdFilter);
+        List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, supervisorNameFilter, studentIdFilter);
 
         // Print the details of the matching projects
         for (Project project : matchingProjects) {
             if (statusFilter == ProjectStatus.AVAILABLE || statusFilter == ProjectStatus.UNAVAILABLE ) {
                 project.displayProjectID();
-                project.displaySupervisorInformation();
-                project.displayProjectInformation();
+                System.out.println("Supervisor: " + project.getSupervisorName());
+                System.out.println("Supervisor email: " + SupervisorRepository.getByName(project.getSupervisorName()).getEmail());
+                project.displayProjectInformation();;
+                System.out.println("\n");
             } else if (statusFilter == ProjectStatus.ALLOCATED||statusFilter == ProjectStatus.RESERVED) {
                 project.displayProjectID();
-                project.displaySupervisorInformation();
-                project.displayStudentInformation();
-                project.displayProjectInformation();;
-            }           
+                System.out.println("Supervisor: " + project.getSupervisorName());
+                System.out.println("Supervisor email: " + SupervisorRepository.getByName(project.getSupervisorName()).getEmail());
+                //project.displayStudentInformation();
+                System.out.println("\n");
+            }
         }
     }
 

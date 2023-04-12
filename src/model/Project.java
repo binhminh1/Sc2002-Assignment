@@ -1,12 +1,9 @@
 package model;
 
-import repository.ProjectRepository;
 import repository.StudentRepository;
 import repository.SupervisorRepository;
 import service.ProjectService;
-import service.StudentService;
-import service.SupervisorService;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 public class Project {
@@ -14,7 +11,7 @@ public class Project {
      * Declaration of variables to be used within the Project Class
      */
     private String projectId;
-    private String supervisorId;
+    private String supervisorName;
     private String projectTitle;
 
     private String studentId;
@@ -27,7 +24,7 @@ public class Project {
 //        this.projectId = df.format(day);
         this.projectId=o;
         this.projectTitle = projectTitle;
-        this.supervisorId =  supervisorId;
+        this.supervisorName =  supervisorId;
 //        this.studentId = o;
         this.status = ProjectStatus.AVAILABLE;
     }
@@ -35,11 +32,11 @@ public class Project {
     /**
      * Print the name and email of the supervisor.
      */
-    public void displaySupervisorInformation() {
-        Supervisor supervisor = SupervisorRepository.getByID(supervisorId);//(need to change)
+    /*public void displaySupervisorInformation() {
+        Supervisor supervisor = SupervisorRepository.getByName(supervisorName);//(need to change)
         System.out.println("Supervisor Name: " + supervisor.getName());
         System.out.println("Supervisor Email Address: " + supervisor.getEmail());
-    }
+    }*/
 
     /**
      * Print the name and email of the student.
@@ -73,13 +70,13 @@ public class Project {
         if (status == ProjectStatus.AVAILABLE) {
 
             displayProjectID();
-            displaySupervisorInformation();
+            //displaySupervisorInformation();
             displayProjectInformation();
             System.out.println("Project is available for allocation.");
         } else if (status == ProjectStatus.ALLOCATED) {
 
             displayProjectID();
-            displaySupervisorInformation();
+            //displaySupervisorInformation();
             displayStudentInformation();
             displayProjectInformation();
             System.out.println("Project is allocated to a student.");
@@ -145,7 +142,7 @@ public class Project {
             return false;
         }
         Project project = ProjectService.getByID(projectId);
-        if(project.getSupervisorId() != supervisorId){
+        if(project.getSupervisorName() != supervisorId){
             return false;
         }
         project.studentId = studentID;
@@ -190,8 +187,8 @@ public class Project {
      * 
      * @return get supervisorID
      */
-    public String getSupervisorId() {
-        return supervisorId;
+    public String getSupervisorName() {
+        return supervisorName;
     }
 
     /**
@@ -218,10 +215,10 @@ public class Project {
 
     /**
      * set the supervisorID
-     * @param supervisorId
+     * @param supervisorName
      */
-    public void setSupervisorId(String supervisorId) {
-        this.supervisorId = supervisorId;
+    public void setSupervisorName(String supervisorName) {
+        this.supervisorName = supervisorName;
     }
 
     /**

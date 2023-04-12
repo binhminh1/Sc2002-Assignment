@@ -4,10 +4,8 @@ import repository.ProjectRepository;
 import repository.RequestRepository;
 import repository.StudentRepository;
 import repository.SupervisorRepository;
-import service.StudentService;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static model.StudentStatus.PENDING;
@@ -78,7 +76,7 @@ public class Mainsample {
                             case 2:
                                 System.out.println("Available projects: ");
                                 for (Project project : ProjectRepository.getAvailableProject()) {
-                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
+                                    System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
                                 }
                                 break;
 
@@ -88,7 +86,7 @@ public class Mainsample {
 
                                     //print all available projects
                                     for (Project project : ProjectRepository.getAvailableProject()) {
-                                        System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorId());
+                                        System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
                                     }
                                     //student input the project id
                                     String projectId = sc.next();
@@ -110,7 +108,7 @@ public class Mainsample {
                                 if (student.getStatus() == StudentStatus.REGISTERED) {
                                     for (Project project : ProjectRepository.getProjectsByStatus(ProjectStatus.ALLOCATED)) {
                                         if (student.getUserId().equals(project.getStudentId())) {
-                                            System.out.println(project.getProjectId() + " " + project.getSupervisorId() + " " + project.getProjectTitle());
+                                            System.out.println(project.getProjectId() + " " + project.getSupervisorName() + " " + project.getProjectTitle());
                                         }
                                     }
                                 } else {
