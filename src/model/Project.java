@@ -18,12 +18,12 @@ public class Project {
     private ProjectStatus status; 
 
 
-    public Project(String o, String supervisorId, String projectTitle) {
+    public Project(String o, String supervisorName, String projectTitle) {
 
 
         this.projectId=o;
         this.projectTitle = projectTitle;
-        this.supervisorName =  supervisorId;
+        this.supervisorName =  supervisorName;
 //        this.studentId = o;
         this.status = ProjectStatus.AVAILABLE;
     }

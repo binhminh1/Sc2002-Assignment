@@ -30,9 +30,9 @@ public class Coordinator extends User{
             project.displayProject();
         }
     }
-    public void changeProjectSupervisor(String projectId, String newSupervisorId) {
+    public void changeProjectSupervisor(String projectId, String newSupervisorName) {
         Project projectToUpdate = ProjectRepository.getByID(projectId);
-        if(SupervisorRepository.getByID(newSupervisorId).supervisorCapReached(newSupervisorId))
+        if(SupervisorRepository.getByName(newSupervisorName).supervisorCapReached(newSupervisorName))
         {
             System.out.println("Supervisor has reached maximum number of supervising projects");
         }
@@ -40,7 +40,7 @@ public class Coordinator extends User{
         else 
         {
             if (projectToUpdate != null) {
-            projectToUpdate.setSupervisorName(newSupervisorId);
+            projectToUpdate.setSupervisorName(newSupervisorName);
             System.out.println("Project supervisor updated.");
             } 
         else {
@@ -112,7 +112,7 @@ public class Coordinator extends User{
         // Ask coordinator for filter options
         System.out.println("Please select filter options:");
         System.out.println("1. Project status");
-        System.out.println("2. Supervisor ID");
+        System.out.println("2. Supervisor name");
         System.out.println("3. Student ID");
         int choice = scanner.nextInt();
 
@@ -130,7 +130,6 @@ public class Coordinator extends User{
                 System.out.println("Enter supervisor name filter:");
                 scanner.nextLine(); // consume the end-of-line character
                 supervisorNameFilter = scanner.nextLine();
-                //System.out.println(supervisorNameFilter);
 
                 break;
             case 3:
@@ -144,7 +143,6 @@ public class Coordinator extends User{
 
         // Search for projects matching the selected filters
         List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, studentIdFilter, supervisorNameFilter);
-        System.out.println(matchingProjects.size());
         // Print the details of the matching projects
         for (Project project : matchingProjects) {
 
@@ -158,9 +156,8 @@ public class Coordinator extends User{
                 System.out.println("\n");
             } else if (project.getStatus() == ProjectStatus.ALLOCATED||project.getStatus() == ProjectStatus.RESERVED) {
                 project.displayProjectID();
-                System.out.println("Supervisor: " + project.getSupervisorName());
-                System.out.println("Supervisor email: " + SupervisorRepository.getByName(project.getSupervisorName()).getEmail());
-                //project.displayStudentInformation();
+                project.displaySupervisorInformation(); //problem cuz "supervisor" is null
+                project.displayStudentInformation();
                 System.out.println("\n");
             }
 
@@ -176,13 +173,13 @@ public class Coordinator extends User{
             // Print all pending requests
             for (Request request : pendingRequests) {
                 if(request.getType() == RequestType.transferStudent)
-                    System.out.println(request.getRequestId() + " "+(SupervisorRepository.getByID(request.getFromId())).getName() + " " +request.getType());
+                    System.out.println(request.getRequestId() + " "+(SupervisorRepository.getByID(request.getFromId())).getName() + " request transfer student of project (id: " +request.getProjectId() + ") to " + request.getReplacementSupName()) ;
                 else if(request.getType() == RequestType.assignProject){
-                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to assign project (id:" +request.getProjectId() + ") to him ");
+                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + " request to assign project (id:" +request.getProjectId() + ") to him ");
                 }else if (request.getType() == RequestType.changeTitle){
-                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to change title of project (id:" +request.getProjectId() + ") to " + request.getNewTitle());
+                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + " request to change title of project (id:" +request.getProjectId() + ") to " + request.getNewTitle());
                 }else{
-                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + "request to deregister of project (id:" + request.getProjectId() + ")");
+                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + " request to deregister of project (id:" + request.getProjectId() + ")");
                 }
             }
     
@@ -207,7 +204,7 @@ public class Coordinator extends User{
                     case transferStudent:
                         if (processChoice == 1) {
                             request.changeStatus(RequestStatus.Approved);
-                            changeProjectSupervisor(request.getProjectId(), request.getReplacementSupId());
+                            changeProjectSupervisor(request.getProjectId(), request.getReplacementSupName());
                             System.out.println("The request has been approved.");
                         } else {
                             System.out.println("The request has been rejected.");

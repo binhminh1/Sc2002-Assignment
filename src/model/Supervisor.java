@@ -57,19 +57,22 @@ public class Supervisor extends User {
      * @param ProjectId projectID does not change
      * @return
      */
-    public boolean sendTransferStudentRequest(String supervisorId, String ProjectId) {
+    public boolean sendTransferStudentRequest(String newsupervisorName, String ProjectId) {
         Project project = ProjectRepository.getByID(ProjectId);
-        if (project == null) {
+        if (project == null || !project.getSupervisorName().equals(super.getName()) ) {
+            System.out.println("Invalid project ID");
             return false;
         }
-        //projecttitle对应了supervisorName
-        Supervisor supervisor = SupervisorRepository.getByName(project.getProjectTitle());
-        if (supervisor == null) {
+        if(project.getStatus()==ProjectStatus.ALLOCATED)
+        {
+            Request request = new Request(RequestType.transferStudent, ProjectId, super.getUserId(), newsupervisorName);
+            RequestRepository.addRequest(request);
+            return true;
+        }
+        else{
+            System.out.println("The project has not been allocated to a student");
             return false;
         }
-        Request request = new Request(RequestType.transferStudent, ProjectId, super.getUserId(), supervisorId);
-        RequestRepository.addRequest(request);
-        return true;
     }
 
     /**
@@ -143,7 +146,7 @@ public class Supervisor extends User {
                     .append("\nProject ID: ").append(request.getProjectId())
                     .append("\nFrom ID: ").append(request.getFromId())
                     .append("\nTo ID: ").append(request.getToName())
-                    .append("\nReplacement supervisor: ").append(request.getReplacementSupId())
+                    .append("\nReplacement supervisor: ").append(request.getReplacementSupName())
                     .append("\nStatus: ").append(request.getStatus());
 
             if (!request.getRequestHistory().isEmpty()) {

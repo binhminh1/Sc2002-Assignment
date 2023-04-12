@@ -11,7 +11,7 @@ public class Request {
     private String projectId;
     private String fromId;
     private String toName;
-    private String replacementSupId;
+    private String replacementSupName;
     private String newTitle;
     private String requestId;
     private RequestStatus status;
@@ -33,13 +33,13 @@ public class Request {
         }
     }
 
-    public Request(RequestType type, String projectId, String fromId, String newSuperId){
+    public Request(RequestType type, String projectId, String fromId, String newSuperName){
         if(type == RequestType.transferStudent){
             this.type = type;
             this.projectId = projectId;
             this.fromId = fromId;
             this.toName = "Li Fang";
-            this.replacementSupId = newSuperId;
+            this.replacementSupName = newSuperName;
             this.status = RequestStatus.Pending;
             Date day = new Date();
 //            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -86,8 +86,8 @@ public class Request {
         return projectId;
     }
 
-    public String getReplacementSupId() {
-        return replacementSupId;
+    public String getReplacementSupName() {
+        return replacementSupName;
     }
 
     public String getFromId() {

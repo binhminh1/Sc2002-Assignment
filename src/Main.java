@@ -195,7 +195,7 @@ public class Main {
                                 }
                                 break;
                             case 2:
-                                loop2:
+
                                 while (true) {
                                     System.out.println("Please select an option: \n" +
                                             "1. create \n" +
@@ -205,15 +205,9 @@ public class Main {
                                     int projectChoice = sc.nextInt();
                                     switch (projectChoice) {
                                         case 1:
-                                            if (supervisor.supervisorCapReached(supervisoruserid)) {
-                                                System.out.println("You already have supervising two projects");
-
-                                                // His AVAILABLE projects have to become UNAVAILABLE
-                                                continue;
-                                            }
                                             System.out.println("Please enter the project  name");
                                             String projectName = sc.next();
-                                            Project project = new Project(String.valueOf(ProjectRepository.numberOfProjects + 1), projectName, supervisor.getUserId());
+                                            Project project = new Project(String.valueOf(ProjectRepository.numberOfProjects + 1), supervisor.getName(),projectName);
                                             supervisor.addProjects(project);
                                             ProjectRepository.addProject(project);
                                             break;
@@ -235,11 +229,11 @@ public class Main {
                                             supervisor.viewProjects();
                                             break;
                                         case 4:
-                                            break loop2;
-
+                                            break;
                                     }
                                     break;
                                 }
+                                break;
                             case 3:
                                 supervisor.processChangeTitleRequest();
                                 break;
@@ -260,22 +254,24 @@ public class Main {
                                 break;
 
                             case 5:
-                                supervisor.viewProjects();
-                                System.out.println("Please enter the project ID: ");
-                                String id = sc.next();
-                                System.out.println("Please enter the supervisor ID: ");
-                                String supervisorId = sc.next();
+                                while(true) {
+                                    supervisor.viewProjects();
+                                    System.out.println("");
+                                    System.out.println("Please enter the project ID: ");
+                                    String projectId = sc.next();
+                                    System.out.println("Please enter the replacement supervisor name: ");
+                                    sc.nextLine(); // consume the end-of-line character
+                                    String supervisorNameToTransfer = sc.nextLine();
 
-                                String projectId = id;
-                                Supervisor trasferSuper = SupervisorRepository.getByID(supervisorId);
-                                if (trasferSuper == null) {
-                                    System.out.println("Invalid supervisor ID. Please try again.");
-                                    break;
-                                }
-                                boolean re = trasferSuper.sendTransferStudentRequest(supervisorId, projectId);
-                                if (!re) {
-                                    System.out.println("Invalid project ID. Please try again.");
-                                    break;
+                                    Supervisor trasferSuper = SupervisorRepository.getByName(supervisorNameToTransfer);
+                                    if (trasferSuper == null) {
+                                        System.out.println("Invalid supervisor name. Please try again.");
+                                        break;
+                                    }
+                                    boolean ra = supervisor.sendTransferStudentRequest(supervisorNameToTransfer, projectId);
+                                    if(ra){
+                                        break;
+                                    }
                                 }
                                 System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
                                 break;
