@@ -115,56 +115,53 @@ public class Coordinator extends User{
         System.out.println("1. Project status");
         System.out.println("2. Supervisor name");
         System.out.println("3. Student ID");
-        int choice = scanner.nextInt();
 
-        // Get selected filter values
-        ProjectStatus statusFilter = null;
-        String supervisorNameFilter = null;
-        String studentIdFilter = null;
-        switch (choice) {
-            case 1:
-                System.out.println("Enter project status filter (UNAVAILABLE, AVAILABLE, RESERVED, or ALLOCATED):");
-                statusFilter = ProjectStatus.valueOf(scanner.next().toUpperCase());
-                break;
-            case 2:
+        try {
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline character
 
-                System.out.println("Enter supervisor name filter:");
-                scanner.nextLine(); // consume the end-of-line character
-                supervisorNameFilter = scanner.nextLine();
-
-                break;
-            case 3:
-                System.out.println("Enter student ID filter:");
-                studentIdFilter = scanner.next();
-                break;
-            default:
-                System.out.println("Invalid choice");
-                return;
-        }
-
-        // Search for projects matching the selected filters
-        List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, studentIdFilter, supervisorNameFilter);
-        // Print the details of the matching projects
-        for (Project project : matchingProjects) {
-
-
-            if (project.getStatus() == ProjectStatus.AVAILABLE || project.getStatus() == ProjectStatus.UNAVAILABLE ) {
-                project.displayProjectID();
-                //System.out.println("Supervisor: " + project.getSupervisorName());
-                //System.out.println("Supervisor email: " + SupervisorRepository.getByName(project.getSupervisorName()).getEmail());
-                project.displaySupervisorInformation();
-                project.displayProjectInformation();;
-                System.out.println("\n");
-            } else if (project.getStatus() == ProjectStatus.ALLOCATED||project.getStatus() == ProjectStatus.RESERVED) {
-                project.displayProjectID();
-                project.displaySupervisorInformation(); //problem cuz "supervisor" is null
-                project.displayStudentInformation();
-                System.out.println("\n");
+            // Get selected filter values
+            ProjectStatus statusFilter = null;
+            String supervisorNameFilter = null;
+            String studentIdFilter = null;
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter project status filter (UNAVAILABLE, AVAILABLE, RESERVED, or ALLOCATED):");
+                    statusFilter = ProjectStatus.valueOf(scanner.next().toUpperCase());
+                    break;
+                case 2:
+                    System.out.println("Enter supervisor name filter:");
+                    supervisorNameFilter = scanner.nextLine();
+                    break;
+                case 3:
+                    System.out.println("Enter student ID filter:");
+                    studentIdFilter = scanner.next();
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    return;
             }
 
+            // Search for projects matching the selected filters
+            List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, studentIdFilter, supervisorNameFilter);
 
+            // Print the details of the matching projects
+            for (Project project : matchingProjects) {
+                if (project.getStatus() == ProjectStatus.AVAILABLE || project.getStatus() == ProjectStatus.UNAVAILABLE) {
+                    project.displayProjectID();
+                    project.displaySupervisorInformation();
+                    project.displayProjectInformation();
+                    System.out.println("\n");
+                } else if (project.getStatus() == ProjectStatus.ALLOCATED || project.getStatus() == ProjectStatus.RESERVED) {
+                    project.displayProjectID();
+                    project.displaySupervisorInformation();
+                    project.displayStudentInformation();
+                    System.out.println("\n");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input");
         }
-
     }
 
     public void processPendingRequests() {
@@ -173,19 +170,44 @@ public class Coordinator extends User{
         while (!pendingRequests.isEmpty()) {
             // Print all pending requests
             for (Request request : pendingRequests) {
-                if(request.getType() == RequestType.transferStudent)
-                    System.out.println(request.getRequestId() + " "+(SupervisorRepository.getByID(request.getFromId())).getName() + " request transfer student of project (id: " +request.getProjectId() + ") to " + request.getReplacementSupName()) ;
+                if(request.getType() == RequestType.transferStudent){
+                    System.out.println("Request ID: " + request.getRequestId());
+                    System.out.println("Student Name: "+(SupervisorRepository.getByID(request.getFromId())).getName());
+                    System.out.println("Request Type: Transfer student to another supervisor");
+                    System.out.println("Project ID: " + request.getProjectId());
+                    System.out.println("Original supervisor ID: " + request.getFromId());
+                    System.out.println("New supervisor ID: " + request.getReplacementSupName());
+                    System.out.println("Request status: " + request.getStatus());
+                }
                 else if(request.getType() == RequestType.assignProject){
-                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + " request to assign project (id:" +request.getProjectId() + ") to him ");
-                }else if (request.getType() == RequestType.changeTitle){
-                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + " request to change title of project (id:" +request.getProjectId() + ") to " + request.getNewTitle());
-                }else{
-                    System.out.println(request.getRequestId() + " " +(StudentRepository.getByID(request.getFromId())).getName() + " request to deregister of project (id:" + request.getProjectId() + ")");
+                    System.out.println("Request ID: " + request.getRequestId());
+                    System.out.println("Student ID: " + request.getFromId());
+                    System.out.println("Student Name: " +(StudentRepository.getByID(request.getFromId())).getName());
+                    System.out.println("Request Type: Assign project to student");
+                    System.out.println("Project ID: "+ request.getProjectId());
+                    System.out.println("Request status: " + request.getStatus());
+                }
+                else if (request.getType() == RequestType.changeTitle){
+                    System.out.println("Request ID: " + request.getRequestId());
+                    System.out.println("Student ID: " + request.getFromId());
+                    System.out.println("Student Name: "+(StudentRepository.getByID(request.getFromId())).getName());
+                    System.out.println("Request Type: Student request to change title of project");
+                    System.out.println("Project ID: "+ request.getProjectId());
+                    System.out.println("New project title"+request.getNewTitle());
+                    System.out.println("Request status: " + request.getStatus());
+                }
+                else{ //deregister
+                    System.out.println("Request ID: " + request.getRequestId());
+                    System.out.println("Student ID: " + request.getFromId());
+                    System.out.println("Student Name: "+(StudentRepository.getByID(request.getFromId())).getName());
+                    System.out.println("Request Type: Student request to deregister from project");
+                    System.out.println("Project ID: "+ request.getProjectId());
+                    System.out.println("Request status: " + request.getStatus());
                 }
             }
     
             // Process a request, ask for requestID
-            System.out.println("Enter request ID to approve/reject or 0 to exit:");
+            System.out.println("\nEnter request ID to approve/reject or 0 to exit:");
             String requestId = scanner.next();
 //            scanner.next(); // Consume the newline character
     
@@ -195,7 +217,7 @@ public class Coordinator extends User{
     
             Request request = RequestRepository.getByID(String.valueOf(requestId));
             if (request != null) {
-                System.out.println("Please select an option: \n" +
+                System.out.println("\nPlease select an option: \n" +
                         "1. Approve \n" +
                         "2. Reject \n");
                 int processChoice = scanner.nextInt();
@@ -252,7 +274,7 @@ public class Coordinator extends User{
         }
     
         if (pendingRequests.isEmpty()) {
-            System.out.println("All pending requests processed.");
+            System.out.println("\nAll pending requests processed.");
         }
     }
 
@@ -261,7 +283,11 @@ public class Coordinator extends User{
         List<String> requestHistory = new ArrayList<>();
     
         for (Request request : RequestRepository.getRequests()) {
-            System.out.println("Request ID: " + request.getRequestId() + " Type: " + request.getType() + " From ID: " + request.getFromId() + " To ID: " + request.getToName() + " Status: " + request.getStatus());
+            System.out.println("Request ID: "+ request.getRequestId());
+            System.out.println("Request Type: "+ request.getType());
+            System.out.println("From ID: "+request.getFromId());
+            System.out.println("To Name: "+ request.getToName());
+            System.out.println("Request status: " + request.getStatus());
         }
             /*
             StringBuilder sb = new StringBuilder();
