@@ -11,7 +11,7 @@ import repository.StudentRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Coordinator extends User{
+public class Coordinator extends User implements ViewRequestHistory{
     private String userId;
     private String password = "password";
     private String email;
@@ -175,7 +175,7 @@ public class Coordinator extends User{
 
     public void processPendingRequests() {
         List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
-    
+
         while (!pendingRequests.isEmpty()) {
             // Print all pending requests
             for (Request request : pendingRequests) {
@@ -214,16 +214,16 @@ public class Coordinator extends User{
                     System.out.println("Request status: " + request.getStatus());
                 }
             }
-    
+
             // Process a request, ask for requestID
             System.out.println("\nEnter request ID to approve/reject or 0 to exit:");
             String requestId = scanner.next();
 //            scanner.next(); // Consume the newline character
-    
+
             if (requestId .equals("0") ) {
                 break; // Exit loop
             }
-    
+
             Request request = RequestRepository.getByID(String.valueOf(requestId));
             if (request != null) {
                 System.out.println("\nPlease select an option: \n" +
@@ -231,7 +231,7 @@ public class Coordinator extends User{
                         "2. Reject \n");
                 int processChoice = scanner.nextInt();
 //                scanner.next(); // Consume the newline character
-    
+
                 switch (request.getType()) {
                     case transferStudent:
                         if (processChoice == 1) {
@@ -275,23 +275,25 @@ public class Coordinator extends User{
             } else {
                 System.out.println("Request not found.");
             }
-    
+
             // Update pending requests list
             pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
         }
-    
+
         if (pendingRequests.isEmpty()) {
             System.out.println("\nAll pending requests processed.");
         }
     }
 
     //View all History
+    @Override
+    public void viewRequestHistory() {
+    }
+
     public void viewRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
-    
-        for (Request request : RequestRepository.getRequests()) {
 
-            System.out.println("Request ID: " + request.getRequestId() + " Type: " + request.getType() + " From ID: " + request.getFromId() + " To NAME: " + request.getToName() + " Status: " + request.getStatus());
+        for (Request request : RequestRepository.getRequests()) {
 
             System.out.println("Request ID: "+ request.getRequestId());
             System.out.println("Request Type: "+ request.getType());
@@ -300,25 +302,5 @@ public class Coordinator extends User{
             System.out.println("Request status: " + request.getStatus());
 
         }
-            /*
-            StringBuilder sb = new StringBuilder();
-            sb.append("Request ID: ").append(request.getRequestId())
-                    .append("\nType: ").append(request.getType())
-                    .append("\nFrom ID: ").append(request.getFromId())
-                    .append("\nTo ID: ").append(request.getToId())
-                    .append("\nStatus: ").append(request.getStatus());
-
-            if (!request.getRequestHistory().isEmpty()) {
-                sb.append("\nHistory:");
-                for (RequestHistory history : request.getRequestHistory()) {
-                    sb.append("\n- ").append(history.getStatus())
-                            .append(" on ").append(history.getUpdatedDate());
-                }
-            }
-            requestHistory.add(sb.toString());
-        }
-        return requestHistory;
-        */
     }
-
 }
