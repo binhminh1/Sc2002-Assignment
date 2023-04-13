@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static model.StudentStatus.PENDING;
+import static model.StudentStatus.UNREGISTERED;
+
 /**
  * Makes use of inheritance and extends from User Class 
  */
@@ -72,13 +75,39 @@ public class Student extends User implements ViewRequestHistory {
         return request;
     }
 
-    public Request sendSelectProjectRequest(String projectID) {
-        Request request = new Request(RequestType.assignProject, projectID, super.getUserId());
-        RequestRepository.addRequest(request);
-        ProjectRepository.getByID(projectID).setStatus(ProjectStatus.RESERVED);
-        ProjectRepository.getByID(projectID).setStudentId(super.getUserId());
-        return request;
+    public Request sendSelectProjectRequest(Student student) {
+        if (student.getStatus() == UNREGISTERED) {
+            System.out.println("Please select a project to register: ");
+
+            while (true) {
+                //print all available projects
+                for (Project project : ProjectRepository.getAvailableProject()) {
+                    System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
+
+                }
+                //student input the project id
+                String projectId = sc.next();
+                Project project = ProjectRepository.getByID(projectId);
+                if (project != null && (project.getStatus().equals(ProjectStatus.AVAILABLE))) {
+
+                    Request request = new Request(RequestType.assignProject, projectId, super.getUserId());
+                    RequestRepository.addRequest(request);
+                    ProjectRepository.getByID(projectId).setStatus(ProjectStatus.RESERVED);
+                    ProjectRepository.getByID(projectId).setStudentId(super.getUserId());
+                    return request;
+                }
+                else{
+                    System.out.println("Your choice is invalid. Please select a valid project.");
+                }
+            }
+        } else {
+            System.out.println("You are unable to register or deregister a project at this moment.");
+            return null;
+        }
     }
+
+
+
 
     public Request sendDeregisterProjectRequest(String projectID) {
         Request request = new Request(RequestType.deregister, projectID, super.getUserId());

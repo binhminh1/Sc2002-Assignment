@@ -89,36 +89,12 @@ public class Main {
                                 break;
 
                             case 3:
-                                if (student.getStatus() == UNREGISTERED) {
-                                    System.out.println("Please select a project to register: ");
-
-                                    while(true) {
-                                        //print all available projects
-                                        for (Project project : ProjectRepository.getAvailableProject()) {
-                                            System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
-
-                                        }
-                                        //student input the project id
-                                        String projectId = sc.next();
-                                        Project project = ProjectRepository.getByID(projectId);
-                                        if (project != null && (project.getStatus().equals(ProjectStatus.AVAILABLE))) {
-
-                                            student.sendSelectProjectRequest(projectId);
-
-                                            System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
-                                            student.changeStatus(PENDING);
-                                            break;
-                                        } else {
-                                            System.out.println("Invalid project ID. Please try again.");
-                                            System.out.println("");
-
-                                        }
-                                    }
-                                } else {
-                                    System.out.println("You are unable to register or deregister a project at this moment.");
+                                Request re = student.sendSelectProjectRequest(student);
+                                if (re != null) {
+                                    System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
+                                    student.changeStatus(PENDING);
                                 }
                                 break;
-
                             case 4:
                                 if (student.getStatus() == StudentStatus.REGISTERED) {
                                     for (Project project : ProjectRepository.getProjectsByStatus(ProjectStatus.ALLOCATED)) {
