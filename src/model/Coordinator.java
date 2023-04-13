@@ -1,5 +1,6 @@
 package model;
  
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 import repository.ProjectRepository;
@@ -75,12 +76,13 @@ public class Coordinator extends User{
         }
     
         // Check if the project is already allocated to a student
-        if (project.getStudentId() != null) {
+        if (project.getStatus().equals(ProjectStatus.ALLOCATED)) {
             System.out.println("Project is already allocated to a student.");
             return;
         }
     
         // Update the project's student ID and status fields
+
         Student student=  StudentRepository.getByID(studentId);
         project.setStudentId(studentId);
         student.changeProjectId(projectId);
@@ -163,17 +165,7 @@ public class Coordinator extends User{
 
             // Print the details of the matching projects
             for (Project project : matchingProjects) {
-                if (project.getStatus() == ProjectStatus.AVAILABLE || project.getStatus() == ProjectStatus.UNAVAILABLE) {
-                    project.displayProjectID();
-                    project.displaySupervisorInformation();
-                    project.displayProjectInformation();
-                    System.out.println("\n");
-                } else if (project.getStatus() == ProjectStatus.ALLOCATED || project.getStatus() == ProjectStatus.RESERVED) {
-                    project.displayProjectID();
-                    project.displaySupervisorInformation();
-                    project.displayStudentInformation();
-                    System.out.println("\n");
-                }
+               project.displayProject();
             }
         } catch (Exception e) {
             System.out.println("Invalid input");
@@ -256,15 +248,12 @@ public class Coordinator extends User{
                             request.changeStatus(RequestStatus.Approved);
                             StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.REGISTERED);
                             allocateProject(request.getProjectId(), request.getFromId());
-                            for(Project project: ProjectRepository.searchProjects(null,null,ProjectRepository.getByID(request.getProjectId()).getSupervisorName())){
-                                if(project.getStatus() == ProjectStatus.AVAILABLE){
-                                    project.setStatus(ProjectStatus.UNAVAILABLE);
-                                }
-                            }
                             System.out.println("The request has been approved.");
                         } else {
                             System.out.println("The request has been rejected.");
                             request.changeStatus(RequestStatus.Rejected);
+                            StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.UNREGISTERED);
+                            ProjectRepository.getByID(request.getProjectId()).setStatus(ProjectStatus.AVAILABLE);
                         }
                         break;
                     case deregister:
@@ -276,6 +265,7 @@ public class Coordinator extends User{
                         } else {
                             System.out.println("The request has been rejected.");
                             request.changeStatus(RequestStatus.Rejected);
+                            StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.REGISTERED);
                         }
                         break;
                     default:
