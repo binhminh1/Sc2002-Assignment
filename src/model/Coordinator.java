@@ -40,7 +40,10 @@ public class Coordinator extends User implements ViewRequestHistory{
         }
     }
 
+    @Override
+    public void viewProject() {
 
+    }
 
     public void viewProjects(){
         for(Project project : ProjectRepository.getProjects()){

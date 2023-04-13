@@ -20,7 +20,6 @@ public class Supervisor extends User implements ViewRequestHistory {
     @Override
     public void ChangePassword() {
     }
-
     public void ChangePassword(Supervisor supervisor, String supervisoruserid) {
         Boolean supervisorResult = false;
         System.out.println("Please enter your new password: ");
@@ -49,8 +48,8 @@ public class Supervisor extends User implements ViewRequestHistory {
     }
 
     public Project getProjectsById(String projectId) {
-        for (Project project : projects) {
-            if (Objects.equals(project.getProjectId(), projectId)) {
+        for (Project project : ProjectRepository.getProjects()){
+            if (projectId.equals(project.getProjectId())) {
                 return project;
             }
         }
@@ -60,6 +59,9 @@ public class Supervisor extends User implements ViewRequestHistory {
     /**
      * Prints projects under the supervisor
      */
+    @Override
+    public void viewProject() {
+    }
     public void viewProjects() {
         for (Project project : ProjectRepository.searchProjects(null, null, super.getName())) {
             project.displayProject();
@@ -243,6 +245,7 @@ public class Supervisor extends User implements ViewRequestHistory {
     }
 
     public void viewRequestHistory(String supervisoruserid, Supervisor supervisor) {
+        System.out.println("Your requests: ");
         for (Request request : RequestRepository.getRequests()) {
 
             if (request.getToName().equals(supervisor.getName())) {
@@ -254,6 +257,29 @@ public class Supervisor extends User implements ViewRequestHistory {
                 System.out.println("Outgoing requests:");
                 System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
             }
+        }
+    }
+
+    public void createProject(Supervisor supervisor) {
+        System.out.println("Please enter the project  name");
+        String projectName = sc.next();
+        Project project = new Project(String.valueOf(ProjectRepository.numberOfProjects + 1), supervisor.getName(), projectName);
+        supervisor.addProjects(project);
+        ProjectRepository.addProject(project);
+        System.out.println("Project created successfully");
+    }
+
+    public void updateProject(Supervisor supervisor) {
+        supervisor.viewProjects();
+        System.out.println("choose the project you want to update by id");
+        String projectId = sc.next();
+        System.out.println("Please enter the new title");
+        String newTitle = sc.next();
+        if (supervisor.getProjectsById(projectId) != null && supervisor.getProjectsById(projectId).getSupervisorName().equals(supervisor.getName())) {
+            supervisor.changeTitle(newTitle, projectId);
+            System.out.println("successfully changed");
+        } else {
+            System.out.println("Invalid project ID");
         }
     }
 }
