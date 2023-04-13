@@ -108,6 +108,17 @@ public class Coordinator extends User{
             }
         }
     }
+
+    public void changeTitle(String projectId,String newTitle){
+        Project project = ProjectRepository.getByID(projectId);
+
+        if (project == null) {
+            System.out.println("Project not found.");
+            return;
+        }
+
+        project.setProjectTitle(newTitle);
+    }
     
     private static Scanner scanner = new Scanner(System.in);
 
@@ -185,7 +196,7 @@ public class Coordinator extends User{
                     System.out.println("Student Name: "+(StudentRepository.getByID(request.getFromId())).getName());
                     System.out.println("Request Type: Student request to change title of project");
                     System.out.println("Project ID: "+ request.getProjectId());
-                    System.out.println("New project title"+request.getNewTitle());
+                    System.out.println("New project title: "+request.getNewTitle());
                     System.out.println("Request status: " + request.getStatus());
                 }
                 else{ //deregister
@@ -229,7 +240,7 @@ public class Coordinator extends User{
                     case assignProject:
                         if (processChoice == 1) {
                             request.changeStatus(RequestStatus.Approved);
-                            StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.REGISTERED);
+
                             allocateProject(request.getProjectId(), request.getFromId());
                             System.out.println("The request has been approved.");
                         } else {
@@ -242,7 +253,7 @@ public class Coordinator extends User{
                     case deregister:
                         if (processChoice == 1) {
                             request.changeStatus(RequestStatus.Approved);
-                            StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.DEREGISTERED);
+
                             deregisterStudentFromFYP(request.getProjectId());
                             System.out.println("The request has been approved.");
                         } else {
@@ -251,8 +262,15 @@ public class Coordinator extends User{
                             StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.REGISTERED);
                         }
                         break;
-                    default:
-                        System.out.println("Invalid request type.");
+                    case changeTitle:
+                        if (processChoice == 1) {
+                            request.changeStatus(RequestStatus.Approved);
+                            changeTitle(request.getProjectId(), request.getNewTitle());
+                            System.out.println("The request has been approved.");
+                        } else {
+                            System.out.println("The request has been rejected.");
+                            request.changeStatus(RequestStatus.Rejected);
+                        }
                         break;
                 }
             } else {

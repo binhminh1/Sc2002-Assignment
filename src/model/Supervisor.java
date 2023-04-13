@@ -185,9 +185,9 @@ public class Supervisor extends User {
                 }
             }
 
-            System.out.println("Enter student ID to approve/reject or 0 to exit:");
-            String studentId = scanner.next();
-            if (studentId.equals("0")) {
+            System.out.println("Enter request ID to approve/reject or 0 to exit:");
+            String requestId = scanner.next();
+            if (requestId.equals("0")) {
                 return; // Exit loop
             }
 
@@ -199,20 +199,20 @@ public class Supervisor extends User {
 
             Request req = null;
             for (Request request1 : pendingRequests) {
-                if (request1.getType() == (RequestType.changeTitle) && request1.getFromId().equals(studentId)) {
+                if (request1.getType() == (RequestType.changeTitle) && request1.getRequestId().equals(requestId)) {
                     System.out.println(request1.getRequestId() + " from: " + request1.getFromId() + request1.getType() + " " + request1.getStatus());
                     req=request1;
                 }
             }
             if (req== null) {
-                System.out.println("Invalid request ID");
+                System.out.println("Invalid student ID");
                 return;
             }
             // Process a request
             if (processChoice == 1) {
                 req.changeStatus(RequestStatus.Approved);
                 System.out.println("Request approved");
-                Student student = StudentRepository.getByID(studentId);
+                Student student = StudentRepository.getByID(req.getFromId());
                 //change title
                 changeTitle(req.getNewTitle(), student.getProjectId());
             } else if (processChoice == 2) {
