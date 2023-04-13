@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * Makes use of inheritance and extends from User Class 
  */
-public class Student extends User{
+public class Student extends User implements ViewRequestHistory {
     /**
      * initialize private variables to be used in class
      */
@@ -111,15 +111,19 @@ public class Student extends User{
         return requestHistory;
     }
 
-    public void viewRequestHistoryStudent(String studentID) {
-        for (Request request : RequestRepository.getRequestsByFromId(studentID)) {
-            System.out.println("Request ID: " + request.getRequestId());
-            System.out.println("Student ID: " + request.getFromId());
-            System.out.println("Request Type: " + request.getType());
-            System.out.println("Request Status: " + request.getStatus());
+    @Override
+    public void viewRequestHistory() {
+    }
+
+    public void viewRequestHistory(String studentID){
+        for (Request request : RequestRepository.getRequestsByFromId(studentID)){
+            System.out.println("Request ID: "+ request.getRequestId());
+            System.out.println("Student ID: "+ request.getFromId());
+            System.out.println("Request Type: "+ request.getType() );
+            System.out.println("Request Status: "+request.getStatus());
             System.out.println(" ");
         }
     }
 
-
 }
+

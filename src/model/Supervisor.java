@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-public class Supervisor extends User {
+public class Supervisor extends User implements ViewRequestHistory {
 
     public List<Project> projects = new ArrayList<>();
 
@@ -61,37 +61,37 @@ public class Supervisor extends User {
      * Prints projects under the supervisor
      */
     public void viewProjects() {
-        for (Project project : ProjectRepository.searchProjects(null,null,super.getName())){
+        for (Project project : ProjectRepository.searchProjects(null, null, super.getName())) {
             project.displayProject();
         }
     }
 
-    /**
+    /*
      * Allows supervisor to send a request to coordinator to transfer student to another supervisor
-     * @param supervisorId new supervisorID
-     * @param ProjectId projectID does not change
+     *
+     * @param supervisorId     new supervisorID
+     * @param ProjectId        projectID does not change
      * @return
      */
     public boolean sendTransferStudentRequest(String newsupervisorName, String ProjectId) {
         Project project = ProjectRepository.getByID(ProjectId);
-        if (project == null || !project.getSupervisorName().equals(super.getName()) ) {
+        if (project == null || !project.getSupervisorName().equals(super.getName())) {
             System.out.println("Invalid project ID");
             return false;
         }
-        if(project.getStatus()==ProjectStatus.ALLOCATED)
-        {
+        if (project.getStatus() == ProjectStatus.ALLOCATED) {
             Request request = new Request(RequestType.transferStudent, ProjectId, super.getUserId(), newsupervisorName);
             RequestRepository.addRequest(request);
             return true;
-        }
-        else{
+        } else {
             System.out.println("The project has not been allocated to a student");
             return false;
         }
     }
 
     /**
-     * Ensures that each supervisor only have 2 projects 
+     * Ensures that each supervisor only have 2 projects
+     *
      * @param newSupervisorId
      * @return
      */
@@ -181,7 +181,7 @@ public class Supervisor extends User {
      * Approve change title request
      */
     public void changeTitle(String newTitle, String projectId) {
-        Project project =   ProjectRepository.getByID(projectId);
+        Project project = ProjectRepository.getByID(projectId);
         project.setProjectTitle(newTitle);
     }
 
@@ -196,7 +196,7 @@ public class Supervisor extends User {
             System.out.println("Pending requests:");
             for (Request request : pendingRequests) {
                 if (request.getType() == (RequestType.changeTitle)) {
-                    System.out.println(request.getRequestId() + " from: " + request.getFromId() + " " +  request.getType() + " " + request.getStatus());
+                    System.out.println(request.getRequestId() + " from: " + request.getFromId() + " " + request.getType() + " " + request.getStatus());
                 }
             }
 
@@ -216,10 +216,10 @@ public class Supervisor extends User {
             for (Request request1 : pendingRequests) {
                 if (request1.getType() == (RequestType.changeTitle) && request1.getFromId().equals(studentId)) {
                     System.out.println(request1.getRequestId() + " from: " + request1.getFromId() + request1.getType() + " " + request1.getStatus());
-                    req=request1;
+                    req = request1;
                 }
             }
-            if (req== null) {
+            if (req == null) {
                 System.out.println("Invalid request ID");
                 return;
             }
@@ -236,44 +236,21 @@ public class Supervisor extends User {
             } else {
                 System.out.println("Invalid choice");
             }
+        }
+    }
 
+    public void viewRequestHistory(String supervisoruserid, Supervisor supervisor) {
+        for (Request request : RequestRepository.getRequests()) {
 
-                /*
+            if (request.getToName().equals(supervisor.getName())) {
+                System.out.println("Incoming requests:");
+                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+            }
 
-                // request2 is the request that the supervisor wants to process
-
-                Request request2 = null;
-                for (Request request1 : pendingRequests) {
-                    if (Objects.equals(request1.getFromId(), studentId)) {
-                        request2 = request1;
-                    }
-                }
-                int processChoice;
-                if (request2 != null) {
-                    System.out.println("Please select an option: \n" +
-                            "1. Approve \n" +
-                            "2. Reject \n");
-                    processChoice = scanner.nextInt();
-                    scanner.next();// Consume the newline character
-                } else {
-                    System.out.println("Invalid request ID");
-                    continue;
-                }
-
-                if (processChoice == 1) {
-                    request2.changeStatus(RequestStatus.Approve);
-                    System.out.println("Request approved");
-
-                    //change title
-                    changeTitle(request2.getNewTitle(), request2.getProjectId());
-
-                } else if (processChoice == 2) {
-                    request2.changeStatus(RequestStatus.Reject);
-                    System.out.println("Request rejected");
-                } else {
-                    System.out.println("Invalid option");
-                }
-            }*/
+            if (request.getFromId().equals(supervisoruserid)) {
+                System.out.println("Outgoing requests:");
+                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+            }
         }
     }
 }

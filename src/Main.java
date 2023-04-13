@@ -127,7 +127,7 @@ public class Main {
 
                             case 5:
                                 System.out.println("Your requests: ");
-                                student.viewRequestHistoryStudent(studentuserid);
+                                student.viewRequestHistory(studentuserid);
                                 break;
 
                             case 6:
@@ -252,20 +252,8 @@ public class Main {
                                 break;
                             case 4:
                                 System.out.println("Your requests: ");
-                                for (Request request : RequestRepository.getRequests()) {
-
-                                    if (request.getToName().equals(supervisor.getName())) {
-                                        System.out.println("Incoming requests:");
-                                        System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-                                    }
-
-                                    if (request.getFromId().equals(supervisoruserid)) {
-                                        System.out.println("Outgoing requests:");
-                                        System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-                                        }
-                                    }
+                                supervisor.viewRequestHistory(supervisoruserid, supervisor);
                                 break;
-
                             case 5:
                                 while(true) {
                                     supervisor.viewProjects();
