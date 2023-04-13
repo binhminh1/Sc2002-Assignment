@@ -75,25 +75,11 @@ public class Main {
                             case 1:
                                 student.ChangePassword(student, studentuserid);
                                 break;
-
                             case 2:
-                                if(student.getStatus().equals(StudentStatus.DEREGISTERED)){
-                                    System.out.println("You are not allowed to make selection again as you deregistered your FYP");
-                                    break;
-                                }
-                                System.out.println("Available projects: ");
-                                for (Project project : ProjectRepository.getAvailableProject()) {
-                                    project.displayProject();
-
-                                }
+                                student.viewAvailableProjects(student);
                                 break;
-
                             case 3:
-                                Request re = student.sendSelectProjectRequest(student);
-                                if (re != null) {
-                                    System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
-                                    student.changeStatus(PENDING);
-                                }
+                                student.sendSelectProjectRequest(student);
                                 break;
                             case 4:
                                 student.viewMyProject(student);
@@ -103,29 +89,13 @@ public class Main {
                                 student.viewRequestHistory(studentuserid);
                                 break;
                             case 6:
-                                if (student.getStatus() == StudentStatus.REGISTERED) {
-                                    System.out.println("Please enter the new title of your project: ");
-                                    String newTitle = sc.next();
-                                    student.sendChangeTitleRequest(student.getProjectId(), student.getSuperid(), newTitle);
-
-                                    System.out.println("Your request has been sent. Please wait for the supervisor's approval.");
-                                } else {
-                                    System.out.println("You have not registered a project yet.");
-                                }
+                                student.sendChangeTitleRequest(student);
                                 break;
-
                             case 7:
-                                if (student.getStatus() == StudentStatus.REGISTERED) {
-                                    student.sendDeregisterProjectRequest(student.getProjectId());
-                                    System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
-
-                                } else {
-
-                                    System.out.println("You are unable to deregister a project at this moment.");
-                                }
+                                student.sendDeregisterProjectRequest(student);
                                 break;
                             case 8:
-                                exit=true;
+                                exit = true;
                                 break;
                             default:
                                 System.out.println("Please enter a number between 1 - 8. Please try again.");

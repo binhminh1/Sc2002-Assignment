@@ -69,11 +69,16 @@ public class Student extends User implements ViewRequestHistory {
         return Superid;
     }
 
-    public Request sendChangeTitleRequest(String projectID, String toId, String newTitle) {
-        Request request = new Request(RequestType.changeTitle, projectID, super.getUserId(), toId, newTitle);
-        RequestRepository.addRequest(request);
-        return request;
+    public void viewAvailableProjects(Student student){
+        if(student.getStatus().equals(StudentStatus.DEREGISTERED)){
+            System.out.println("You are not allowed to make selection again as you deregistered your FYP");
+        }
+        System.out.println("Available projects: ");
+        for (Project project : ProjectRepository.getAvailableProject()) {
+            project.displayProject();
+        }
     }
+
 
     public Request sendSelectProjectRequest(Student student) {
         if (student.getStatus() == UNREGISTERED) {
@@ -94,6 +99,8 @@ public class Student extends User implements ViewRequestHistory {
                     RequestRepository.addRequest(request);
                     ProjectRepository.getByID(projectId).setStatus(ProjectStatus.RESERVED);
                     ProjectRepository.getByID(projectId).setStudentId(super.getUserId());
+                    System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
+                    student.changeStatus(PENDING);
                     return request;
                 }
                 else{
@@ -109,10 +116,16 @@ public class Student extends User implements ViewRequestHistory {
 
 
 
-    public Request sendDeregisterProjectRequest(String projectID) {
-        Request request = new Request(RequestType.deregister, projectID, super.getUserId());
-        RequestRepository.addRequest(request);
-        return request;
+    public Request sendDeregisterProjectRequest(Student student) {
+        if (student.getStatus() == StudentStatus.REGISTERED) {
+            Request request = new Request(RequestType.deregister, student.getProjectId(), super.getUserId());
+            RequestRepository.addRequest(request);
+            System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
+            return request;
+        } else {
+            System.out.println("You are unable to deregister a project at this moment.");
+            return null;
+        }
     }
 
     public List<String> viewOutgoingRequestsHistory() {
@@ -165,6 +178,21 @@ public class Student extends User implements ViewRequestHistory {
             }
         } else {
             System.out.println("You have not registered a project yet.");
+        }
+    }
+    public Request sendChangeTitleRequest(Student student){
+        if (student.getStatus() == StudentStatus.REGISTERED) {
+            System.out.println("Please enter the new title of your project: ");
+            String newTitle = sc.next();
+
+            Request request = new Request(RequestType.changeTitle, student.getProjectId(), super.getUserId(), toId, newTitle);
+            RequestRepository.addRequest(request);
+            System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
+            return request;
+        }
+        else{
+            System.out.println("You have not registered a project yet.");
+            return null;
         }
     }
 
