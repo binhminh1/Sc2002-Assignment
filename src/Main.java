@@ -149,6 +149,9 @@ public class Main {
                             case 8:
                                 exit=true;
                                 break;
+                            default:
+                                System.out.println("Please enter a number between 1 - 8. Please try again.");
+                                break;
                         }
                     }
                     if(exit){
@@ -230,6 +233,9 @@ public class Main {
                                             break;
                                         case 4:
                                             break;
+                                        default:
+                                            System.out.println("Please enter a number between 1 - 4. Please try again.");
+                                            break;
                                     }
                                     break;
                                 }
@@ -277,6 +283,9 @@ public class Main {
                                 break;
                             case 6:
                                 exit=true;
+                                break;
+                            default:
+                                System.out.println("Please enter a number between 1 - 6. Please try again.");
                                 break;
                         }
                     }
@@ -336,6 +345,9 @@ public class Main {
                                 break;
                             case 5:
                                 exit = true;
+                                break;
+                            default:
+                                System.out.println("Please enter a number between 1 - 5. Please try again.");
                                 break;
                         }
                     }

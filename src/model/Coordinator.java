@@ -114,57 +114,55 @@ public class Coordinator extends User{
         System.out.println("1. Project status");
         System.out.println("2. Supervisor name");
         System.out.println("3. Student ID");
-        int choice = scanner.nextInt();
 
-        // Get selected filter values
-        ProjectStatus statusFilter = null;
-        String supervisorNameFilter = null;
-        String studentIdFilter = null;
-        switch (choice) {
-            case 1:
-                System.out.println("Enter project status filter (UNAVAILABLE, AVAILABLE, RESERVED, or ALLOCATED):");
-                statusFilter = ProjectStatus.valueOf(scanner.next().toUpperCase());
-                break;
-            case 2:
+        try {
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline character
 
-                System.out.println("Enter supervisor name filter:");
-                scanner.nextLine(); // consume the end-of-line character
-                supervisorNameFilter = scanner.nextLine();
-
-                break;
-            case 3:
-                System.out.println("Enter student ID filter:");
-                studentIdFilter = scanner.next();
-                break;
-            default:
-                System.out.println("Invalid choice");
-                return;
-        }
-
-        // Search for projects matching the selected filters
-        List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, studentIdFilter, supervisorNameFilter);
-        // Print the details of the matching projects
-        for (Project project : matchingProjects) {
-
-
-            if (project.getStatus() == ProjectStatus.AVAILABLE || project.getStatus() == ProjectStatus.UNAVAILABLE ) {
-                project.displayProjectID();
-                //System.out.println("Supervisor: " + project.getSupervisorName());
-                //System.out.println("Supervisor email: " + SupervisorRepository.getByName(project.getSupervisorName()).getEmail());
-                project.displaySupervisorInformation();
-                project.displayProjectInformation();;
-                System.out.println("\n");
-            } else if (project.getStatus() == ProjectStatus.ALLOCATED||project.getStatus() == ProjectStatus.RESERVED) {
-                project.displayProjectID();
-                project.displaySupervisorInformation(); //problem cuz "supervisor" is null
-                project.displayStudentInformation();
-                System.out.println("\n");
+            // Get selected filter values
+            ProjectStatus statusFilter = null;
+            String supervisorNameFilter = null;
+            String studentIdFilter = null;
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter project status filter (UNAVAILABLE, AVAILABLE, RESERVED, or ALLOCATED):");
+                    statusFilter = ProjectStatus.valueOf(scanner.next().toUpperCase());
+                    break;
+                case 2:
+                    System.out.println("Enter supervisor name filter:");
+                    supervisorNameFilter = scanner.nextLine();
+                    break;
+                case 3:
+                    System.out.println("Enter student ID filter:");
+                    studentIdFilter = scanner.next();
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    return;
             }
 
+            // Search for projects matching the selected filters
+            List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, studentIdFilter, supervisorNameFilter);
 
+            // Print the details of the matching projects
+            for (Project project : matchingProjects) {
+                if (project.getStatus() == ProjectStatus.AVAILABLE || project.getStatus() == ProjectStatus.UNAVAILABLE) {
+                    project.displayProjectID();
+                    project.displaySupervisorInformation();
+                    project.displayProjectInformation();
+                    System.out.println("\n");
+                } else if (project.getStatus() == ProjectStatus.ALLOCATED || project.getStatus() == ProjectStatus.RESERVED) {
+                    project.displayProjectID();
+                    project.displaySupervisorInformation();
+                    project.displayStudentInformation();
+                    System.out.println("\n");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input");
         }
-
     }
+
 
     public void processPendingRequests() {
         List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
