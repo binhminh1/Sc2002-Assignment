@@ -200,9 +200,9 @@ public class Supervisor extends User implements ViewRequestHistory {
                 }
             }
 
-            System.out.println("Enter request ID to approve/reject or 0 to exit:");
-            String requestId = scanner.next();
-            if (requestId.equals("0")) {
+            System.out.println("Enter student ID to approve/reject or 0 to exit:");
+            String studentId = scanner.next();
+            if (studentId.equals("0")) {
                 return; // Exit loop
             }
 
@@ -214,7 +214,7 @@ public class Supervisor extends User implements ViewRequestHistory {
 
             Request req = null;
             for (Request request1 : pendingRequests) {
-                if (request1.getType() == (RequestType.changeTitle) && request1.getRequestId().equals(requestId)) {
+                if (request1.getType() == (RequestType.changeTitle) && request1.getFromId().equals(studentId)) {
                     System.out.println(request1.getRequestId() + " from: " + request1.getFromId() + request1.getType() + " " + request1.getStatus());
                     req = request1;
                 }
