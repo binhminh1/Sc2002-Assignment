@@ -153,6 +153,20 @@ public class Student extends User implements ViewRequestHistory {
             System.out.println(" ");
         }
     }
+    public void viewMyProject(Student student){
+        if (student.getStatus() == StudentStatus.REGISTERED) {
+            for (Project project : ProjectRepository.getProjectsByStatus(ProjectStatus.ALLOCATED)) {
+                if (student.getUserId().equals(project.getStudentId())) {
+                    project.displayProjectID();
+                    project.displaySupervisorInformation();
+                    project.displayProjectInformation();
+
+                }
+            }
+        } else {
+            System.out.println("You have not registered a project yet.");
+        }
+    }
 
 }
 

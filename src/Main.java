@@ -96,22 +96,12 @@ public class Main {
                                 }
                                 break;
                             case 4:
-                                if (student.getStatus() == StudentStatus.REGISTERED) {
-                                    for (Project project : ProjectRepository.getProjectsByStatus(ProjectStatus.ALLOCATED)) {
-                                        if (student.getUserId().equals(project.getStudentId())) {
-                                            System.out.println(project.getProjectId() + " " + project.getSupervisorName() + " " + project.getProjectTitle());
-                                        }
-                                    }
-                                } else {
-                                    System.out.println("You have not registered a project yet.");
-                                }
+                                student.viewMyProject(student);
                                 break;
-
                             case 5:
                                 System.out.println("Your requests: ");
                                 student.viewRequestHistory(studentuserid);
                                 break;
-
                             case 6:
                                 if (student.getStatus() == StudentStatus.REGISTERED) {
                                     System.out.println("Please enter the new title of your project: ");
