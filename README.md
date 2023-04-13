@@ -1,1 +1,1 @@
-# Sc2002-Assignment
+# SC2002-Assignment
