@@ -99,21 +99,27 @@ public class Main {
                                 if (student.getStatus() == UNREGISTERED) {
                                     System.out.println("Please select a project to register: ");
 
-                                    //print all available projects
-                                    for (Project project : ProjectRepository.getAvailableProject()) {
-                                        System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
+                                    while(true) {
+                                        //print all available projects
+                                        for (Project project : ProjectRepository.getAvailableProject()) {
+                                            System.out.println(project.getProjectId() + " " + project.getProjectTitle() + " " + project.getSupervisorName());
 
-                                    }
-                                    //student input the project id
-                                    String projectId = sc.next();
-                                    Project project = ProjectRepository.getByID(projectId);
-                                    if (project != null) {
-                                        student.sendSelectProjectRequest(projectId);
+                                        }
+                                        //student input the project id
+                                        String projectId = sc.next();
+                                        Project project = ProjectRepository.getByID(projectId);
+                                        if (project != null && (project.getStatus().equals(ProjectStatus.AVAILABLE))) {
 
-                                        System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
-                                        student.changeStatus(PENDING);
-                                    } else {
-                                        System.out.println("Invalid project ID. Please try again.");
+                                            student.sendSelectProjectRequest(projectId);
+
+                                            System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
+                                            student.changeStatus(PENDING);
+                                            break;
+                                        } else {
+                                            System.out.println("Invalid project ID. Please try again.");
+                                            System.out.println("");
+
+                                        }
                                     }
                                 } else {
                                     System.out.println("You are unable to register or deregister a project at this moment.");
@@ -155,7 +161,7 @@ public class Main {
                                     System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
 
                                 } else {
-                                    
+
                                     System.out.println("You are unable to deregister a project at this moment.");
                                 }
                                 break;

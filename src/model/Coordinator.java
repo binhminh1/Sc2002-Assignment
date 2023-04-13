@@ -66,7 +66,7 @@ public class Coordinator extends User{
         }
     
         // Update the project's student ID and status fields
-        
+
         Student student=  StudentRepository.getByID(studentId);
         project.setStudentId(studentId);
         student.changeProjectId(projectId);
@@ -231,18 +231,12 @@ public class Coordinator extends User{
                             request.changeStatus(RequestStatus.Approved);
                             StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.REGISTERED);
                             allocateProject(request.getProjectId(), request.getFromId());
-                            /*
-                            for(Project project: ProjectRepository.searchProjects(null,null,ProjectRepository.getByID(request.getProjectId()).getSupervisorName())){
-                                if(project.getStatus() == ProjectStatus.AVAILABLE){
-                                    project.setStatus(ProjectStatus.UNAVAILABLE);
-                                }
-                            }
-
-                             */
                             System.out.println("The request has been approved.");
                         } else {
                             System.out.println("The request has been rejected.");
                             request.changeStatus(RequestStatus.Rejected);
+                            StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.UNREGISTERED);
+                            ProjectRepository.getByID(request.getProjectId()).setStatus(ProjectStatus.AVAILABLE);
                         }
                         break;
                     case deregister:
@@ -254,6 +248,7 @@ public class Coordinator extends User{
                         } else {
                             System.out.println("The request has been rejected.");
                             request.changeStatus(RequestStatus.Rejected);
+                            StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.REGISTERED);
                         }
                         break;
                     default:
