@@ -73,14 +73,7 @@ public class Main {
                         Student student = StudentRepository.getByID(studentuserid);
                         switch (studentChoice) {
                             case 1:
-                                Boolean studentResult = false;
-                                System.out.println("Please enter your new password: ");
-                                String newPassword = sc.next();
-                                student.changePassword(newPassword);
-                                System.out.println("Your password has been changed.");
-                                while (!studentResult) {
-                                    studentResult = student.login(studentuserid, student);
-                                }
+                                student.ChangePassword(student, studentuserid);
                                 break;
 
                             case 2:
@@ -140,7 +133,7 @@ public class Main {
 
                             case 5:
                                 System.out.println("Your requests: ");
-                                student.viewRequestHistoryStudent(studentuserid);
+                                student.viewRequestHistory(studentuserid);
                                 break;
 
                             case 6:
@@ -167,6 +160,9 @@ public class Main {
                                 break;
                             case 8:
                                 exit=true;
+                                break;
+                            default:
+                                System.out.println("Please enter a number between 1 - 8. Please try again.");
                                 break;
                         }
                     }
@@ -212,14 +208,7 @@ public class Main {
                         supervisorChoice = sc.nextInt();
                         switch (supervisorChoice) {
                             case 1:
-                                System.out.println("Please enter your new password: ");
-                                String newPassword = sc.next();
-                                supervisor.changePassword(newPassword);
-                                System.out.println("Your password has been changed.");
-                                boolean supervisorResult = false;
-                                while (!supervisorResult) {
-                                    supervisorResult = supervisor.login(supervisoruserid, supervisor);
-                                }
+                                supervisor.ChangePassword(supervisor, supervisoruserid);
                                 break;
                             case 2:
 
@@ -257,6 +246,9 @@ public class Main {
                                             break;
                                         case 4:
                                             break;
+                                        default:
+                                            System.out.println("Please enter a number between 1 - 4. Please try again.");
+                                            break;
                                     }
                                     break;
                                 }
@@ -266,20 +258,8 @@ public class Main {
                                 break;
                             case 4:
                                 System.out.println("Your requests: ");
-                                for (Request request : RequestRepository.getRequests()) {
-
-                                    if (request.getToName().equals(supervisor.getName())) {
-                                        System.out.println("Incoming requests:");
-                                        System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-                                    }
-
-                                    if (request.getFromId().equals(supervisoruserid)) {
-                                        System.out.println("Outgoing requests:");
-                                        System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
-                                        }
-                                    }
+                                supervisor.viewRequestHistory(supervisoruserid, supervisor);
                                 break;
-
                             case 5:
                                 while(true) {
                                     supervisor.viewProjects();
@@ -304,6 +284,9 @@ public class Main {
                                 break;
                             case 6:
                                 exit=true;
+                                break;
+                            default:
+                                System.out.println("Please enter a number between 1 - 6. Please try again.");
                                 break;
                         }
                     }
@@ -348,14 +331,7 @@ public class Main {
                         coorChoice = sc.nextInt();
                         switch (coorChoice) {
                             case 1:
-                                Boolean coorResult = false;
-                                System.out.println("Please enter your new password: ");
-                                String newPassword = sc.next();
-                                coordinator.changePassword(newPassword);
-                                System.out.println("Your password has been changed.");
-                                while (!coorResult) {
-                                    coorResult = coordinator.login(coorId, coordinator);
-                                }
+                                coordinator.ChangePassword(coordinator, coorId);
                                 break;
                             case 2:
                                 coordinator.displayReportByFilters();
@@ -368,6 +344,9 @@ public class Main {
                                 break;
                             case 5:
                                 exit = true;
+                                break;
+                            default:
+                                System.out.println("Please enter a number between 1 - 5. Please try again.");
                                 break;
                         }
                     }

@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 
-public class User {
+public abstract class User {
     private String userId;
     private String password = "password";
     private String email;
@@ -17,76 +17,84 @@ public class User {
         this.email = email;
         this.password = "password";
     }
+
     public String getPassword() {
-            return password;
-        }
-        public String getEmail() {
-            return email;
-        }
-        public String getName() {
-            return name;
-        }
-        public String getUserId() {
-            return userId;
-        }
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
-        public void setEmail(String email) {
-            this.email = email;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
 
-        public void changePassword(String password) {
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void changePassword(String password) {
         this.password = password;
     }
 
-    public Boolean login(String userId,Student student) {
+    public Boolean login(String userId, Student student) {
 //        while (true) {
-            System.out.println("Enter your password: ");
-            String password = sc.next();
+        System.out.println("Enter your password: ");
+        String password = sc.next();
 
-            if (Objects.equals(password, student.getPassword())) {
-                System.out.println("Login successful.");
-                return true;
-            } else {
-                System.out.println("Wrong user ID or password. Please try again.");
-                return false;
-            }
+        if (Objects.equals(password, student.getPassword())) {
+            System.out.println("Login successful.");
+            return true;
+        } else {
+            System.out.println("Wrong user ID or password. Please try again.");
+            return false;
+        }
 //        }
     }
 
     public Boolean login(String userId, Supervisor supervisor) {
 //        while (true) {
-            System.out.println("Enter your password: ");
-            String password = sc.next();
+        System.out.println("Enter your password: ");
+        String password = sc.next();
 
-            if (Objects.equals(password, supervisor.getPassword())) {
-                System.out.println("Login successful.");
-                return true;
-            } else {
-                System.out.println("Wrong user ID or password. Please try again.");
-                return false;
-            }
+        if (Objects.equals(password, supervisor.getPassword())) {
+            System.out.println("Login successful.");
+            return true;
+        } else {
+            System.out.println("Wrong user ID or password. Please try again.");
+            return false;
+        }
 //        }
     }
 
     public boolean login(String userId, Coordinator coordinator) {
 
 
-            System.out.println("Enter your password: ");
-            String password = sc.next();
-            if (Objects.equals(password, coordinator.getPassword())) {
+        System.out.println("Enter your password: ");
+        String password = sc.next();
+        if (Objects.equals(password, coordinator.getPassword())) {
 
-                System.out.println("Login successful.");
-                return true;
-            } else {
-                System.out.println("Wrong user ID or password. Please try again.");
-                return false;
-            }
+            System.out.println("Login successful.");
+            return true;
+        } else {
+            System.out.println("Wrong user ID or password. Please try again.");
+            return false;
+        }
     }
-
+    public abstract void ChangePassword();
 
 }
+
