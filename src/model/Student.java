@@ -76,6 +76,7 @@ public class Student extends User{
         Request request = new Request(RequestType.assignProject, projectID, super.getUserId());
         RequestRepository.addRequest(request);
         ProjectRepository.getByID(projectID).setStatus(ProjectStatus.RESERVED);
+        ProjectRepository.getByID(projectID).setStudentId(super.getUserId());
         return request;
     }
 

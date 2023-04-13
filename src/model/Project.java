@@ -91,6 +91,8 @@ public class Project {
      * @param studentID the student to be assigned
      * @throws IllegalStateException if the project is not available for allocation
      */
+
+    /*
     public boolean reserve(String studentID){
         if (status != ProjectStatus.AVAILABLE) {
             return false;
