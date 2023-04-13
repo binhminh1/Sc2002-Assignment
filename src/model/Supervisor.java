@@ -17,7 +17,7 @@ public class Supervisor extends User implements ViewRequestHistory {
         super(userId, name, email);
     }
 
-
+    @Override
     public Boolean login() {
         System.out.println("Enter your password: ");
         String password = sc.next();
@@ -28,7 +28,8 @@ public class Supervisor extends User implements ViewRequestHistory {
         } else {
             System.out.println("Wrong user ID or password. Please try again.");
             return false;
-
+        }
+    }
 
     @Override
     public void ChangePassword() {
@@ -71,9 +72,13 @@ public class Supervisor extends User implements ViewRequestHistory {
      */
     @Override
     public void viewProject() {
-    }
-    public void viewProjects() {
         for (Project project : ProjectRepository.searchProjects(null, null, super.getName())) {
+            project.displayProject();
+        }
+    }
+
+    public void viewAllocatedProject() {
+        for (Project project : ProjectRepository.searchProjects(ProjectStatus.ALLOCATED, null, super.getName())) {
             project.displayProject();
         }
     }
@@ -85,32 +90,19 @@ public class Supervisor extends User implements ViewRequestHistory {
      * @param ProjectId        projectID does not change
      * @return
      */
-    public boolean sendTransferStudentRequest(String newsupervisorName, String ProjectId) {
-        Project project = ProjectRepository.getByID(ProjectId);
-        if (project == null || !project.getSupervisorName().equals(super.getName())) {
-            System.out.println("Invalid project ID");
-            return false;
-        }
-        if (project.getStatus() == ProjectStatus.ALLOCATED) {
-            Request request = new Request(RequestType.transferStudent, ProjectId, super.getUserId(), newsupervisorName);
-            RequestRepository.addRequest(request);
-            return true;
-        } else {
-            System.out.println("The project has not been allocated to a student");
-            return false;
-        }
-    }
+
 
     /**
      * Ensures that each supervisor only have 2 projects
      *
-     * @param newSupervisorId
+     * @param newSupervisorName
      * @return
      */
-    public boolean supervisorCapReached(String newSupervisorId) {
+
+    public boolean supervisorCapReached(String newSupervisorName) {
         int numOfProject = 0;
-        for (Project project : projects) {
-            if (Objects.equals(project.getSupervisorName(), newSupervisorId)) {
+        for (Project project : ProjectRepository.searchProjects(null, null, newSupervisorName)) {
+            if (project.getStatus().equals(ProjectStatus.ALLOCATED)) {
                 numOfProject++;
             }
         }
@@ -210,12 +202,12 @@ public class Supervisor extends User implements ViewRequestHistory {
 
             if (request.getToName().equals(supervisor.getName())) {
                 System.out.println("Incoming requests:");
-                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus()+" "+request.getTime());
             }
 
             if (request.getFromId().equals(supervisoruserid)) {
                 System.out.println("Outgoing requests:");
-                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus());
+                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus()+" "+request.getTime());
             }
         }
     }
@@ -230,7 +222,7 @@ public class Supervisor extends User implements ViewRequestHistory {
     }
 
     public void updateProject(Supervisor supervisor) {
-        supervisor.viewProjects();
+        supervisor.viewProject();
         System.out.println("choose the project you want to update by id");
         String projectId = sc.next();
         System.out.println("Please enter the new title");
@@ -242,4 +234,41 @@ public class Supervisor extends User implements ViewRequestHistory {
             System.out.println("Invalid project ID");
         }
     }
+
+    public void transferStudentRequest(Supervisor supervisor) {
+        while (true) {
+            supervisor.viewAllocatedProject();
+            System.out.println("");
+            System.out.println("Please enter the project ID: ");
+            String projectId = sc.next();
+            Project project = ProjectRepository.getByID(projectId);
+            if (project == null || !project.getSupervisorName().equals(super.getName())) {
+                System.out.println("Invalid project ID");
+                continue;
+            }
+            if (project.getStatus() != ProjectStatus.ALLOCATED) {
+                System.out.println("The project has not been allocated to a student");
+                continue;
+            }
+            System.out.println("Please enter the replacement supervisor name: ");
+            sc.nextLine(); // consume the end-of-line character
+            String supervisorNameToTransfer = sc.nextLine();
+
+            Supervisor trasferSuper = SupervisorRepository.getByName(supervisorNameToTransfer);
+            if (trasferSuper == null) {
+                System.out.println("Invalid supervisor name. Please try again.");
+                continue;
+            }
+            if (trasferSuper.supervisorCapReached(supervisorNameToTransfer)) {
+                System.out.println("Replacement supervisor is already supervising 2 projects. Please try again.");
+                continue;
+            }
+
+            Request request = new Request(RequestType.transferStudent, projectId, super.getUserId(), supervisorNameToTransfer);
+            RequestRepository.addRequest(request);
+            break;
+        }
+        System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
+    }
 }
+

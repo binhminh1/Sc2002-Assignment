@@ -178,6 +178,7 @@ public class Student extends User implements ViewRequestHistory {
             System.out.println("Student ID: "+ request.getFromId());
             System.out.println("Request Type: "+ request.getType() );
             System.out.println("Request Status: "+request.getStatus());
+            System.out.println("Request time: "+request.getTime());
             System.out.println(" ");
         }
     }

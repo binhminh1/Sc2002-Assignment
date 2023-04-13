@@ -17,6 +17,8 @@ public class Request {
     private RequestStatus status;
     private ArrayList<RequestHistory> requestHistory;
 
+    private String time;
+
 
     public Request(RequestType type, String projectId, String fromId, String toId, String newTitle){
         if(type == RequestType.changeTitle){
@@ -29,6 +31,7 @@ public class Request {
             Date day = new Date();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             this.requestId = String.valueOf(new Date().getTime()) ;
+            this.time = df.format(day) ;
             this.requestHistory = new ArrayList<>();
         }
     }
@@ -42,7 +45,8 @@ public class Request {
             this.replacementSupName = newSuperName;
             this.status = RequestStatus.Pending;
             Date day = new Date();
-//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            this.time = df.format(day) ;
             this.requestId = String.valueOf(new Date().getTime()) ;
             this.requestHistory = new ArrayList<>();
         }
@@ -56,8 +60,9 @@ public class Request {
         this.projectId = projectId;
         this.status = RequestStatus.Pending;
         Date day = new Date();
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         this.requestId = String.valueOf(new Date().getTime()) ;
+        this.time = df.format(day) ;
         this.requestHistory = new ArrayList<>();
     }
 
@@ -67,6 +72,10 @@ public class Request {
 
     public RequestStatus getStatus() {
         return status;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public String getToName() {

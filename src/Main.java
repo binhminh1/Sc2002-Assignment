@@ -50,9 +50,10 @@ public class Main {
                         } catch (IllegalArgumentException e) {
                             // handle the exception
                             System.out.println("Wrong userId");
+                            continue;
                         }
                         result = student.login();                    }
-                    if(exit2){
+                    if(exit2) {
                         break;
                     }
                     int studentChoice = 0;
@@ -68,7 +69,9 @@ public class Main {
                                 "7. Request to deregister FYP \n" +
                                 "8. Exit \n");
                         studentChoice = sc.nextInt();
-                        Student student = StudentRepository.getByID(studentuserid);
+                        //Student student = StudentRepository.getByID(studentuserid);
+                        UserFactory userFactoryImpl = new StudentFactory();
+                        Student student = (Student) userFactoryImpl.getUser(studentuserid);
                         switch (studentChoice) {
                             case 1:
                                 student.ChangePassword();
@@ -116,12 +119,19 @@ public class Main {
                             exit3 = true;
                             break;
                         }
-                        Supervisor supervisor = SupervisorRepository.getByID(supervisoruserid);
-
-                        if (supervisor == null) {
-                            System.out.println("Invalid user ID or password. Please try again.");
+                        UserFactory userFactoryImpl = new SupervisorFactory();
+                        Supervisor supervisor = (Supervisor) userFactoryImpl.getUser(supervisoruserid);
+                        try {
+                            // code that may throw the exception
+                            if (supervisor == null) {
+                                throw new IllegalArgumentException("Supervisor not found");
+                            }
+                        } catch (IllegalArgumentException e1) {
+                            // handle the exception
+                            System.out.println("Wrong userId");
                             continue;
                         }
+
                         superResult = supervisor.login();
                     }
                     if(exit3){
@@ -130,7 +140,8 @@ public class Main {
                     int supervisorChoice = 0;
 
                     while (supervisorChoice != 6) {
-                        Supervisor supervisor = SupervisorRepository.getByID(supervisoruserid);
+                        UserFactory userFactoryImpl = new SupervisorFactory();
+                        Supervisor supervisor = (Supervisor) userFactoryImpl.getUser(supervisoruserid);
                         System.out.println("Welcome " + supervisoruserid + "!");
                         System.out.println("Please select an option: \n" +
                                 "1. changePassword \n" +
@@ -161,7 +172,7 @@ public class Main {
                                             supervisor.updateProject(supervisor);
                                             break;
                                         case 3:
-                                            supervisor.viewProjects();
+                                            supervisor.viewProject();
                                             break;
                                         case 4:
                                             break;
@@ -178,27 +189,9 @@ public class Main {
                             case 4:
                                 supervisor.viewRequestHistory(supervisoruserid, supervisor);
                                 break;
-                            case 5:
-                                while(true) {
-                                    supervisor.viewProjects();
-                                    System.out.println("");
-                                    System.out.println("Please enter the project ID: ");
-                                    String projectId = sc.next();
-                                    System.out.println("Please enter the replacement supervisor name: ");
-                                    sc.nextLine(); // consume the end-of-line character
-                                    String supervisorNameToTransfer = sc.nextLine();
 
-                                    Supervisor trasferSuper = SupervisorRepository.getByName(supervisorNameToTransfer);
-                                    if (trasferSuper == null) {
-                                        System.out.println("Invalid supervisor name. Please try again.");
-                                        break;
-                                    }
-                                    boolean ra = supervisor.sendTransferStudentRequest(supervisorNameToTransfer, projectId);
-                                    if(ra){
-                                        break;
-                                    }
-                                }
-                                System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
+                            case 5:
+                                supervisor.transferStudentRequest(supervisor);
                                 break;
                             case 6:
                                 exit = true;
