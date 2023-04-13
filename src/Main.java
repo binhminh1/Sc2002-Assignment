@@ -84,6 +84,10 @@ public class Main {
                                 break;
 
                             case 2:
+                                if(student.getStatus().equals(StudentStatus.DEREGISTERED)){
+                                    System.out.println("You are not allowed to make selection again as you deregistered your FYP");
+                                    break;
+                                }
                                 System.out.println("Available projects: ");
                                 for (Project project : ProjectRepository.getAvailableProject()) {
                                     project.displayProject();
@@ -147,13 +151,12 @@ public class Main {
 
                             case 7:
                                 if (student.getStatus() == StudentStatus.REGISTERED) {
-                                    Project project = ProjectRepository.getByID(student.getProjectId());
-                                    if (project != null) {
-                                        student.sendDeregisterProjectRequest(project.getProjectId());
-                                        System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
-                                    }
+                                    student.sendDeregisterProjectRequest(student.getProjectId());
+                                    System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
+
                                 } else {
-                                    System.out.println("You are unable to register or deregister a project at this moment.");
+                                    
+                                    System.out.println("You are unable to deregister a project at this moment.");
                                 }
                                 break;
                             case 8:
