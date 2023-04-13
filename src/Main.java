@@ -36,16 +36,26 @@ public class Main {
                 case 1:
                     String studentuserid = null;
                     Boolean result = false;
+                    Boolean exit2 = false;
                     while (!result) {
-                        System.out.println("Enter your user ID: ");
-                        studentuserid = sc.next();
-                        Student student = StudentRepository.getByID(studentuserid);
 
+                        System.out.println("Enter your user ID: ");
+                        System.out.println("Enter back to go back");
+                        studentuserid = sc.next();
+
+                        if(studentuserid.equals("back")){
+                            exit2 = true;
+                            break;
+                        }
+                        Student student = StudentRepository.getByID(studentuserid);
                         if (student == null) {
                             System.out.println("Invalid user ID or password. Please try again.");
                             continue;
                         }
                         result = student.login(studentuserid, student);
+                    }
+                    if(exit2){
+                        break;
                     }
                     int studentChoice = 0;
                     while (studentChoice != 8) {
@@ -157,10 +167,15 @@ public class Main {
                 case 2:
                     String supervisoruserid = null;
                     boolean superResult = false;
+                    boolean exit3 = false;
                     while (!superResult) {
                         System.out.println("Enter your user ID: ");
+                        System.out.println("Enter back to go back");
                         supervisoruserid = sc.next();
-
+                        if(supervisoruserid.equals("back")){
+                            exit3 = true;
+                            break;
+                        }
                         Supervisor supervisor = SupervisorRepository.getByID(supervisoruserid);
 
                         if (supervisor == null) {
@@ -168,6 +183,9 @@ public class Main {
                             continue;
                         }
                         superResult = supervisor.login(supervisoruserid, supervisor);
+                    }
+                    if(exit3){
+                        break;
                     }
                     int supervisorChoice = 0;
 
@@ -288,21 +306,26 @@ public class Main {
                 case 3:
                     boolean coordinatorResult = false;
                     String coorId = null;
-
+                    boolean exit4 = false;
                     while (!coordinatorResult) {
                         System.out.println("Enter your user ID: ");
+                        System.out.println("Enter back to go back");
                         coorId = sc.next();
+                        if(coorId.equals("back")){
+                            exit4 = true;
+                            break;
+                        }
+
                         if (!coorId.equals("ASFLI")) {
                             System.out.println("Invalid user ID or password. Please try again.");
                             continue;
                         }
                         Coordinator coordinator = new Coordinator("ASFLI", "Li Fang", "ASFLI@NTU.EDU.SG");
-
                         coordinatorResult = coordinator.login(coorId, coordinator);
-
                     }
-
-
+                    if(exit4){
+                        break;
+                    }
                     Coordinator coordinator = new Coordinator("ASFLI", "Li Fang", "ASFLI@NTU.EDU.SG");
                     int coorChoice = 0;
                     while (coorChoice != 5) {
