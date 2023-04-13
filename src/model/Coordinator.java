@@ -68,6 +68,7 @@ public class Coordinator extends User{
         Student student=  StudentRepository.getByID(studentId);
         project.setStudentId(studentId);
         student.changeProjectId(projectId);
+        student.changeStatus(StudentStatus.REGISTERED);
         project.setStatus(ProjectStatus.ALLOCATED);
         System.out.println("Project allocated to student.");
     }
