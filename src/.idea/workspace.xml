@@ -8,6 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Coordinator.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Coordinator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Supervisor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,11 +112,6 @@
           <properties class="java.io.FileNotFoundException" package="java.io" />
           <option name="timeStamp" value="74" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Main.java</url>
-          <line>259</line>
-          <option name="timeStamp" value="91" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

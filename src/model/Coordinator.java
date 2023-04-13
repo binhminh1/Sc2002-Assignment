@@ -24,7 +24,23 @@ public class Coordinator extends User{
         this.password = "password";
     }
 
-    
+    @Override
+    public void ChangePassword() {
+    }
+
+    public void ChangePassword(Coordinator coordinator, String coordinatoruserid) {
+        Boolean coorResult = false;
+        System.out.println("Please enter your new password: ");
+        String newPassword = sc.next();
+        coordinator.changePassword(newPassword);
+        System.out.println("Your password has been changed.");
+        while (!coorResult) {
+            coorResult = coordinator.login(coordinatoruserid, coordinator);
+        }
+    }
+
+
+
     public void viewProjects(){
         for(Project project : ProjectRepository.getProjects()){
             project.displayProject();
@@ -258,7 +274,7 @@ public class Coordinator extends User{
         List<String> requestHistory = new ArrayList<>();
     
         for (Request request : RequestRepository.getRequests()) {
-            System.out.println("Request ID: " + request.getRequestId() + " Type: " + request.getType() + " From ID: " + request.getFromId() + " To ID: " + request.getToName() + " Status: " + request.getStatus());
+            System.out.println("Request ID: " + request.getRequestId() + " Type: " + request.getType() + " From ID: " + request.getFromId() + " To NAME: " + request.getToName() + " Status: " + request.getStatus());
         }
             /*
             StringBuilder sb = new StringBuilder();

@@ -17,6 +17,21 @@ public class Supervisor extends User {
         super(userId, name, email);
     }
 
+    @Override
+    public void ChangePassword() {
+    }
+
+    public void ChangePassword(Supervisor supervisor, String supervisoruserid) {
+        Boolean supervisorResult = false;
+        System.out.println("Please enter your new password: ");
+        String newPassword = sc.next();
+        supervisor.changePassword(newPassword);
+        System.out.println("Your password has been changed.");
+        while (!supervisorResult) {
+            supervisorResult = supervisor.login(supervisoruserid, supervisor);
+        }
+    }
+
     Scanner scanner = new Scanner(System.in);
 
     /**

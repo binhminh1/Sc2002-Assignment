@@ -63,14 +63,7 @@ public class Main {
                         Student student = StudentRepository.getByID(studentuserid);
                         switch (studentChoice) {
                             case 1:
-                                Boolean studentResult = false;
-                                System.out.println("Please enter your new password: ");
-                                String newPassword = sc.next();
-                                student.changePassword(newPassword);
-                                System.out.println("Your password has been changed.");
-                                while (!studentResult) {
-                                    studentResult = student.login(studentuserid, student);
-                                }
+                                student.ChangePassword(student, studentuserid);
                                 break;
 
                             case 2:
@@ -188,14 +181,7 @@ public class Main {
                         supervisorChoice = sc.nextInt();
                         switch (supervisorChoice) {
                             case 1:
-                                System.out.println("Please enter your new password: ");
-                                String newPassword = sc.next();
-                                supervisor.changePassword(newPassword);
-                                System.out.println("Your password has been changed.");
-                                boolean supervisorResult = false;
-                                while (!supervisorResult) {
-                                    supervisorResult = supervisor.login(supervisoruserid, supervisor);
-                                }
+                                supervisor.ChangePassword(supervisor, supervisoruserid);
                                 break;
                             case 2:
 
@@ -325,14 +311,7 @@ public class Main {
                         coorChoice = sc.nextInt();
                         switch (coorChoice) {
                             case 1:
-                                Boolean coorResult = false;
-                                System.out.println("Please enter your new password: ");
-                                String newPassword = sc.next();
-                                coordinator.changePassword(newPassword);
-                                System.out.println("Your password has been changed.");
-                                while (!coorResult) {
-                                    coorResult = coordinator.login(coorId, coordinator);
-                                }
+                                coordinator.ChangePassword(coordinator, coorId);
                                 break;
                             case 2:
                                 coordinator.displayReportByFilters();
