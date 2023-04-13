@@ -42,18 +42,22 @@ public class Main {
                         System.out.println("Enter your user ID: ");
                         System.out.println("Enter back to go back");
                         studentuserid = sc.next();
-
                         if(studentuserid.equals("back")){
                             exit2 = true;
                             break;
                         }
-                        Student student = StudentRepository.getByID(studentuserid);
-                        if (student == null) {
-                            System.out.println("Invalid user ID or password. Please try again.");
-                            continue;
+                        UserFactory userFactoryImpl = new StudentFactory();
+                        Student student = (Student) userFactoryImpl.getUser(studentuserid);
+                        try {
+                            // code that may throw the exception
+                            if (student == null) {
+                                throw new IllegalArgumentException("Student not found");
+                            }
+                        } catch (IllegalArgumentException e) {
+                            // handle the exception
+                            System.out.println("Wrong userId");
                         }
-                        result = student.login(studentuserid, student);
-                    }
+                        result = student.login();                    }
                     if(exit2){
                         break;
                     }
@@ -73,7 +77,7 @@ public class Main {
                         Student student = StudentRepository.getByID(studentuserid);
                         switch (studentChoice) {
                             case 1:
-                                student.ChangePassword(student, studentuserid);
+                                student.ChangePassword();
                                 break;
                             case 2:
                                 student.viewAvailableProjects(student);
@@ -112,6 +116,7 @@ public class Main {
                     while (!superResult) {
                         System.out.println("Enter your user ID: ");
                         System.out.println("Enter back to go back");
+
                         supervisoruserid = sc.next();
                         if(supervisoruserid.equals("back")){
                             exit3 = true;
@@ -123,7 +128,7 @@ public class Main {
                             System.out.println("Invalid user ID or password. Please try again.");
                             continue;
                         }
-                        superResult = supervisor.login(supervisoruserid, supervisor);
+                        superResult = supervisor.login();
                     }
                     if(exit3){
                         break;
@@ -144,7 +149,7 @@ public class Main {
                         supervisorChoice = sc.nextInt();
                         switch (supervisorChoice) {
                             case 1:
-                                supervisor.ChangePassword(supervisor, supervisoruserid);
+                                supervisor.ChangePassword();
                                 break;
                             case 2:
 
@@ -249,7 +254,7 @@ public class Main {
                             continue;
                         }
                         Coordinator coordinator = new Coordinator("ASFLI", "Li Fang", "ASFLI@NTU.EDU.SG");
-                        coordinatorResult = coordinator.login(coorId, coordinator);
+                        coordinatorResult = coordinator.login();
                     }
                     if(exit4){
                         break;
@@ -267,7 +272,7 @@ public class Main {
                         coorChoice = sc.nextInt();
                         switch (coorChoice) {
                             case 1:
-                                coordinator.ChangePassword(coordinator, coorId);
+                                coordinator.ChangePassword();
                                 break;
                             case 2:
                                 coordinator.displayReportByFilters();

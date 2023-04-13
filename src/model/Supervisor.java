@@ -18,32 +18,42 @@ public class Supervisor extends User implements ViewRequestHistory {
     }
 
     @Override
-    public void ChangePassword() {
-    }
+    public Boolean login() {
+        System.out.println("Enter your password: ");
+        String password = sc.next();
 
-    public void ChangePassword(Supervisor supervisor, String supervisoruserid) {
-        Boolean supervisorResult = false;
-        System.out.println("Please enter your new password: ");
-        String newPassword = sc.next();
-        supervisor.changePassword(newPassword);
-        System.out.println("Your password has been changed.");
-        while (!supervisorResult) {
-            supervisorResult = supervisor.login(supervisoruserid, supervisor);
+        if (Objects.equals(password, this.getPassword())) {
+            System.out.println("Login successful.");
+            return true;
+        } else {
+            System.out.println("Wrong user ID or password. Please try again.");
+            return false;
         }
     }
 
+    @Override
+    public void ChangePassword() {
+        Boolean supervisorResult = false;
+        System.out.println("Please enter your new password: ");
+        String newPassword = sc.next();
+        this.changePassword(newPassword);
+        System.out.println("Your password has been changed.");
+        while (!supervisorResult) {
+            supervisorResult = this.login();
+        }
+    }
+
+
+
+
     Scanner scanner = new Scanner(System.in);
 
-    /**
-     * Allows supervisor to add new projects
-     */
+
     public void addProjects(Project project) {
         projects.add(project);
     }
 
-    /**
-     * Allows supervisor to remove exisiting projects
-     */
+
     public void removeProject(Project project) {
         projects.remove(project);
     }
@@ -123,59 +133,9 @@ public class Supervisor extends User implements ViewRequestHistory {
         }
     }
 
-    //INCOMING request = change title
-    public List<String> viewIncomingRequestsHistory() {
-        List<String> requestHistory = new ArrayList<>();
-
-        for (Request request : RequestRepository.getRequestsByToName(this.getUserId())) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Request ID: ").append(request.getRequestId())
-                    .append("\nType: ").append(request.getType())
-                    .append("\nProject ID: ").append(request.getProjectId())
-                    .append("\nFrom ID: ").append(request.getFromId())
-                    .append("\nTo ID: ").append(request.getToName())
-                    .append("\nNew title: ").append(request.getNewTitle())
-                    .append("\nStatus: ").append(request.getStatus());
-
-            if (!request.getRequestHistory().isEmpty()) {
-                sb.append("\nHistory:");
-                for (RequestHistory history : request.getRequestHistory()) {
-                    sb.append("\n- ").append(history.getStatus())
-                            .append(" on ").append(history.getUpdatedDate());
-                }
-            }
-            requestHistory.add(sb.toString());
-        }
-        return requestHistory;
-    }
 
 
     //OUTGOING request = transfer student
-    public List<String> viewOutgoingRequestsHistory() {
-        List<String> requestHistory = new ArrayList<>();
-
-        for (Request request : RequestRepository.getRequestsByFromId(this.getUserId())) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Request ID: ").append(request.getRequestId())
-                    .append("\nType: ").append(request.getType())
-                    .append("\nProject ID: ").append(request.getProjectId())
-                    .append("\nFrom ID: ").append(request.getFromId())
-                    .append("\nTo ID: ").append(request.getToName())
-                    .append("\nReplacement supervisor: ").append(request.getReplacementSupName())
-                    .append("\nStatus: ").append(request.getStatus());
-
-            if (!request.getRequestHistory().isEmpty()) {
-                sb.append("\nHistory:");
-                for (RequestHistory history : request.getRequestHistory()) {
-                    sb.append("\n- ").append(history.getStatus())
-                            .append(" on ").append(history.getUpdatedDate());
-                }
-            }
-
-            requestHistory.add(sb.toString());
-        }
-        return requestHistory;
-    }
 
     /**
      * Approve change title request

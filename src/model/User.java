@@ -50,50 +50,12 @@ public abstract class User {
         this.password = password;
     }
 
-    public Boolean login(String userId, Student student) {
-//        while (true) {
-        System.out.println("Enter your password: ");
-        String password = sc.next();
-
-        if (Objects.equals(password, student.getPassword())) {
-            System.out.println("Login successful.");
-            return true;
-        } else {
-            System.out.println("Wrong user ID or password. Please try again.");
-            return false;
-        }
-//        }
-    }
-
-    public Boolean login(String userId, Supervisor supervisor) {
-//        while (true) {
-        System.out.println("Enter your password: ");
-        String password = sc.next();
-
-        if (Objects.equals(password, supervisor.getPassword())) {
-            System.out.println("Login successful.");
-            return true;
-        } else {
-            System.out.println("Wrong user ID or password. Please try again.");
-            return false;
-        }
-//        }
-    }
-
-    public boolean login(String userId, Coordinator coordinator) {
+    public abstract Boolean login();
 
 
-        System.out.println("Enter your password: ");
-        String password = sc.next();
-        if (Objects.equals(password, coordinator.getPassword())) {
 
-            System.out.println("Login successful.");
-            return true;
-        } else {
-            System.out.println("Wrong user ID or password. Please try again.");
-            return false;
-        }
-    }
+
+
     public abstract void ChangePassword();
 
 }

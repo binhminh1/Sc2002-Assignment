@@ -5,6 +5,7 @@ import repository.RequestRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static model.StudentStatus.PENDING;
@@ -32,18 +33,30 @@ public class Student extends User implements ViewRequestHistory {
     }
 
     @Override
-    public void ChangePassword() {
+    public Boolean login() {
+        System.out.println("Enter your password: ");
+        String password = sc.next();
+
+        if (Objects.equals(password, this.getPassword())) {
+            System.out.println("Login successful.");
+            return true;
+        } else {
+            System.out.println("Wrong user ID or password. Please try again.");
+            return false;
+        }
     }
 
 
-    public void ChangePassword(Student student, String studentuserid) {
+
+
+    public void ChangePassword() {
         Boolean studentResult = false;
         System.out.println("Please enter your new password: ");
         String newPassword = sc.next();
-        student.changePassword(newPassword);
+        this.changePassword(newPassword);
         System.out.println("Your password has been changed.");
         while (!studentResult) {
-            studentResult = student.login(studentuserid, student);
+            studentResult = this.login();
         }
     }
 
