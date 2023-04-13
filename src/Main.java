@@ -38,7 +38,7 @@ public class Main {
                     Boolean result = false;
                     Boolean exit2 = false;
                     while (!result) {
-
+                        
                         System.out.println("Enter your user ID: ");
                         System.out.println("Enter back to go back");
                         studentuserid = sc.next();
