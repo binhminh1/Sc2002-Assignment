@@ -57,6 +57,7 @@ public abstract class User {
 
 
     public abstract void ChangePassword();
+    public abstract void viewProject();
 
 }
 

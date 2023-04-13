@@ -49,7 +49,9 @@ public class Student extends User implements ViewRequestHistory {
 
 
 
+
     public void ChangePassword() {
+
         Boolean studentResult = false;
         System.out.println("Please enter your new password: ");
         String newPassword = sc.next();
@@ -179,7 +181,12 @@ public class Student extends User implements ViewRequestHistory {
             System.out.println(" ");
         }
     }
-    public void viewMyProject(Student student){
+
+    @Override
+    public void viewProject() {
+    }
+
+    public void viewProject(Student student){
         if (student.getStatus() == StudentStatus.REGISTERED) {
             for (Project project : ProjectRepository.getProjectsByStatus(ProjectStatus.ALLOCATED)) {
                 if (student.getUserId().equals(project.getStudentId())) {

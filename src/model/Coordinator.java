@@ -38,7 +38,10 @@ public class Coordinator extends User implements ViewRequestHistory{
         }
     }
 
+    @Override
+    public void viewProject() {
 
+    }
 
     @Override
     public Boolean login() {

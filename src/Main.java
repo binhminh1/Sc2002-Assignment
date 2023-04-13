@@ -1,15 +1,9 @@
 import model.*;
-import model.Request;
-import repository.ProjectRepository;
-import repository.RequestRepository;
 import repository.StudentRepository;
 import repository.SupervisorRepository;
 
 import java.io.IOException;
 import java.util.Scanner;
-
-import static model.StudentStatus.PENDING;
-import static model.StudentStatus.UNREGISTERED;
 
 public class Main {
 
@@ -25,7 +19,7 @@ public class Main {
 
         System.out.println("Welcome to FYPMS! Please wait a few seconds for initialization");
         ReadCSV.readFile();
-        boolean exit=false;
+        boolean exit = false;
         while (true) {
             System.out.println("If you are a student, please enter 1 \n" +
                     "If you are a Faculty, please enter 2 \n" +
@@ -38,7 +32,7 @@ public class Main {
                     Boolean result = false;
                     Boolean exit2 = false;
                     while (!result) {
-                        
+
                         System.out.println("Enter your user ID: ");
                         System.out.println("Enter back to go back");
                         studentuserid = sc.next();
@@ -86,7 +80,7 @@ public class Main {
                                 student.sendSelectProjectRequest(student);
                                 break;
                             case 4:
-                                student.viewMyProject(student);
+                                student.viewProject(student);
                                 break;
                             case 5:
                                 System.out.println("Your requests: ");
@@ -152,35 +146,19 @@ public class Main {
                                 supervisor.ChangePassword();
                                 break;
                             case 2:
-
                                 while (true) {
                                     System.out.println("Please select an option: \n" +
-                                            "1. create \n" +
-                                            "2. update \n" +//need another switch class
-                                            "3. view \n" +
-                                            "4. back \n");
+                                            "1. Create \n" +
+                                            "2. Update \n" +//need another switch class
+                                            "3. View \n" +
+                                            "4. Back \n");
                                     int projectChoice = sc.nextInt();
                                     switch (projectChoice) {
                                         case 1:
-                                            System.out.println("Please enter the project  name");
-                                            String projectName = sc.next();
-                                            Project project = new Project(String.valueOf(ProjectRepository.numberOfProjects + 1), supervisor.getName(),projectName);
-                                            supervisor.addProjects(project);
-                                            ProjectRepository.addProject(project);
+                                            supervisor.createProject(supervisor);
                                             break;
-
                                         case 2:
-                                            supervisor.viewProjects();
-                                            System.out.println("choose the project you want to update by id");
-                                            String projectId = sc.next();
-                                            System.out.println("Please enter the new title");
-                                            String newTitle = sc.next();
-                                            if (supervisor.getProjectsById(projectId) != null) {
-                                                supervisor.changeTitle(newTitle, projectId);
-                                                System.out.println("successfully changed");
-                                            } else {
-                                                System.out.println("invalid projectId");
-                                            }
+                                            supervisor.updateProject(supervisor);
                                             break;
                                         case 3:
                                             supervisor.viewProjects();
@@ -198,7 +176,6 @@ public class Main {
                                 supervisor.processChangeTitleRequest();
                                 break;
                             case 4:
-                                System.out.println("Your requests: ");
                                 supervisor.viewRequestHistory(supervisoruserid, supervisor);
                                 break;
                             case 5:
@@ -224,7 +201,7 @@ public class Main {
                                 System.out.println("Your request has been sent. Please wait for the coordinator's approval.");
                                 break;
                             case 6:
-                                exit=true;
+                                exit = true;
                                 break;
                             default:
                                 System.out.println("Please enter a number between 1 - 6. Please try again.");
@@ -234,7 +211,6 @@ public class Main {
                     if (exit) {
                         break;
                     }
-
 
                 case 3:
                     boolean coordinatorResult = false;
