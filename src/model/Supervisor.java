@@ -150,7 +150,10 @@ public class Supervisor extends User implements ViewRequestHistory {
             System.out.println("Pending requests:");
             for (Request request : pendingRequests) {
                 if (request.getType() == (RequestType.changeTitle)) {
-                    System.out.println(request.getRequestId() + " from: " + request.getFromId() + " " + request.getType() + " " + request.getStatus());
+                    System.out.println("Request ID: "+ request.getRequestId());
+                    System.out.println("From ID: "+ request.getFromId());
+                    System.out.println("Request Type: "+ request.getType());
+                    System.out.println("Request status: "+ request.getStatus());
                 }
             }
 
@@ -169,7 +172,10 @@ public class Supervisor extends User implements ViewRequestHistory {
             Request req = null;
             for (Request request1 : pendingRequests) {
                 if (request1.getType() == (RequestType.changeTitle) && request1.getFromId().equals(studentId)) {
-                    System.out.println(request1.getRequestId() + " from: " + request1.getFromId() + request1.getType() + " " + request1.getStatus());
+                    System.out.println("Request ID: "+ request.getRequestId());
+                    System.out.println("From ID: "+ request.getFromId());
+                    System.out.println("Request Type: "+ request.getType());
+                    System.out.println("Request status: "+ request.getStatus());
                     req = request1;
                 }
             }
@@ -202,12 +208,18 @@ public class Supervisor extends User implements ViewRequestHistory {
 
             if (request.getToName().equals(supervisor.getName())) {
                 System.out.println("Incoming requests:");
-                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus()+" "+request.getTime());
+                System.out.println("Request ID: "+ request.getRequestId());
+                System.out.println("Request Type: "+ request.getType());
+                System.out.println("Request status: "+ request.getStatus());
+                System.out.println("Time that request is sent: " + request.getTime());
             }
 
             if (request.getFromId().equals(supervisoruserid)) {
                 System.out.println("Outgoing requests:");
-                System.out.println(request.getRequestId() + " " + request.getType() + " " + request.getStatus()+" "+request.getTime());
+                System.out.println("Request ID: "+ request.getRequestId());
+                System.out.println("Request Type: "+ request.getType());
+                System.out.println("Request status: "+ request.getStatus());
+                System.out.println("Time that request is sent: " + request.getTime());
             }
         }
     }
@@ -223,13 +235,13 @@ public class Supervisor extends User implements ViewRequestHistory {
 
     public void updateProject(Supervisor supervisor) {
         supervisor.viewProject();
-        System.out.println("choose the project you want to update by id");
+        System.out.println("Input the project ID to change title");
         String projectId = sc.next();
         System.out.println("Please enter the new title");
         String newTitle = sc.next();
         if (supervisor.getProjectsById(projectId) != null && supervisor.getProjectsById(projectId).getSupervisorName().equals(supervisor.getName())) {
             supervisor.changeTitle(newTitle, projectId);
-            System.out.println("successfully changed");
+            System.out.println("Successfully changed");
         } else {
             System.out.println("Invalid project ID");
         }

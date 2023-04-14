@@ -17,7 +17,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
 
-        System.out.println("Welcome to FYPMS! Please wait a few seconds for initialization");
+        System.out.println("\nWelcome to FYPMS! Please wait a few seconds for initialization");
         ReadCSV.readFile();
         boolean exit = false;
         while (true) {
@@ -33,7 +33,7 @@ public class Main {
                     Boolean exit2 = false;
                     while (!result) {
 
-                        System.out.println("Enter your user ID: ");
+                        System.out.println("\nEnter your user ID: ");
                         System.out.println("Enter back to go back");
                         studentuserid = sc.next();
                         if(studentuserid.equals("back")){
@@ -58,7 +58,7 @@ public class Main {
                     }
                     int studentChoice = 0;
                     while (studentChoice != 8) {
-                        System.out.println("Welcome " + studentuserid + "!");
+                        System.out.println("\nWelcome " + studentuserid + "!");
                         System.out.println("Please select an option: \n" +
                                 "1. changePassword \n" +
                                 "2. View available projects \n" +
@@ -99,7 +99,7 @@ public class Main {
                                 exit = true;
                                 break;
                             default:
-                                System.out.println("Please enter a number between 1 - 8. Please try again.");
+                                System.out.println("\nPlease enter a number between 1 - 8. Please try again.");
                                 break;
                         }
                     }
@@ -111,7 +111,7 @@ public class Main {
                     boolean superResult = false;
                     boolean exit3 = false;
                     while (!superResult) {
-                        System.out.println("Enter your user ID: ");
+                        System.out.println("\nEnter your user ID: ");
                         System.out.println("Enter back to go back");
 
                         supervisoruserid = sc.next();
@@ -142,7 +142,7 @@ public class Main {
                     while (supervisorChoice != 6) {
                         UserFactory userFactoryImpl = new SupervisorFactory();
                         Supervisor supervisor = (Supervisor) userFactoryImpl.getUser(supervisoruserid);
-                        System.out.println("Welcome " + supervisoruserid + "!");
+                        System.out.println("\nWelcome " + supervisoruserid + "!");
                         System.out.println("Please select an option: \n" +
                                 "1. changePassword \n" +
                                 "2. Create/update/View projects \n" +//need another switch class
@@ -158,7 +158,7 @@ public class Main {
                                 break;
                             case 2:
                                 while (true) {
-                                    System.out.println("Please select an option: \n" +
+                                    System.out.println("\nPlease select an option: \n" +
                                             "1. Create \n" +
                                             "2. Update \n" +//need another switch class
                                             "3. View \n" +
@@ -169,6 +169,8 @@ public class Main {
                                             supervisor.createProject(supervisor);
                                             break;
                                         case 2:
+                                            supervisor.viewProject();
+                                            System.out.println(" ");
                                             supervisor.updateProject(supervisor);
                                             break;
                                         case 3:
@@ -177,7 +179,7 @@ public class Main {
                                         case 4:
                                             break;
                                         default:
-                                            System.out.println("Please enter a number between 1 - 4. Please try again.");
+                                            System.out.println("\nPlease enter a number between 1 - 4. Please try again.");
                                             break;
                                     }
                                     break;
@@ -210,7 +212,7 @@ public class Main {
                     String coorId = null;
                     boolean exit4 = false;
                     while (!coordinatorResult) {
-                        System.out.println("Enter your user ID: ");
+                        System.out.println("\nEnter your user ID: ");
                         System.out.println("Enter back to go back");
                         coorId = sc.next();
                         if(coorId.equals("back")){
@@ -231,7 +233,7 @@ public class Main {
                     Coordinator coordinator = new Coordinator("ASFLI", "Li Fang", "ASFLI@NTU.EDU.SG");
                     int coorChoice = 0;
                     while (coorChoice != 5) {
-                        System.out.println("Welcome " + coordinator.getName() + "!");
+                        System.out.println("\nWelcome " + coordinator.getName() + "!");
                         System.out.println("Please select an option: \n" +
                                 "1. changePassword \n" +
                                 "2. View Projects By filter \n" +//need another switch class
@@ -256,7 +258,7 @@ public class Main {
                                 exit = true;
                                 break;
                             default:
-                                System.out.println("Please enter a number between 1 - 5. Please try again.");
+                                System.out.println("\nPlease enter a number between 1 - 5. Please try again.");
                                 break;
                         }
                     }
