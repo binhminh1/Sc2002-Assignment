@@ -144,8 +144,8 @@ public class Main {
                         Supervisor supervisor = (Supervisor) userFactoryImpl.getUser(supervisoruserid);
                         System.out.println("\nWelcome " + supervisoruserid + "!");
                         System.out.println("Please select an option: \n" +
-                                "1. changePassword \n" +
-                                "2. Create/update/View projects \n" +//need another switch class
+                                "1. Change your password \n" +
+                                "2. Create/Update title/View projects \n" +//need another switch class
                                 "3. View Student Pending Request \n" +
                                 "4. View request history\n" +
                                 "5. Request to transfer student \n" +
@@ -159,9 +159,9 @@ public class Main {
                             case 2:
                                 while (true) {
                                     System.out.println("\nPlease select an option: \n" +
-                                            "1. Create \n" +
-                                            "2. Update \n" +//need another switch class
-                                            "3. View \n" +
+                                            "1. Create project\n" +
+                                            "2. Update title\n" +//need another switch class
+                                            "3. View all projects\n" +
                                             "4. Back \n");
                                     int projectChoice = sc.nextInt();
                                     switch (projectChoice) {
