@@ -34,7 +34,7 @@ public class Main {
                 "█   █     █   █ █   █   █ ██▄██ █▄▄▄▄▄█ █\n" +
                 "█▄▄▄█     █▄▄▄█ █▄▄▄█   █▄█   █▄█▄▄▄▄▄▄▄█\n");
         while (true) {
-            System.out.println("If you are a student, please enter 1 \n" +
+            System.out.println("\nIf you are a student, please enter 1 \n" +
                     "If you are a Faculty, please enter 2 \n" +
                     "If you are a FYP coordinator, please enter 3 \n" +
                     "If you want to exit, please enter 4 \n");
@@ -77,7 +77,7 @@ public class Main {
                     while (studentChoice != 8) {
                         System.out.println("\nWelcome " + studentuserid + "!");//
                         System.out.println("Please select an option: \n" +
-                                "1. changePassword \n" +
+                                "1. Change your password \n" +
                                 "2. View available projects \n" +
                                 "3. Select the project to send to the coordinator\n" +
                                 "4. View my project \n" +
@@ -277,9 +277,10 @@ public class Main {
                         if (pendingRequest){
                         System.out.println("\nWelcome " + coordinator.getName() + "!");
                         System.out.println("Please select an option: \n" +
-                                "1. changePassword \n" +
-                                "2. View Projects By filter \n" +
-                                "3. View Request NEW！\n" +
+
+                                "1. Change your password \n" +
+                                "2. View Projects By filter \n" +//need another switch class
+                                "3. View Request \n" +
                                 "4. View request history\n" +
                                 "5. Exit\n");
                         } else {
