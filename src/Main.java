@@ -73,9 +73,11 @@ public class Main {
                     if(exit2) {
                         break;
                     }
+                    UserFactory userFactoryImpl = new StudentFactory();
+                    Student student = (Student) userFactoryImpl.getUser(studentuserid);
                     int studentChoice = 0;
                     while (studentChoice != 8) {
-                        System.out.println("\nWelcome " + studentuserid + "!");//
+                        System.out.println("\nWelcome " + student.getName() + "!");//
                         System.out.println("Please select an option: \n" +
                                 "1. Change your password \n" +
                                 "2. View available projects \n" +
@@ -87,8 +89,7 @@ public class Main {
                                 "8. Exit \n");
                         studentChoice = sc.nextInt();
                         //Student student = StudentRepository.getByID(studentuserid);
-                        UserFactory userFactoryImpl = new StudentFactory();
-                        Student student = (Student) userFactoryImpl.getUser(studentuserid);
+
                         switch (studentChoice) {
                             case 1:
                                 student.ChangePassword();
@@ -136,7 +137,7 @@ public class Main {
                             exit3 = true;
                             break;
                         }
-                        UserFactory userFactoryImpl = new SupervisorFactory();
+                        userFactoryImpl = new SupervisorFactory();
                         Supervisor supervisor = (Supervisor) userFactoryImpl.getUser(supervisoruserid);
                         try {
                             // code that may throw the exception
@@ -158,7 +159,7 @@ public class Main {
 
                     while (supervisorChoice != 6) {
                         boolean pendingRequest = false;
-                        UserFactory userFactoryImpl = new SupervisorFactory();
+                        userFactoryImpl = new SupervisorFactory();
                         Supervisor supervisor = (Supervisor) userFactoryImpl.getUser(supervisoruserid);
                         System.out.println("\nWelcome " + supervisor.getName() + "!");
                         List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);

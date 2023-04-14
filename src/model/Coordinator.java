@@ -175,12 +175,25 @@ public class Coordinator extends User implements ViewRequestHistory{
                     statusFilter = ProjectStatus.valueOf(scanner.next().toUpperCase());
                     break;
                 case 2:
-                    System.out.println("Enter supervisor name filter:");
-                    supervisorNameFilter = scanner.nextLine();
+                    while(true) {
+                        System.out.println("Enter supervisor name filter:");
+                        supervisorNameFilter = scanner.nextLine();
+                        if(SupervisorRepository.getByName(supervisorNameFilter) != null){
+                            break;
+                        }
+
+                        System.out.println("Invalid supervisor name");
+                    }
                     break;
                 case 3:
+                    while(true){
                     System.out.println("Enter student ID filter:");
                     studentIdFilter = scanner.next();
+                    if(StudentRepository.getByID(studentIdFilter) != null){
+                        break;
+                    }
+                    System.out.println("Invalid student ID");
+                    }
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -189,7 +202,10 @@ public class Coordinator extends User implements ViewRequestHistory{
 
             // Search for projects matching the selected filters
             List<Project> matchingProjects = ProjectRepository.searchProjects(statusFilter, studentIdFilter, supervisorNameFilter);
-
+            if(matchingProjects.isEmpty()){
+                System.out.println("No projects found");
+                return;
+            }
             // Print the details of the matching projects
             for (Project project : matchingProjects) {
                project.displayProject();
