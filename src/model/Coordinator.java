@@ -276,10 +276,20 @@ public class Coordinator extends User implements ViewRequestHistory{
                         break;
                     case assignProject:
                         if (processChoice == 1) {
-                            request.changeStatus(RequestStatus.Approved);
-
-                            allocateProject(request.getProjectId(), request.getFromId());
-                            System.out.println("The request has been approved.");
+                            Project projectID = ProjectRepository.getByID(request.getProjectId());
+                            String supervisorName = projectID.getSupervisorName();
+                            Supervisor supervisor = SupervisorRepository.getByName(supervisorName);
+                            if (supervisor.supervisorCapReached(supervisorName) == false) {
+                                request.changeStatus(RequestStatus.Approved);
+                                allocateProject(request.getProjectId(), request.getFromId());
+                                System.out.println("The request has been approved.");
+                            }
+                            else{
+                                System.out.println("The supervisor already got 2 students.");
+                                request.changeStatus(RequestStatus.Rejected);
+                                StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.UNREGISTERED);
+                                ProjectRepository.getByID(request.getProjectId()).setStatus(ProjectStatus.AVAILABLE);
+                            }
                         } else {
                             System.out.println("The request has been rejected.");
                             request.changeStatus(RequestStatus.Rejected);
