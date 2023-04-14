@@ -1,9 +1,14 @@
 import model.*;
+import model.Request;
+import repository.RequestRepository;
 import repository.StudentRepository;
 import repository.SupervisorRepository;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
+
+import static java.lang.System.exit;
 
 public class Main {
 
@@ -31,10 +36,14 @@ public class Main {
         while (true) {
             System.out.println("If you are a student, please enter 1 \n" +
                     "If you are a Faculty, please enter 2 \n" +
-                    "If you are a FYP coordinator, please enter 3 \n");
+                    "If you are a FYP coordinator, please enter 3 \n" +
+                    "If you want to exit, please enter 4 \n");
+
             int choice = sc.nextInt();
             //login as student
             switch (choice) {
+                case 4:
+                    exit(0);
                 case 1:
                     String studentuserid = null;
                     Boolean result = false;
@@ -66,7 +75,7 @@ public class Main {
                     }
                     int studentChoice = 0;
                     while (studentChoice != 8) {
-                        System.out.println("\nWelcome " + studentuserid + "!");
+                        System.out.println("\nWelcome " + studentuserid + "!");//
                         System.out.println("Please select an option: \n" +
                                 "1. changePassword \n" +
                                 "2. View available projects \n" +
@@ -148,16 +157,33 @@ public class Main {
                     int supervisorChoice = 0;
 
                     while (supervisorChoice != 6) {
+                        boolean pendingRequest = false;
                         UserFactory userFactoryImpl = new SupervisorFactory();
                         Supervisor supervisor = (Supervisor) userFactoryImpl.getUser(supervisoruserid);
-                        System.out.println("\nWelcome " + supervisoruserid + "!");
-                        System.out.println("Please select an option: \n" +
-                                "1. Change your password \n" +
-                                "2. Create/Update title/View projects \n" +//need another switch class
-                                "3. View Student Pending Request \n" +
-                                "4. View request history\n" +
-                                "5. Request to transfer student \n" +
-                                "6. Exit\n");
+                        System.out.println("\nWelcome " + supervisor.getName() + "!");
+                        List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
+                        for (Request request : pendingRequests) {
+                            if (request.getToName().equals(supervisor.getName())) {
+                                pendingRequest = true;
+                            }
+                        }
+                            if (pendingRequest){
+                                System.out.println("Please select an option: \n" +
+                                        "1. Change your password \n" +
+                                        "2. Create/Update title/View projects \n" +//need another switch class
+                                        "3. View Student Pending Request New!\n" +
+                                        "4. View request history\n" +
+                                        "5. Request to transfer student \n" +
+                                        "6. Exit\n");
+                            } else {
+                                System.out.println("Please select an option: \n" +
+                                        "1. Change your password \n" +
+                                        "2. Create/Update title/View projects \n" +//need another switch class
+                                        "3. View Student Pending Request \n" +
+                                        "4. View request history\n" +
+                                        "5. Request to transfer student \n" +
+                                        "6. Exit\n");
+                            }
 
                         supervisorChoice = sc.nextInt();
                         switch (supervisorChoice) {
@@ -241,13 +267,30 @@ public class Main {
                     Coordinator coordinator = new Coordinator("ASFLI", "Li Fang", "ASFLI@NTU.EDU.SG");
                     int coorChoice = 0;
                     while (coorChoice != 5) {
+                        boolean pendingRequest = false;
+                        List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
+                        for (Request request : pendingRequests) {
+                            if (request.getToName().equals("Li Fang")) {
+                                pendingRequest = true;
+                            }
+                        }
+                        if (pendingRequest){
                         System.out.println("\nWelcome " + coordinator.getName() + "!");
                         System.out.println("Please select an option: \n" +
                                 "1. changePassword \n" +
-                                "2. View Projects By filter \n" +//need another switch class
-                                "3. View Request \n" +
+                                "2. View Projects By filter \n" +
+                                "3. View Request NEW！\n" +
                                 "4. View request history\n" +
                                 "5. Exit\n");
+                        } else {
+                            System.out.println("\nWelcome " + coordinator.getName() + "!");
+                            System.out.println("Please select an option: \n" +
+                                    "1. changePassword \n" +
+                                    "2. View Projects By filter \n" +
+                                    "3. View Request \n" +
+                                    "4. View request history\n" +
+                                    "5. Exit\n");
+                        }
                         coorChoice = sc.nextInt();
                         switch (coorChoice) {
                             case 1:
