@@ -1,6 +1,5 @@
 package model;
  
-import java.sql.SQLOutput;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -26,6 +25,12 @@ public class Coordinator extends User implements ViewRequestHistory{
         this.password = "password";
     }
 
+    /**
+     * Prompts the user to enter a new password, changes the password of the Coordinator object calling the method, and
+     * logs in the user with the new password. The method loops until the login attempt is successful.
+     *
+     * @return void
+     */
     @Override
     public void ChangePassword() {
         Boolean coorResult = false;
@@ -40,9 +45,14 @@ public class Coordinator extends User implements ViewRequestHistory{
 
     @Override
     public void viewProject() {
-
     }
-
+    /**
+     * Prompts the user to enter their password and compares it with the stored password of the Coordinator object calling
+     * the method. If the passwords match, the method returns true and prints a success message. Otherwise, the method
+     * returns false and prints an error message.
+     *
+     * @return a Boolean indicating whether the login attempt was successful
+     */
     @Override
     public Boolean login() {
         System.out.println("Enter your password: ");
@@ -57,12 +67,27 @@ public class Coordinator extends User implements ViewRequestHistory{
         }
     }
 
-
+    /**
+     * Displays all available projects in the ProjectRepository by calling the displayProject() method for each project.
+     *
+     * @return void
+     */
     public void viewProjects(){
         for(Project project : ProjectRepository.getProjects()){
             project.displayProject();
         }
     }
+    /**
+     * Changes the supervisor of the project with the specified ID to the supervisor with the specified name, if the
+     * supervisor is not already supervising the maximum number of projects. If the supervisor is already supervising the
+     * maximum number of projects, prints an error message. If the project with the specified ID is not found, prints an
+     * error message.
+     *
+     * @param projectId the ID of the project to update
+     * @param newSupervisorName the name of the new supervisor to assign to the project
+     * @return void
+     */
+
     public void changeProjectSupervisor(String projectId, String newSupervisorName) {
         Project projectToUpdate = ProjectRepository.getByID(projectId);
         if(SupervisorRepository.getByName(newSupervisorName).supervisorCapReached(newSupervisorName))
@@ -81,8 +106,15 @@ public class Coordinator extends User implements ViewRequestHistory{
             }
         }
     }
-
-
+    /**
+     * Assigns the specified project to the specified student by updating the project's student ID and status fields and
+     * the student's project ID and status fields. If the project with the specified ID is not found, prints an error
+     * message. If the project is already allocated to a student, prints an error message.
+     *
+     * @param projectId the ID of the project to allocate
+     * @param studentId the ID of the student to allocate the project to
+     * @return void
+     */
     public void allocateProject(String projectId, String studentId) {
         Project project = ProjectRepository.getByID(projectId);
     
@@ -106,6 +138,15 @@ public class Coordinator extends User implements ViewRequestHistory{
         project.setStatus(ProjectStatus.ALLOCATED);
         System.out.println("Project allocated to student.");
     }
+    /**
+     * Removes the allocation of the project with the specified ID from its student, sets the project's student ID and
+     * status fields to null and "AVAILABLE", respectively, and sets the student's project ID and status fields to null and
+     * "DEREGISTERED", respectively. If the project with the specified ID is not found, prints an error message. If the
+     * student with the ID of the previously allocated student is not found, prints an error message.
+     *
+     * @param projectId the ID of the project to deregister
+     * @return void
+     */
 
     public void deregisterStudentFromFYP(String projectId) {
         Project projectToUpdate = ProjectRepository.getByID(projectId);
@@ -127,19 +168,15 @@ public class Coordinator extends User implements ViewRequestHistory{
         } else {
             System.out.println("Project not found.");
         }
-    } 
-
-    public void displayProjectByStatus(ProjectStatus status) {
-        List<Project> matchingProjects = ProjectRepository.getProjectsByStatus(status);
-        if (matchingProjects.isEmpty()) {
-            System.out.println("No projects found with status " + status);
-        } else {
-            System.out.println("Projects with status: " + status);
-            for (Project project : matchingProjects) {
-                System.out.println("Project ID: " + project.getProjectId());
-            }
-        }
     }
+    /**
+     * Changes the title of the project with the specified ID to the specified new title. If the project with the specified
+     * ID is not found, prints an error message.
+     *
+     * @param projectId the ID of the project to update
+     * @param newTitle the new title to assign to the project
+     * @return void
+     */
 
     public void changeTitle(String projectId,String newTitle){
         Project project = ProjectRepository.getByID(projectId);
@@ -154,6 +191,15 @@ public class Coordinator extends User implements ViewRequestHistory{
     
     private static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Displays a report of all projects matching the specified filters, including project status, supervisor name, and/or
+     * student ID. Asks the coordinator to select filter options and values via the console, and searches for projects
+     * matching the selected filters in the ProjectRepository. If no projects match the selected filters, prints a message
+     * indicating that no projects were found. If an invalid input is provided at any point during the process, prints an
+     * error message and exits the method.
+     *
+     * @return void
+     */
     public void displayReportByFilters() {
         // Ask coordinator for filter options
         System.out.println("Please select filter options:");
@@ -215,7 +261,15 @@ public class Coordinator extends User implements ViewRequestHistory{
         }
     }
 
+    /**
 
+     Displays all pending requests and allows coordinator to approve or reject them based on their type.
+     Types of requests include transferStudent, assignProject, deregister, and changeTitle.
+     For each request, the details of the request are printed, and the coordinator can select to approve or reject it.
+     Depending on the request type, different actions are taken upon approval or rejection, such as changing the project supervisor,
+     allocating a project to a student, deregistering a student from a project, or changing the title of a project.
+     The method loops through all pending requests until there are none left, or until the coordinator selects to exit.
+     */
     public void processPendingRequests() {
         List<Request> pendingRequests = RequestRepository.getRequestsbyStatus(RequestStatus.Pending);
 
@@ -354,6 +408,12 @@ public class Coordinator extends User implements ViewRequestHistory{
     @Override
     public void viewRequestHistory() {
     }
+
+    /**
+
+     Displays the history of all requests made in the system, including their details such as request ID, request time,
+     request type, from ID, to name, and request status.
+     */
 
     public void viewRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
