@@ -29,7 +29,7 @@ public class Main {
                 "█   █     █   █ █   █   █ ██▄██ █▄▄▄▄▄█ █\n" +
                 "█▄▄▄█     █▄▄▄█ █▄▄▄█   █▄█   █▄█▄▄▄▄▄▄▄█\n");
         while (true) {
-            System.out.println("If you are a student, please enter 1 \n" +
+            System.out.println("\nIf you are a student, please enter 1 \n" +
                     "If you are a Faculty, please enter 2 \n" +
                     "If you are a FYP coordinator, please enter 3 \n");
             int choice = sc.nextInt();
