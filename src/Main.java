@@ -20,6 +20,14 @@ public class Main {
         System.out.println("\nWelcome to FYPMS! Please wait a few seconds for initialization");
         ReadCSV.readFile();
         boolean exit = false;
+        System.out.println("" +
+                " ▄▄▄▄▄▄▄ ▄▄   ▄▄ ▄▄▄▄▄▄▄ ▄▄   ▄▄ ▄▄▄▄▄▄▄ \n" +
+                "█       █  █ █  █       █  █▄█  █       █\n" +
+                "█    ▄▄▄█  █▄█  █    ▄  █       █  ▄▄▄▄▄█\n" +
+                "█   █▄▄▄█       █   █▄█ █       █ █▄▄▄▄▄ \n" +
+                "█    ▄▄▄█▄     ▄█    ▄▄▄█       █▄▄▄▄▄  █\n" +
+                "█   █     █   █ █   █   █ ██▄██ █▄▄▄▄▄█ █\n" +
+                "█▄▄▄█     █▄▄▄█ █▄▄▄█   █▄█   █▄█▄▄▄▄▄▄▄█\n");
         while (true) {
             System.out.println("If you are a student, please enter 1 \n" +
                     "If you are a Faculty, please enter 2 \n" +

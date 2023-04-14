@@ -172,10 +172,10 @@ public class Supervisor extends User implements ViewRequestHistory {
             Request req = null;
             for (Request request1 : pendingRequests) {
                 if (request1.getType() == (RequestType.changeTitle) && request1.getFromId().equals(studentId)) {
-                    System.out.println("Request ID: "+ request.getRequestId());
-                    System.out.println("From ID: "+ request.getFromId());
-                    System.out.println("Request Type: "+ request.getType());
-                    System.out.println("Request status: "+ request.getStatus());
+                    System.out.println("Request ID: "+ request1.getRequestId());
+                    System.out.println("From ID: "+ request1.getFromId());
+                    System.out.println("Request Type: "+ request1.getType());
+                    System.out.println("Request status: "+ request1.getStatus());
                     req = request1;
                 }
             }
