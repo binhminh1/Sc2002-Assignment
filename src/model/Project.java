@@ -1,8 +1,9 @@
 package model;
 
+import repository.ProjectRepository;
 import repository.StudentRepository;
 import repository.SupervisorRepository;
-import service.ProjectService;
+
 
 import java.util.Date;
 
@@ -144,7 +145,7 @@ public class Project {
         if(this.status != ProjectStatus.ALLOCATED){
             return false;
         }
-        Project project = ProjectService.getByID(projectId);
+        Project project = ProjectRepository.getByID(projectId);
         if(project.getSupervisorName() != supervisorId){
             return false;
         }

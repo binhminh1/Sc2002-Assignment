@@ -1,7 +1,6 @@
 package repository;
 
 import model.Supervisor;
-import service.SupervisorService;
 
 import java.util.ArrayList;
 import java.util.List;
