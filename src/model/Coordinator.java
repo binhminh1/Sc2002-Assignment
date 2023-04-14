@@ -207,7 +207,7 @@ public class Coordinator extends User implements ViewRequestHistory{
             // Print all pending requests
             for (Request request : pendingRequests) {
                 if(request.getType() == RequestType.transferStudent){
-                    System.out.println("Request ID: " + request.getRequestId());
+                    System.out.println("\nRequest ID: " + request.getRequestId());
                     System.out.println("Request Time: " + request.getTime());
                     System.out.println("Student Name: "+(SupervisorRepository.getByID(request.getFromId())).getName());
                     System.out.println("Request Type: Transfer student to another supervisor");
@@ -217,7 +217,7 @@ public class Coordinator extends User implements ViewRequestHistory{
                     System.out.println("Request status: " + request.getStatus());
                 }
                 else if(request.getType() == RequestType.assignProject){
-                    System.out.println("Request ID: " + request.getRequestId());
+                    System.out.println("\nRequest ID: " + request.getRequestId());
                     System.out.println("Request Time: " + request.getTime());
                     System.out.println("Student ID: " + request.getFromId());
                     System.out.println("Student Name: " +(StudentRepository.getByID(request.getFromId())).getName());
@@ -226,7 +226,7 @@ public class Coordinator extends User implements ViewRequestHistory{
                     System.out.println("Request status: " + request.getStatus());
                 }
                 else if (request.getType() == RequestType.changeTitle){
-                    System.out.println("Request ID: " + request.getRequestId());
+                    System.out.println("\nRequest ID: " + request.getRequestId());
                     System.out.println("Request Time: " + request.getTime());
                     System.out.println("Student ID: " + request.getFromId());
                     System.out.println("Student Name: "+(StudentRepository.getByID(request.getFromId())).getName());
@@ -236,7 +236,7 @@ public class Coordinator extends User implements ViewRequestHistory{
                     System.out.println("Request status: " + request.getStatus());
                 }
                 else{ //deregister
-                    System.out.println("Request ID: " + request.getRequestId());
+                    System.out.println("\nRequest ID: " + request.getRequestId());
                     System.out.println("Request Time: " + request.getTime());
                     System.out.println("Student ID: " + request.getFromId());
                     System.out.println("Student Name: "+(StudentRepository.getByID(request.getFromId())).getName());
