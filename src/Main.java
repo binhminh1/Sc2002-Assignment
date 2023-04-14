@@ -60,7 +60,7 @@ public class Main {
                     while (studentChoice != 8) {
                         System.out.println("\nWelcome " + studentuserid + "!");
                         System.out.println("Please select an option: \n" +
-                                "1. changePassword \n" +
+                                "1. Change your password \n" +
                                 "2. View available projects \n" +
                                 "3. Select the project to send to the coordinator\n" +
                                 "4. View my project \n" +
@@ -235,7 +235,7 @@ public class Main {
                     while (coorChoice != 5) {
                         System.out.println("\nWelcome " + coordinator.getName() + "!");
                         System.out.println("Please select an option: \n" +
-                                "1. changePassword \n" +
+                                "1. Change your password \n" +
                                 "2. View Projects By filter \n" +//need another switch class
                                 "3. View Request \n" +
                                 "4. View request history\n" +
