@@ -238,8 +238,9 @@ public class Supervisor extends User implements ViewRequestHistory {
         supervisor.viewProject();
         System.out.println("Input the project ID to change title");
         String projectId = sc.next();
-        System.out.println("Please enter the new title");
+        System.out.println("Please enter the new title, use underscore(_) to represent whitespace");
         String newTitle = sc.next();
+        newTitle=newTitle.replace("_"," ");
         if (supervisor.getProjectsById(projectId) != null && supervisor.getProjectsById(projectId).getSupervisorName().equals(supervisor.getName())) {
             supervisor.changeTitle(newTitle, projectId);
             System.out.println("Successfully changed");
