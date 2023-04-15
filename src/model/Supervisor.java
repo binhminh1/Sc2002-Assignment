@@ -225,8 +225,9 @@ public class Supervisor extends User implements ViewRequestHistory {
     }
 
     public void createProject(Supervisor supervisor) {
-        System.out.println("Please enter the project name");
+        System.out.println("Please enter the project name, use underscore(_) to represent whitespace");
         String projectName = sc.next();
+        projectName=projectName.replace("_"," ");
         Project project = new Project(String.valueOf(ProjectRepository.numberOfProjects + 1), supervisor.getName(), projectName);
         supervisor.addProjects(project);
         ProjectRepository.addProject(project);

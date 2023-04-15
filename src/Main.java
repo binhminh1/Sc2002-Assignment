@@ -201,7 +201,6 @@ public class Main {
                                         supervisor.ChangePassword();
                                         break;
                                     case 2:
-                                        while (true) {
                                             System.out.println("\nPlease select an option: \n" +
                                                     "1. Create project\n" +
                                                     "2. Update title\n" +//need another switch class
@@ -225,8 +224,6 @@ public class Main {
                                                 default:
                                                     System.out.println("\nPlease enter a number between 1 - 4. Please try again.");
                                                     break;
-                                            }
-                                            break;
                                         }
                                         break;
                                     case 3:
