@@ -360,6 +360,11 @@ public class Coordinator extends User implements ViewRequestHistory{
                                 request.changeStatus(RequestStatus.Rejected);
                                 StudentRepository.getByID(request.getFromId()).changeStatus(StudentStatus.UNREGISTERED);
                                 ProjectRepository.getByID(request.getProjectId()).setStatus(ProjectStatus.UNAVAILABLE);
+                                for (Project project : ProjectRepository.searchProjects(null, null, supervisorName)) {
+                                    if (project.getStatus().equals(ProjectStatus.AVAILABLE)) {
+                                        project.setStatus(ProjectStatus.UNAVAILABLE);
+                                    }
+                                }
                             }
                         } else {
                             System.out.println("The request has been rejected.");
