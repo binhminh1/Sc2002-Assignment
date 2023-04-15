@@ -203,8 +203,9 @@ public class Student extends User implements ViewRequestHistory {
     }
     public Request sendChangeTitleRequest(Student student){
         if (student.getStatus() == StudentStatus.REGISTERED) {
-            System.out.println("Please enter the new title of your project: ");
+            System.out.println("Please enter the new title of your project,use underscore(_) to represent whitespace: ");
             String newTitle = sc.next();
+            newTitle=newTitle.replace("_"," ");
 
             Request request = new Request(RequestType.changeTitle, student.getProjectId(), super.getUserId(), toId, newTitle);
             RequestRepository.addRequest(request);
