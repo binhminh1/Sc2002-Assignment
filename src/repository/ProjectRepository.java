@@ -3,27 +3,48 @@ package repository;
 import model.Project;
 import model.ProjectStatus;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectRepository {
+    /**
+     * Declaration of variables
+     */
     public static int numberOfProjects = 0;
+    /**
+     * Creates list of projects
+     */
     public static List <Project> projects = new ArrayList<>();
 
+    /**
+     * Allow us to add a project
+     * @param project
+     */
     public static void addProject(Project project) {
         numberOfProjects++;
         projects.add(project);
     }
 
+    /**
+     * Allows us to remove a project
+     * @param project
+     */
     public static void removeProject(Project project) {
         projects.remove(project);
     }
 
+    /**
+     * @return projects
+     */
     public static List<Project> getProjects() {
         return projects;
     }
 
+    /**
+     * get the project ID
+     * @param id
+     * @return
+     */
     public static Project getByID(String id) {
         for (Project project : projects) {
             if (project.getProjectId().equals(id)) {
@@ -32,7 +53,10 @@ public class ProjectRepository {
         }
         return null;
     }
-
+    
+    /**
+     * @return all of the available projects
+     */
     public static List<Project> getAvailableProject() {
         List<Project> availableProjects = new ArrayList<>();
         for (Project project : projects) {
@@ -43,6 +67,11 @@ public class ProjectRepository {
         return availableProjects;
     }
 
+    /**
+     * categorise projects by status
+     * @param status (AVAILABLE, UNAVAILABLE, RESERVED, ALLOCATED)
+     * @return
+     */
     public static List<Project> getProjectsByStatus(ProjectStatus status) {
         List<Project> matchingProjects = new ArrayList<>();
         for (Project project : projects) {
@@ -53,6 +82,13 @@ public class ProjectRepository {
         return matchingProjects;
     }
 
+    /**
+     * allow coordinator to search for a project by its characteristics
+     * @param status (AVAILABLE, UNAVAILABLE, RESERVED, ALLOCATED)
+     * @param studentId
+     * @param supervisorName
+     * @return
+     */
     public static List<Project> searchProjects(ProjectStatus status, String studentId, String supervisorName) {
         List<Project> matchingProjects = new ArrayList<>();
         for (Project project : projects) {

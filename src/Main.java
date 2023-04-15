@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
-
+/**
+ * Output and UI of FYPMS
+ * Switch cases allows users to choose what they want to do
+ * Exception handling implemented to catch error inputs
+ */
 public class Main {
 
     private static final String CoordinatorID = "ASFLI";

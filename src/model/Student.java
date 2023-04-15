@@ -46,9 +46,9 @@ public class Student extends User implements ViewRequestHistory {
         }
     }
 
-
-
-
+    /**
+     * Allows student to change password
+     */
 
     public void ChangePassword() {
 
@@ -62,28 +62,47 @@ public class Student extends User implements ViewRequestHistory {
         }
     }
 
-
+    /**
+     * changes the student status (PENDING, DEREGISTERED, REGISTERED)
+     * @param status
+     */
     public void changeStatus(StudentStatus status) {
         this.status = status;
     }
 
+    /**
+     * change the project title
+     */
     public void changeProjectId(String projectId) {
         this.projectId = projectId;
         this.Superid = ProjectRepository.getByID(projectId).getSupervisorName();
     }
 
+    /**
+     * @return status of student (PENDING, DEREGISTERED, REGISTERED)
+     */
     public StudentStatus getStatus() {
         return status;
     }
 
+    /**
+     * @return project ID
+     */
     public String getProjectId() {
         return projectId;
     }
 
+    /**
+     * @return supervisor ID
+     */
     public String getSuperid() {
         return Superid;
     }
 
+    /**
+     * Allows student to see all available projects that he can select from
+     * @param student
+     */
     public void viewAvailableProjects(Student student){
         if(student.getStatus().equals(StudentStatus.DEREGISTERED)){
             System.out.println("You are not allowed to make selection again as you deregistered your FYP");
@@ -94,7 +113,11 @@ public class Student extends User implements ViewRequestHistory {
         }
     }
 
-
+    /**
+     * Allows student to send a request to the coordinator to select a project
+     * @param student
+     * @return 
+     */
     public Request sendSelectProjectRequest(Student student) {
         if (student.getStatus() == UNREGISTERED) {
             System.out.println("Please select a project to register: ");
@@ -128,9 +151,11 @@ public class Student extends User implements ViewRequestHistory {
         }
     }
 
-
-
-
+    /**
+     * Allows student to send a request to the coordinator to deregister from allocated project
+     * @param student
+     * @return
+     */
     public Request sendDeregisterProjectRequest(Student student) {
         if (student.getStatus() == StudentStatus.REGISTERED) {
             Request request = new Request(RequestType.deregister, student.getProjectId(), super.getUserId());
@@ -143,6 +168,9 @@ public class Student extends User implements ViewRequestHistory {
         }
     }
 
+    /**
+     * Allows student to view all the requests that he sent out
+     */
     public List<String> viewOutgoingRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
 
@@ -172,6 +200,9 @@ public class Student extends User implements ViewRequestHistory {
     public void viewRequestHistory() {
     }
 
+    /**
+     * Allows student to view all of his request history
+     */
     public void viewRequestHistory(String studentID){
         for (Request request : RequestRepository.getRequestsByFromId(studentID)){
             System.out.println("Request ID: "+ request.getRequestId());
@@ -187,6 +218,10 @@ public class Student extends User implements ViewRequestHistory {
     public void viewProject() {
     }
 
+    /**
+     * Allows student to view his own project
+     * @param student
+     */
     public void viewProject(Student student){
         if (student.getStatus() == StudentStatus.REGISTERED) {
             for (Project project : ProjectRepository.getProjectsByStatus(ProjectStatus.ALLOCATED)) {
@@ -201,6 +236,12 @@ public class Student extends User implements ViewRequestHistory {
             System.out.println("You have not registered a project yet.");
         }
     }
+
+    /**
+     * Allows student to send a request to supervisor to change the project title
+     * @param student
+     * @return
+     */
     public Request sendChangeTitleRequest(Student student){
         if (student.getStatus() == StudentStatus.REGISTERED) {
             System.out.println("Please enter the new title of your project,use underscore(_) to represent whitespace: ");

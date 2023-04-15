@@ -202,6 +202,11 @@ public class Supervisor extends User implements ViewRequestHistory {
         }
     }
 
+    /**
+     * Allow supervisor to view request history
+     * @param supervisoruserid
+     * @param supervisor
+     */
     public void viewRequestHistory(String supervisoruserid, Supervisor supervisor) {
         System.out.println("Your requests: ");
         for (Request request : RequestRepository.getRequests()) {
@@ -224,6 +229,10 @@ public class Supervisor extends User implements ViewRequestHistory {
         }
     }
 
+    /**
+     * Allows supervisor to create new project
+     * @param supervisor
+     */
     public void createProject(Supervisor supervisor) {
         System.out.println("Please enter the project name, use underscore(_) to represent whitespace");
         String projectName = sc.next();
@@ -234,6 +243,10 @@ public class Supervisor extends User implements ViewRequestHistory {
         System.out.println("Project created successfully");
     }
 
+    /**
+     * Allows supervisor to update project title
+     * @param supervisor
+     */
     public void updateProject(Supervisor supervisor) {
         supervisor.viewProject();
         System.out.println("Input the project ID to change title");
@@ -249,6 +262,9 @@ public class Supervisor extends User implements ViewRequestHistory {
         }
     }
 
+    /**
+     * Allows supervisor to transfer student to another supervisor 
+     */
     public void transferStudentRequest(Supervisor supervisor) {
         while (true) {
             supervisor.viewAllocatedProject();
