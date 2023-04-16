@@ -7,6 +7,9 @@ import model.RequestType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Extract requests
+ */
 public class RequestRepository {
     /**
      * Creates list of requests

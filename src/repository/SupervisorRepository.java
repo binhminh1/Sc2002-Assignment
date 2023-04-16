@@ -5,6 +5,9 @@ import model.Supervisor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Extracts supervisors
+ */
 public class SupervisorRepository {
     /**
      * Creates list of supervisors

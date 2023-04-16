@@ -6,7 +6,9 @@ import repository.SupervisorRepository;
 
 
 import java.util.Date;
-
+/**
+ * Runs the different functions of projects
+ */
 public class Project {
     /** 
      * Declaration of variables to be used within the Project Class

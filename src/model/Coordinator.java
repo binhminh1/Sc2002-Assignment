@@ -10,7 +10,9 @@ import repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Methods that coordinator can do
+ */
 public class Coordinator extends User implements ViewRequestHistory{
     private String userId;
     private String password = "password";

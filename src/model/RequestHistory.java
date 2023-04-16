@@ -2,6 +2,9 @@ package model;
 
 import java.util.Date;
 
+/**
+ * Allows request history to be printed out
+ */
 public class RequestHistory {
     /**
      * initialize private variables to be used in class

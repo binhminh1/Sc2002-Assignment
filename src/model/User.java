@@ -3,7 +3,9 @@ package model;
 import java.util.Objects;
 import java.util.Scanner;
 
-
+/**
+ * Allows user objects to be created
+ */
 public abstract class User {
     /**
      * Declare private variables

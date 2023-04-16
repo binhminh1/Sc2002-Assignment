@@ -6,6 +6,9 @@ import model.ProjectStatus;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Extract projects
+ */
 public class ProjectRepository {
     /**
      * Declaration of variables
@@ -41,9 +44,8 @@ public class ProjectRepository {
     }
 
     /**
-     * get the project ID
      * @param id
-     * @return
+     * @return project ID
      */
     public static Project getByID(String id) {
         for (Project project : projects) {
@@ -70,7 +72,7 @@ public class ProjectRepository {
     /**
      * categorise projects by status
      * @param status (AVAILABLE, UNAVAILABLE, RESERVED, ALLOCATED)
-     * @return
+     * @return projects of a certain status
      */
     public static List<Project> getProjectsByStatus(ProjectStatus status) {
         List<Project> matchingProjects = new ArrayList<>();
@@ -87,7 +89,7 @@ public class ProjectRepository {
      * @param status (AVAILABLE, UNAVAILABLE, RESERVED, ALLOCATED)
      * @param studentId
      * @param supervisorName
-     * @return
+     * @return projects that fulfil the filter
      */
     public static List<Project> searchProjects(ProjectStatus status, String studentId, String supervisorName) {
         List<Project> matchingProjects = new ArrayList<>();

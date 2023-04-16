@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+/**
+ * Allows requests to be generated
+ */
 public class Request {
     private RequestType type;
     private String projectId;

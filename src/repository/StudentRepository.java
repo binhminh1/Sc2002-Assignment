@@ -8,6 +8,9 @@ import model.Supervisor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Extract students
+ */
 public class StudentRepository {
     /**
      * Creates list of students
