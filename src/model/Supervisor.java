@@ -160,7 +160,7 @@ public class Supervisor extends User implements ViewRequestHistory {
             for (Request request : pendingRequests) {
                 if (request.getType() == (RequestType.changeTitle)) {
                     System.out.println("\nRequest ID: "+ request.getRequestId());
-                    System.out.println("From ID: "+ request.getFromId());
+                    System.out.println("Student ID: "+ request.getFromId());
                     System.out.println("Request Type: "+ request.getType());
                     System.out.println("Request status: "+ request.getStatus());
                 }
@@ -289,21 +289,21 @@ public class Supervisor extends User implements ViewRequestHistory {
                 System.out.println("The project has not been allocated to a student");
                 continue;
             }
-            System.out.println("Please enter the replacement supervisor name: ");
-            sc.nextLine(); // consume the end-of-line character
-            String supervisorNameToTransfer = sc.nextLine();
+            System.out.println("Please enter the replacement supervisor ID: ");
 
-            Supervisor trasferSuper = SupervisorRepository.getByName(supervisorNameToTransfer);
+            String supervisorIdToTransfer = sc.next();
+            System.out.println(supervisorIdToTransfer);
+            Supervisor trasferSuper = SupervisorRepository.getByID(supervisorIdToTransfer);
             if (trasferSuper == null) {
-                System.out.println("Invalid supervisor name. Please try again.");
+                System.out.println("Invalid supervisor ID. Please try again.");
                 continue;
             }
-            if (trasferSuper.supervisorCapReached(supervisorNameToTransfer)) {
+            if (trasferSuper.supervisorCapReached(supervisorIdToTransfer)) {
                 System.out.println("Replacement supervisor is already supervising 2 projects. Please try again.");
                 continue;
             }
 
-            Request request = new Request(RequestType.transferStudent, projectId, super.getUserId(), supervisorNameToTransfer);
+            Request request = new Request(RequestType.transferStudent, projectId, super.getUserId(), trasferSuper.getName());
             RequestRepository.addRequest(request);
             break;
         }

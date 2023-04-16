@@ -217,7 +217,6 @@ public class Main {
                                                     supervisor.createProject(supervisor);
                                                     break;
                                                 case 2:
-                                                    supervisor.viewProject();
                                                     System.out.println(" ");
                                                     supervisor.updateProject(supervisor);
                                                     break;
