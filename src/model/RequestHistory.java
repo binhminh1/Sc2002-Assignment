@@ -10,8 +10,8 @@ public class RequestHistory {
     private String updatedDate;
 
     /**
-     * 
-     * @param status
+     * Declaration and assignment of variables
+     * @param status (PENDING, DEREGISTERED, REGISTERED)
      * @param updatedDate
      */
     public RequestHistory(RequestStatus status, String updatedDate) {
@@ -19,10 +19,16 @@ public class RequestHistory {
         this.updatedDate = updatedDate;
     }
 
+    /**
+     * @return request status
+     */
     public RequestStatus getStatus() {
         return status;
     }
 
+    /**
+     * @return updated date
+     */
     public String getUpdatedDate() {
         return updatedDate;
     }

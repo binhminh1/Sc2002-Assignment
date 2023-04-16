@@ -19,7 +19,9 @@ public class Request {
 
     private String time;
 
-
+    /**
+     * Declaration and assignment of variables for changeTitle
+     */
     public Request(RequestType type, String projectId, String fromId, String toId, String newTitle){
         if(type == RequestType.changeTitle){
             this.type = type;
@@ -36,6 +38,9 @@ public class Request {
         }
     }
 
+    /**
+     * Declaration and assignment of variables for transferStudent
+     */
     public Request(RequestType type, String projectId, String fromId, String newSuperName){
         if(type == RequestType.transferStudent){
             this.type = type;
@@ -52,7 +57,13 @@ public class Request {
         }
     }
 
-    // Deregister and register
+    /**
+     * 
+     * Declaration and assignment of variables for registering and deregistering student
+     * @param type request type
+     * @param projectId
+     * @param studentId
+     */
     public Request(RequestType type, String projectId, String studentId){
         this.fromId = studentId;
         this.toName = "Li Fang";
@@ -66,22 +77,41 @@ public class Request {
         this.requestHistory = new ArrayList<>();
     }
 
+    /**
+     *
+     * @return request type
+     */
     public RequestType getType() {
         return type;
     }
 
+    /**
+     * get request status (PENDING, APPROVED, REJECTED)
+     */
     public RequestStatus getStatus() {
         return status;
     }
 
+    /**
+     * 
+     * @return time of request sent
+     */
     public String getTime() {
         return time;
     }
 
+    /**
+     * 
+     * @return toName 
+     */
     public String getToName() {
         return toName;
     }
 
+    /**
+     * change status of request after approval/rejection
+     * @param status request status (PENDING, APPROVED, REJECTED)
+     */
     public void changeStatus(RequestStatus status){
         this.status = status;
         Date day = new Date();
@@ -91,26 +121,44 @@ public class Request {
         requestHistory.add(history);
     }
 
+    /**
+     * @return project ID
+     */
     public String getProjectId() {
         return projectId;
     }
 
+    /**
+     * @return replacement supervisor name
+     */
     public String getReplacementSupName() {
         return replacementSupName;
     }
 
+    /**
+     * @return from ID
+     */
     public String getFromId() {
         return fromId;
     }
 
+    /**
+     * @return new project title
+     */
     public String getNewTitle() {
         return newTitle;
     }
 
+    /**
+     * @return request ID
+     */
     public String getRequestId() {
         return requestId;
     }
 
+    /**
+     * @return request history to be printed out
+     */
     public ArrayList<RequestHistory> getRequestHistory() {
         return requestHistory;
     }

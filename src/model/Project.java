@@ -25,7 +25,6 @@ public class Project {
         this.projectId=o;
         this.projectTitle = projectTitle;
         this.supervisorName =  supervisorName;
-//        this.studentId = o;
         this.status = ProjectStatus.AVAILABLE;
     }
 
@@ -55,7 +54,7 @@ public class Project {
     }
 
     /**
-     * Print the title and status of the project.
+     * Print the title and status of the project
      */
     public void displayProjectInformation() {
         System.out.println("Project Title: " + projectTitle);
@@ -63,8 +62,12 @@ public class Project {
     }
 
     /**
-     * Print all the projects and display the projectID, information of the project and supervisor information.<!-- -->
-     * For projects that are allocated, the information of the student that is allocated to the project is also printed.
+     * Print all the projects and display the projectID, information
+     * of the project and supervisor information
+     * 
+     * For projects that are allocated, the information of the student 
+     * that is allocated to the project is also printed.
+     * 
      */
     public void displayProject() {
         if (status == ProjectStatus.AVAILABLE || status == ProjectStatus.UNAVAILABLE) {
@@ -86,7 +89,7 @@ public class Project {
             throw new IllegalStateException("Project status is not AVAILABLE or ALLOCATED.");
         }
     }
-    // sss
+
     /**
      * Assign a student to the project 
      * (change project status to reserved so that no otehr student can choose it until request is approved/rejected)
@@ -135,11 +138,11 @@ public class Project {
     }
 
     /**
-     * 
+     * Transfer student from one supervisor to another
      * @param studentID 
      * @param supervisorId 
      * @param projectId 
-     * @return true when 
+     * @return 
      */
     public boolean Transfer(String studentID,String supervisorId,String projectId){
         if(this.status != ProjectStatus.ALLOCATED){
@@ -173,7 +176,7 @@ public class Project {
 
     /**
      * 
-     * @return get project status
+     * @return get project status (AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE)
      */
     public ProjectStatus getStatus(){
         return status;
@@ -211,7 +214,7 @@ public class Project {
     }
 
     /**
-     * set the project status
+     * set the project status (AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE)
      */
     public void setStatus(ProjectStatus status){
         this.status = status;

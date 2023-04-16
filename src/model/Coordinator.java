@@ -409,7 +409,7 @@ public class Coordinator extends User implements ViewRequestHistory{
         }
     }
 
-    //View all History
+    //View all History (overriding)
     @Override
     public void viewRequestHistory() {
     }
