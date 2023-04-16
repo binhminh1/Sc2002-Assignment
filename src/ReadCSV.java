@@ -96,8 +96,9 @@ public class ReadCSV {
      * Update the excel sheet with the new information when user presses exit
      */
     public static void writeFile() {
+        String projectPath = System.getProperty("user.dir") + "/src/rollover project.csv";
         try {
-            FileWriter writer = new FileWriter(PATH.projectFile); // open the file in append mode
+            FileWriter writer = new FileWriter(projectPath); // open the file in append mode
 
             List<Project> projectList = ProjectRepository.getProjects();
 
