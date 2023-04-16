@@ -25,7 +25,6 @@ public class Project {
         this.projectId=o;
         this.projectTitle = projectTitle;
         this.supervisorName =  supervisorName;
-//        this.studentId = o;
         this.status = ProjectStatus.AVAILABLE;
     }
 

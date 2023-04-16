@@ -106,6 +106,15 @@ public class Student extends User implements ViewRequestHistory {
     public void viewAvailableProjects(Student student){
         if(student.getStatus().equals(StudentStatus.DEREGISTERED)){
             System.out.println("You are not allowed to make selection again as you deregistered your FYP");
+            return;
+        }
+        if(student.getStatus().equals(PENDING)){
+            System.out.println("You already have a pending request");
+            return;
+        }
+        if (student.getStatus() == StudentStatus.REGISTERED){
+            System.out.println("You are not allowed to make selection again as you are registered");
+            return;
         }
         System.out.println("Available projects: ");
         for (Project project : ProjectRepository.getAvailableProject()) {

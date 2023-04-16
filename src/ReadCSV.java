@@ -1,6 +1,4 @@
-import model.Project;
-import model.Student;
-import model.Supervisor;
+import model.*;
 import repository.ProjectRepository;
 import repository.StudentRepository;
 import repository.SupervisorRepository;
@@ -45,20 +43,6 @@ public class ReadCSV {
 
             SupervisorRepository.addSupervisor(supervisor1);
         }
-        System.out.println("Loading Project List");
-        List<List<String>> projectList = ReadCSV.read(PATH.projectFile);
-        int o = 1;
-        for(List<String> project: projectList){
-
-
-            Supervisor supervisor = SupervisorRepository.getByName(project.get(0));
-
-            Project project1 = new Project(String.valueOf(o),supervisor.getName(), project.get(1));
-
-            ProjectRepository.addProject(project1);
-
-            o++;
-        }
         System.out.println("Loading Student List");
         List<List<String>> studentList = ReadCSV.read(PATH.studentFile);
 
@@ -72,5 +56,51 @@ public class ReadCSV {
             StudentRepository.addStudent(student1);
         }
 
+        System.out.println("Loading Project List");
+        List<List<String>> projectList = ReadCSV.read(PATH.projectFile);
+        int o = 1;
+        for(List<String> project: projectList){
+
+
+            Supervisor supervisor = SupervisorRepository.getByName(project.get(0));
+
+            Project project1 = new Project(String.valueOf(o),supervisor.getName(), project.get(1));
+
+            String studentID = project.get(2);
+
+            ProjectRepository.addProject(project1);
+
+            if (studentID != null && !studentID.equals("null"))
+            {
+                project1.setStatus(ProjectStatus.ALLOCATED);
+                project1.setStudentId(studentID);
+                Student student99 = StudentRepository.getByID(studentID);
+                student99.changeStatus(StudentStatus.REGISTERED);
+            }
+
+            o++;
+        }
+
     }
+
+    public static void writeFile() {
+        try {
+            FileWriter writer = new FileWriter(PATH.projectFile); // open the file in append mode
+
+            List<Project> projectList = ProjectRepository.getProjects();
+
+            // Write project data to file
+            for (Project project : projectList) {
+                writer.write(project.getSupervisorName() + ",");
+                writer.write(project.getProjectTitle() + ",");
+                writer.write(project.getStudentId()+"\n");
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

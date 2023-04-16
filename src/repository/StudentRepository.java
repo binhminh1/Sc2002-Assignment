@@ -42,7 +42,6 @@ public class StudentRepository {
      */
     public static Student getByID(String id) {
         for (Student student : students) {
-            String userid=student.getUserId();
             if (student.getUserId().equals(id)) {
                 return student;
             }
