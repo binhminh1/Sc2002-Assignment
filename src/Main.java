@@ -49,7 +49,6 @@ public class Main {
                 //login as student
                 switch (choice) {
                     case 4:
-                        System.out.println("Database updated");
                         ReadCSV.writeFile();
                         exit(0);
                     case 1:
