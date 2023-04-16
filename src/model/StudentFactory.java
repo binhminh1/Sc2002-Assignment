@@ -1,9 +1,10 @@
 package model;
 
+
+import repository.StudentRepository;
 /**
  * Allows overriding and creates student object
  */
-import repository.StudentRepository;
 public class StudentFactory  implements UserFactory{
     @Override
     public Student getUser(String userID) {
