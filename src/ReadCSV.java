@@ -7,7 +7,9 @@ import java.io. * ;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * Reads the excel file and extract the information
+ */
 public class ReadCSV {
     public static final String delimiter = ",";
     public static List<List<String>> read(String csvFile) {
@@ -28,6 +30,10 @@ public class ReadCSV {
         }
         return null;
     }
+
+    /**
+ * Reads the excel file and extract the information
+    */
     public static void readFile() {
         //csv file to read
         System.out.println("Loading Supervisor List");
@@ -83,6 +89,9 @@ public class ReadCSV {
 
     }
 
+    /**
+     * Update the excel sheet with the new information when user presses exit
+     */
     public static void writeFile() {
         try {
             FileWriter writer = new FileWriter(PATH.projectFile); // open the file in append mode

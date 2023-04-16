@@ -83,6 +83,9 @@ public class Supervisor extends User implements ViewRequestHistory {
         }
     }
 
+    /**
+     * Allows supervisor to view his allocated projects
+     */
     public void viewAllocatedProject() {
         for (Project project : ProjectRepository.searchProjects(ProjectStatus.ALLOCATED, null, super.getName())) {
             project.displayProject();
