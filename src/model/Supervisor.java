@@ -17,6 +17,9 @@ public class Supervisor extends User implements ViewRequestHistory {
         super(userId, name, email);
     }
 
+    /**
+     * Makes use of overriding to login for supervisor
+     */
     @Override
     public Boolean login() {
         System.out.println("Enter your password: ");
@@ -31,6 +34,9 @@ public class Supervisor extends User implements ViewRequestHistory {
         }
     }
 
+    /**
+     * Makes use of overriding to change password for supervisor
+     */
     @Override
     public void ChangePassword() {
         Boolean supervisorResult = false;

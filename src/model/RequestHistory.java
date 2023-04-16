@@ -11,7 +11,7 @@ public class RequestHistory {
 
     /**
      * Declaration and assignment of variables
-     * @param status
+     * @param status (PENDING, DEREGISTERED, REGISTERED)
      * @param updatedDate
      */
     public RequestHistory(RequestStatus status, String updatedDate) {

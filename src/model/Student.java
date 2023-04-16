@@ -32,6 +32,9 @@ public class Student extends User implements ViewRequestHistory {
         this.status = StudentStatus.UNREGISTERED;
     }
 
+    /**
+     * Makes use of overriding for student to login
+     */
     @Override
     public Boolean login() {
         System.out.println("Enter your password: ");
@@ -63,8 +66,8 @@ public class Student extends User implements ViewRequestHistory {
     }
 
     /**
-     * changes the student status (PENDING, DEREGISTERED, REGISTERED)
-     * @param status
+     * changes the student status
+     * @param status (PENDING, DEREGISTERED, REGISTERED)
      */
     public void changeStatus(StudentStatus status) {
         this.status = status;
@@ -125,7 +128,7 @@ public class Student extends User implements ViewRequestHistory {
     /**
      * Allows student to send a request to the coordinator to select a project
      * @param student
-     * @return 
+     * @return request
      */
     public Request sendSelectProjectRequest(Student student) {
         if (student.getStatus() == UNREGISTERED) {
@@ -163,7 +166,7 @@ public class Student extends User implements ViewRequestHistory {
     /**
      * Allows student to send a request to the coordinator to deregister from allocated project
      * @param student
-     * @return
+     * @return request
      */
     public Request sendDeregisterProjectRequest(Student student) {
         if (student.getStatus() == StudentStatus.REGISTERED) {
@@ -179,6 +182,7 @@ public class Student extends User implements ViewRequestHistory {
 
     /**
      * Allows student to view all the requests that he sent out
+     * @return request history
      */
     public List<String> viewOutgoingRequestsHistory() {
         List<String> requestHistory = new ArrayList<>();
@@ -249,7 +253,7 @@ public class Student extends User implements ViewRequestHistory {
     /**
      * Allows student to send a request to supervisor to change the project title
      * @param student
-     * @return
+     * @return request
      */
     public Request sendChangeTitleRequest(Student student){
         if (student.getStatus() == StudentStatus.REGISTERED) {
